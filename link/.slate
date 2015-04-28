@@ -1,0 +1,85 @@
+# Configs
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+config secondsBetweenRepeat 0.1
+config checkDefaultsOnLoad true
+config focusCheckWidthMax 3000
+
+config windowHintsShowIcons true
+config windowHintsIgnoreHiddenWindows false
+config windowHintsSpread true
+config windowHintsSpreadPadding 10 # pixel gap between icons
+config windowHintsDuration 5
+config windowHintsHeight 60
+config windowHintsWidth 60
+# This prevents icons being bunched up
+config windowHintsTopLeftX (windowSizeX/2)-(windowHintsWidth/2)
+config windowHintsTopLeftY (windowSizeY/2)-(windowHintsHeight/2)
+ 
+# Misc Aliases 
+alias showHintsLeftHand hint AOEUIYQJKX
+alias showNormalHint hint AOEUIDHTNSYXFBPKGMCW
+alias browser 'Google Chrome'
+
+#
+# Abstract positions for later use within configuration.
+#
+alias full move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias tophalf move screenOriginX;screenOriginY screenSizeX;screenSizeY/2
+alias bottomhalf move screenOriginX;screenOriginY+screenSizeY/2 screenSizeX;screenSizeY/2
+alias topleft corner top-left resize:screenSizeX/2;screenSizeY/2
+alias topright corner top-right resize:screenSizeX/2;screenSizeY/2
+alias bottomleft corner bottom-left resize:screenSizeX/2;screenSizeY/2
+alias bottomright corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
+#
+# The following 'bind' lines allow you to hold "CTRL" and "COMMAND"
+# and then press a third key that corresponds to 9 sections of a
+# square:
+#
+#   u  i  o
+#   j  k  l
+#   m  ,  .
+#
+bind u:ctrl;cmd  ${topleft}
+bind j:ctrl;cmd  ${lefthalf}
+bind m:ctrl;cmd  ${bottomleft}
+
+bind i:ctrl;cmd  ${tophalf}
+bind k:ctrl;cmd  ${full}
+bind ,:ctrl;cmd  ${bottomhalf}
+
+bind o:ctrl;cmd  ${topright}
+bind l:ctrl;cmd  ${righthalf}
+bind .:ctrl;cmd  ${bottomright}
+
+bind e:cmd  ${showNormalHint}
+ 
+# ======================================
+# The HYPER key
+# ======================================
+ 
+alias hyper ctrl;alt;cmd
+  
+# App bindings
+bind b:${hyper} focus ${browser}
+bind e:${hyper} focus ${editor}
+bind m:${hyper} focus 'Mail'
+bind i:${hyper} focus 'iTerm'
+bind f:${hyper} focus 'Finder'
+
+# Throws
+bind n:${hyper} throw next
+bind right:${hyper} throw right
+bind left:${hyper}  throw left
+bind up:${hyper} throw up
+bind down:${hyper}  throw down
+
+ 
+bind f:${hyper} throw 1 resize
+bind g:${hyper} throw 0 resize
+
+##

@@ -1,0 +1,219 @@
+#! /usr/bin/env python
+# Script to download the latest verison of BURP Proxy.
+# Script relies on a conf/.burp file to be located in user $HOME directory.
+# The file should have three lines:
+#   email = "XXXXXX@XXXXX.XXX"
+#   custnumber = "XXXXXXXXX"
+#   directory = "DIR/DIR/" must have slash at the end
+
+# Works on all Python 2.7
+from HTMLParser import HTMLParser
+import cookielib, urllib, urllib2, os, glob, re, argparse
+
+
+class URLS(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.download_href = None
+        self.license_href = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            for name, value in attrs:
+                # This is parsed top to bottom. We stop at the first link. First
+                # link is assumer to be latest ? more logic needed.
+                if name == 'href' and 'DownloadBuild.ashx' in value:
+                    self.download_href = value if self.download_href == None else self.download_href
+                if name == 'href' and 'DownloadLicenseKey.ashx' in value:
+                    self.license_href = value if self.license_href == None else self.license_href
+
+class ViewState(HTMLParser):
+    def __init__(self):
+        HTMLParser.__init__(self)
+        self.viewstate = None
+        self.eventvalidation = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'input':
+            # Find Viewstate in attrs.
+            if ('id', '__VIEWSTATE') in attrs and self.viewstate == None:
+                # assert the last field is the 'value' field we need
+                assert(attrs[-1][0] == 'value')
+                self.viewstate = attrs[-1][1]
+
+            if ('id', '__EVENTVALIDATION') in attrs and self.eventvalidation == None:
+                # assert the last field is the 'value' field we need
+                assert(attrs[-1][0] == 'value')
+                self.eventvalidation = attrs[-1][1]
+
+# URLS we need
+main_url = "https://pro.portswigger.net/users/"
+login_url = "https://pro.portswigger.net/users/default.aspx"
+
+home_dir = os.path.expanduser('~') + "/"
+
+if os.path.isfile(home_dir + "/conf/.burp") == False :
+    print "Missing .burp file"
+    exit(1)
+
+burp_config = {}
+execfile(home_dir + "/conf/.burp", burp_config) 
+burp_dir =  home_dir + burp_config['directory']
+# Let make some Dirs just incase they do not exist
+if not os.path.exists(burp_dir):
+    os.makedirs(burp_dir, 0755 )
+if not os.path.exists(burp_dir + "logs"):
+    os.makedirs(burp_dir + "logs", 0755 )
+if not os.path.exists(burp_dir + "logging"):
+    os.makedirs(burp_dir + "logging", 0755 )
+if not os.path.exists(burp_dir + "backup"):
+    os.makedirs(burp_dir + "backup", 0755 )
+if not os.path.exists(burp_dir + "temp"):
+    os.makedirs(burp_dir + "temp", 0755 )
+
+
+
+
+
+## SETUP
+# Store the cookies and create an opener that will hold them
+cj = cookielib.CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
+# Add our headers
+opener.addheaders = [('User-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X \
+    10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 \
+    Safari/537.36'), ('HTTP_ACCEPT', 'text/html,application/xhtml+xml,\
+    application/xml; q=0.9,*/*; q=0.8'),
+    ('Content-Type', 'application/x-www-form-urlencoded')]
+
+# Install our opener (note that this changes the global opener to the one
+# we just made, but you can also just call opener.open() if you want)
+urllib2.install_opener(opener)
+# Parsers
+parser_vs = ViewState()
+parser_urls = URLS()
+## END SETUP
+
+
+def issue_request(url, data=None):
+    if data != None:
+        # Use urllib to encode the payload
+        data = urllib.urlencode(data)
+
+        # Build our Request object (supplying 'data' makes it a POST)
+        req = urllib2.Request(url, data)
+    else:
+        # Build our Request object (supplying 'data' makes it a POST)
+        req = urllib2.Request(url)
+
+    # Make the request and read the response
+    resp = urllib2.urlopen(req)
+    return resp.read()
+
+def download_burp(uri):
+    url = main_url + uri
+    req = urllib2.Request(url)
+    resp = urllib2.urlopen(req)
+    filename = resp.info()['Content-Disposition']
+    filename = filename[filename.find('filename=') + len('filename='):]
+    
+    os.chdir(burp_dir)
+    jar_files = glob.glob("burpsuite*.jar")
+    bk_files = glob.glob("burp*.jar.bk")
+    
+    if filename in jar_files:
+        if args.download_burp == True:
+            # Download the latest Burp
+            with open(burp_dir + filename, "wb") as local_file:
+                local_file.write(resp.read())
+            
+            # Remove Prev Symlink
+            os.remove("burp.jar")
+            
+            # Symlink it into burp.jar
+            os.symlink(filename, "burp.jar")
+            exit(0)
+        print 'You already have the latest Burp'
+        exit(0)
+    # Remove current Burp BK.
+    # Should only be one
+    if len(bk_files) > 1:
+        print "Too Many BK Files in Burp DIR"
+        exit(1)
+    
+    if len(bk_files) == 1:
+        os.remove( bk_files[0] )
+    
+    # Move current burp into BK
+    # Should only be one current
+    if len(jar_files) == 1:
+        os.rename(jar_files[0], jar_files[0]+".bk")
+        # Remove Prev Symlink
+        os.remove("burp.jar")
+    
+    # Download the latest Burp
+    with open(burp_dir + filename, "wb") as local_file:
+       local_file.write(resp.read())
+    
+    # Symlink it into burp.jar
+    os.symlink(filename, "burp.jar")
+
+def download_lic(uri):
+    url = main_url + uri
+    req = urllib2.Request(url)
+    resp = urllib2.urlopen(req)
+    filename = resp.info()['Content-Disposition']
+    filename = filename[filename.find('filename=') + len('filename='):]
+    
+    if os.path.isfile(burp_dir + filename) == False or \
+        args.download_license == True:
+        # Download the license 
+        with open(burp_dir + filename, "wb") as local_file:
+            local_file.write(resp.read())
+    
+
+def setup_viewstate():
+    parser_vs.feed(issue_request(main_url))
+    #print parser_vs.viewstate
+    #print parser_vs.eventvalidation
+
+def setup_urls():
+    #Input parameters we are going to send
+    payload = {
+     '__VIEWSTATE': parser_vs.viewstate,
+     '__EVENTVALIDATION' : parser_vs.eventvalidation ,
+     'txtEmail': burp_config['email'],
+     'txtCustNumber': burp_config['custnumber'],
+     'cmdLogin': 'Log in'
+     }
+
+    #print contents
+    parser_urls.feed(issue_request(login_url, payload))
+
+    #print parser_urls.download_href
+    #print parser_urls.license_href
+
+
+def main():
+    parser = argparse.ArgumentParser(description='This is a Script that \
+        downloads burp.')
+    parser.add_argument('-l','--download-license', action="store_true", help='Force the \
+        the re-downloading of license file', default=False, required=False)
+    parser.add_argument('-b','--download-burp',action="store_true", help='Force the re-download \
+        of Burp', default=False, required=False)
+    global args
+    args = parser.parse_args()
+    
+    setup_viewstate()
+    setup_urls()
+
+
+    download_lic(parser_urls.license_href)
+    download_burp(parser_urls.download_href)
+
+ 
+
+if __name__ == "__main__":
+    __author__ = 'Raviv Cohen'
+    main()

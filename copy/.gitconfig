@@ -1,0 +1,47 @@
+[user]
+	name = cara marie
+    email = cara@me
+[core]
+    autocrlf = input
+    whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+    excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore_global
+    pager = less -FRSX --shift 5
+[apply]
+    whitespace = fix
+[alias]
+	d = difftool
+    br = branch
+    cm = commit
+    co = checkout
+    g = grep -I
+    lg = log -p
+    rv = review
+    st = status
+[push]
+	default = simple
+[merge]
+	tool = opendiff
+[diff]
+	tool = vimdiff
+#[credential]
+#	helper = osxkeychain
+[color]
+    ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+[difftool]
+    prompt = false
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+    insteadOf = "github:"
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+    insteadOf = "gist:"

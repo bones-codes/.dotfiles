@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo 'vim plugins'
+cd "$HOME/.dotfiles/link/.vim/bundle"
+for i in `ls`; do
+  echo $i
+  cd "$i"
+  git pull
+  cd ..
+  echo
+done
+
+echo 'fuzzdb'
+if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
+  cd "$HOME/tools/burp/fuzzdb"
+  svn update
+else
+  cd "$HOME/tools/burp"
+  svn checkout http://fuzzdb.googlecode.com/svn/trunk/ fuzzdb
+fi
+
+echo 'brew update, upgrade, cleanup and checkup'
+brew update && brew upgrade --all && brew upgrade brew-cask 
+brew cleanup && brew cask cleanup && brew doctor
+
+if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
+  source "$HOME/.dotfiles/bin/update_local"
+fi

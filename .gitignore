@@ -1,0 +1,18 @@
+caches/
+backups/
+link/.gnupg/
+link/.ssh/
+link/.password-store/
+*local*
+*.last-run
+*.cache/
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

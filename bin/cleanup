@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function clean_up() {
+  cd $1
+  for file in `ls -a`; do
+    rm -rf $HOME/$file
+  done
+}
+
+clean_up $HOME/.dotfiles/copy
+clean_up $HOME/.dotfiles/link
+rm $HOME/.dotfiles
