@@ -154,7 +154,7 @@ Any file in the `copy` subdirectory will be copied into `~/`. Any file that _nee
 ## The ~/ "link" step
 Any file in the `link` subdirectory gets symbolically linked with `ln -s` into `~/`. Edit these, and you change the file in the repo. Don't link files containing sensitive data, or you might accidentally commit that data!
 
-## Aliases and Functions
+### Aliases and Functions
 To keep things easy, I make use of Robby Russell's [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh). A custom .zshrc file is linked over and all my custom aliases functions go into [.oh-my-zsh-custom](link/.oh-my-zsh-custom) folder. All .zsh files in there will get sourced. 
 
 ## Scripts 
