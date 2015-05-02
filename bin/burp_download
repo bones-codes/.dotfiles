@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # Script to download the latest verison of BURP Proxy.
-# Script relies on a conf/.burp file to be located in user $HOME directory.
+# Script relies on a .burp file to be located in user $HOME directory.
 # The file should have three lines:
 #   email = "XXXXXX@XXXXX.XXX"
 #   custnumber = "XXXXXXXXX"
@@ -52,12 +52,12 @@ login_url = "https://pro.portswigger.net/users/default.aspx"
 
 home_dir = os.path.expanduser('~') + "/"
 
-if os.path.isfile(home_dir + "/conf/.burp") == False :
+if os.path.isfile(home_dir + "/.burp") == False :
     print "Missing .burp file"
     exit(1)
 
 burp_config = {}
-execfile(home_dir + "/conf/.burp", burp_config) 
+execfile(home_dir + "/.burp", burp_config) 
 burp_dir =  home_dir + burp_config['directory']
 # Let make some Dirs just incase they do not exist
 if not os.path.exists(burp_dir):
