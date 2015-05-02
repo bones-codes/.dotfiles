@@ -103,6 +103,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * dvtm
    * awscli
    * sslyze
+   * masscan
    * nmap 
    * youtube-dl 
    * pkg-config 

@@ -38,6 +38,7 @@ if [ "$local" ]; then
   dvtm
   youtube-dl
   awscli
+  masscan
   sslyze
   urlview
   pass
