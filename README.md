@@ -21,7 +21,7 @@ Note:
 * Files in `conf` just sit there. If a config file doesn't _need_ to go in `~/`, put it in there.
 
 [dotfiles]: bin/dotfiles
-[bin]: https://github.com/bones-code/.dotfiles/tree/master/bin
+[bin]: https://github.com/bones-codes/.dotfiles/tree/master/bin
 
 ## Installation
 ### Standalone user support
@@ -64,7 +64,7 @@ bash -c "$(curl -fsSL http://bit.ly/bones-dots)"
 If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
 
 ```sh
-bash -c "$(curl -fsSL https://raw.github.com/bones-code/.dotfiles/master/bin/dotfiles)"
+bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"
 ```
 
 ### OS X
@@ -159,7 +159,7 @@ To keep things easy, I make use of Robby Russell's [oh-my-zsh](https://github.co
 
 ## Scripts 
 On top of the scripts in [.oh-my-zsh-custom](link/.oh-my-zsh-custom), there are some custom scripts in the bin folder I use all the time: 
-   * burp_download - downloads and "install's" latest burp
+   * burp_download - downloads and installs latest burp
    * checksum - OpenSSL checksum wrapper
    * cleanup - removes all copied/linked files (including .dotfiles) from ~/ 
    * multi_firefox - app-named profiles for firefox

@@ -6,7 +6,7 @@ echo 'dotfiles --- bones'
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0")
 See the README for documentation.
-https://github.com/bones-code/.dotfiles
+https://github.com/bones-codes/.dotfiles
 HELP
 exit; fi
 
@@ -81,7 +81,7 @@ function check_cmd_tools() {
     # This works because:
     # a. On a clean install before any mods upon issuing sudo reboot the terminal reopens as part of restore previous state
     # b. One a clean install .profile does not exist so it easy to manipulate and later delete.
-    echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-code/.dotfiles/master/bin/dotfiles)"' >> .profile
+    echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
     sleep 5
     sudo -u root reboot
   fi
@@ -312,7 +312,7 @@ if [[ ! -d $DOTFILES_HOME ]]; then
   new_dotfiles_install=1
   prompt_delay=15
   e_header "Downloading dotfiles"
-  git clone git://github.com/bones-code/.dotfiles.git $DOTFILES_HOME
+  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
   cd $DOTFILES_HOME
 elif [[ "$1" != "restart" ]]; then
   # Make sure we have the latest files.
