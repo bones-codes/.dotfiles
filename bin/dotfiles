@@ -239,8 +239,6 @@ function get_os() {
 ## FUNCTIONS END                                                               #
 ################################################################################
 
-if [[ "$1" == "local" ]]; then export local=True; fi
-
 # Set OS type
 # OSX
 if [[ "$OSTYPE" =~ ^darwin ]]; then
@@ -257,6 +255,7 @@ fi
 
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
+if [[ "$1" == "local" ]]; then export local=True; fi
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
@@ -292,10 +291,10 @@ fi
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
-if [[ ! "$(type -P git)" && get_os 'ubuntu' ]]; then
+if [[ ! "$(type -P git)" && $OS == 'ubuntu' ]]; then
   e_header "Installing Git"
   sudo apt-get -qq install git-core
-elif [[ ! "$(type -P git)" && get_os 'arch' ]]; then
+elif [[ ! "$(type -P git)" && $OS == 'arch' ]]; then
   e_header "Installing Git"
   sudo pacman --noc -S git
 fi
@@ -306,26 +305,26 @@ if [[ ! "$(type -P git)" ]]; then
   exit 1
 fi
 
-# Initialize.
-if [[ ! -d $DOTFILES_HOME ]]; then
-  # $DOTFILES directory doesn't exist? Clone it!
-  new_dotfiles_install=1
-  prompt_delay=15
-  e_header "Downloading dotfiles"
-  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
-  cd $DOTFILES_HOME
-elif [[ "$1" != "restart" ]]; then
-  # Make sure we have the latest files.
-  e_header "Updating dotfiles"
-  cd $DOTFILES_HOME
-  prev_head="$(git rev-parse HEAD)"
-  git pull
-  git submodule update --init --recursive --quiet
-  if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
-    e_header "Changes detected, restarting script"
-    exec "$0" "restart"
-  fi
-fi
+## Initialize.
+#if [[ ! -d $DOTFILES_HOME ]]; then
+#  # $DOTFILES directory doesn't exist? Clone it!
+#  new_dotfiles_install=1
+#  prompt_delay=15
+#  e_header "Downloading dotfiles"
+#  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
+#  cd $DOTFILES_HOME
+#elif [[ "$1" != "restart" ]]; then
+#  # Make sure we have the latest files.
+#  e_header "Updating dotfiles"
+#  cd $DOTFILES_HOME
+#  prev_head="$(git rev-parse HEAD)"
+#  git pull
+#  git submodule update --init --recursive --quiet
+#  if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
+#    e_header "Changes detected, restarting script"
+#    exec "$0" "restart"
+#  fi
+#fi
 
 # Add binaries into the path
 PATH=$DOTFILES_HOME/bin:$PATH
@@ -339,7 +338,7 @@ shopt -s nullglob
 backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
-read -p "Do you want to run the init scripts?"
+read -p "Do you want to run the init scripts? "
 case $yn in 
 [Yy]* )
   e_header "Running Init"
