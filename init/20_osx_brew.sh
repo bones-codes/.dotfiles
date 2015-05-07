@@ -53,14 +53,6 @@ if [ "$local" ]; then
     "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
     nmap
     )
-
-    # Install http-screenshot-html.nse
-    sudo gem install wkhtmltoimage-binary
-    NMAP_VERSION=`ls -v /usr/local/Cellar/nmap/ | tail -n 1`
-    cd /usr/local/Cellar/nmap/$NMAP_VERSION/share/nmap/scripts/
-    wget https://raw.githubusercontent.com/afxdub/http-screenshot-html/master/http-screenshot-html.nse 
-    nmap --script-updatedb
-
   fi
   
 fi
