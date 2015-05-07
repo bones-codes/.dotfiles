@@ -1,4 +1,4 @@
-get_os 'osx' || return 1
+$(get_os 'osx') || return 1
 
 if [[ ! "$(type -P brew)" ]]; then
   e_header "Installing Homebrew"

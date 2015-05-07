@@ -291,10 +291,10 @@ fi
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
-if [[ ! "$(type -P git)" && $OS == 'ubuntu' ]]; then
+if [[ ! "$(type -P git)" && $(get_os 'ubuntu') ]]; then
   e_header "Installing Git"
   sudo apt-get -qq install git-core
-elif [[ ! "$(type -P git)" && $OS == 'arch' ]]; then
+elif [[ ! "$(type -P git)" && $(get_os 'arch') ]]; then
   e_header "Installing Git"
   sudo pacman --noc -S git
 fi
@@ -344,7 +344,7 @@ case $yn in
   e_header "Running Init"
   do_stuff "init"
   ;;
-* )
+[Nn]* )
   e_header "Skipping Init"
   ;;
 esac

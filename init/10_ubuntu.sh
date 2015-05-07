@@ -1,4 +1,4 @@
-get_os 'ubuntu' || return 1
+$(get_os 'ubuntu') || return 1
 
 # If the old files isn't removed, the duplicate APT alias will break sudo!
 sudoers_old="/etc/sudoers.d/sudoers-cowboy"; [[ -e "$sudoers_old" ]] && sudo rm "$sudoers_old"

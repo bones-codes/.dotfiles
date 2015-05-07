@@ -1,4 +1,4 @@
-get_os 'osx' || return 1
+$(get_os 'osx') || return 1
 
 e_header "Running OSX Config"
 # OSX Config. Can safely be run everytime.

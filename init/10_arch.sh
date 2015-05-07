@@ -1,4 +1,4 @@
-get_os 'arch' || return 1
+$(get_os 'arch') || return 1
 
 # Update APT.
 e_header "Updating pacman"
