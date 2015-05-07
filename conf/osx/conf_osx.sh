@@ -251,11 +251,11 @@ if [[ "$local" ]]; then
   defaults write com.apple.dock autohide-time-modifier -float 0
 
   # Add spacers to the Dock
-  defaults write com.apple.dock persistent-others -array-add ‘{tile-data={}; tile-type=“spacer-tile”;}’
-  defaults write com.apple.dock persistent-others -array-add ‘{tile-data={}; tile-type=“spacer-tile”;}’
-  defaults write com.apple.dock persistent-others -array-add ‘{tile-data={}; tile-type=“spacer-tile”;}’
-  defaults write com.apple.dock persistent-others -array-add ‘{tile-data={}; tile-type=“spacer-tile”;}’
-  defaults write com.apple.dock persistent-others -array-add ‘{tile-data={}; tile-type=“spacer-tile”;}’
+  defaults write com.apple.dock persistent-others -array-add "{tile-data={}; tile-type='spacer-tile';}"
+  defaults write com.apple.dock persistent-others -array-add "{tile-data={}; tile-type='spacer-tile';}"
+  defaults write com.apple.dock persistent-others -array-add "{tile-data={}; tile-type='spacer-tile';}"
+  defaults write com.apple.dock persistent-others -array-add "{tile-data={}; tile-type='spacer-tile';}"
+  defaults write com.apple.dock persistent-others -array-add "{tile-data={}; tile-type='spacer-tile';}"
 
   # Start screen saver -- bottom right corner
   defaults write com.apple.dock wvous-br-corner -int 5
