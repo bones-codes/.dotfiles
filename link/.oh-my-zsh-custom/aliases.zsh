@@ -4,9 +4,6 @@ if [[ -e "$HOME/.local_aliases.zsh" ]]; then
 fi
 
 export DOTFILES="$HOME/.dotfiles"
-# Add binaries into the path
-PATH=~/.dotfiles/bin:$PATH
-export PATH
 
 # Run dotfiles script, then source.
 function dotfiles() {

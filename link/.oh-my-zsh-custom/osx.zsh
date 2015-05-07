@@ -15,9 +15,11 @@ function path_remove() {
   echo "${t[*]}"
 }
 
+export DOTFILES="$HOME/.dotfiles"
+
 # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
-PATH=/usr/local/bin:$(path_remove /usr/local/bin)
-PATH=/usr/local/sbin:$(path_remove /usr/local/sbin)
+# Add binaries into the path
+PATH=$DOTFILES/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
 export PATH
 
 #Some Sudo related stuff if your a STD user.
@@ -47,8 +49,6 @@ alias flush="dscacheutil -flushcache"
 # Recursively delete `.DS_Store` files
 alias dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
-export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin::/usr/local/MacGPG2/bin
-export PATH=/usr/texbin:$PATH
 
 # Setup DirColors DB to load on start
 alias dircolors='gdircolors'
