@@ -305,26 +305,26 @@ if [[ ! "$(type -P git)" ]]; then
   exit 1
 fi
 
-## Initialize.
-#if [[ ! -d $DOTFILES_HOME ]]; then
-#  # $DOTFILES directory doesn't exist? Clone it!
-#  new_dotfiles_install=1
-#  prompt_delay=15
-#  e_header "Downloading dotfiles"
-#  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
-#  cd $DOTFILES_HOME
-#elif [[ "$1" != "restart" ]]; then
-#  # Make sure we have the latest files.
-#  e_header "Updating dotfiles"
-#  cd $DOTFILES_HOME
-#  prev_head="$(git rev-parse HEAD)"
-#  git pull
-#  git submodule update --init --recursive --quiet
-#  if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
-#    e_header "Changes detected, restarting script"
-#    exec "$0" "restart"
-#  fi
-#fi
+# Initialize.
+if [[ ! -d $DOTFILES_HOME ]]; then
+  # $DOTFILES directory doesn't exist? Clone it!
+  new_dotfiles_install=1
+  prompt_delay=15
+  e_header "Downloading dotfiles"
+  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
+  cd $DOTFILES_HOME
+elif [[ "$1" != "restart" ]]; then
+  # Make sure we have the latest files.
+  e_header "Updating dotfiles"
+  cd $DOTFILES_HOME
+  prev_head="$(git rev-parse HEAD)"
+  git pull
+  git submodule update --init --recursive --quiet
+  if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
+    e_header "Changes detected, restarting script"
+    exec "$0" "restart"
+  fi
+fi
 
 # Add binaries into the path
 PATH=$DOTFILES_HOME/bin:$PATH
@@ -338,15 +338,13 @@ shopt -s nullglob
 backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
-read -p "Do you want to run the init scripts? "
+read -p "Do you want to run the init scripts? " yn
 case $yn in 
 [Yy]* )
-  e_header "Running Init"
-  do_stuff "init"
-  ;;
+  e_header "Running Init";
+  do_stuff "init";;
 [Nn]* )
-  e_header "Skipping Init"
-  ;;
+  e_header "Skipping Init";;
 esac
 
 # Copy and Link Over Files 
