@@ -94,6 +94,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * ack 
    * rename 
    * p7zip 
+   * tmux
    * reattach-to-user-namespace
    * lesspipe --syntax-highlighting
    * python --universal

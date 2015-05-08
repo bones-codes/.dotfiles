@@ -23,6 +23,7 @@ recipes=(
   ack 
   rename 
   p7zip 
+  tmux
   reattach-to-user-namespace
   "lesspipe --syntax-highlighting"
   "python --universal" 
