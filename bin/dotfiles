@@ -82,10 +82,9 @@ function check_cmd_tools() {
     # a. On a clean install before any mods upon issuing sudo reboot the terminal reopens as part of restore previous state
     # b. One a clean install .profile does not exist so it easy to manipulate and later delete.
     if [[ "$1" == "local" ]]; then 
-      echo 'bash -c "$(export local=True; curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile; 
-    else
-      echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
+      echo 'export local=True' >> .profile; 
     fi
+    echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
     sleep 5
     sudo -u root reboot
   fi
@@ -235,27 +234,31 @@ function assert() {
 }
 
 function get_os() {
-  if [[ $OS == $1 ]]; then return 0; fi
+  if [ -z $1 ]; then
+    # Set OS type
+    # OSX
+    if [[ "$OSTYPE" =~ ^darwin ]]; then
+    export OS="osx" 
+    # Ubuntu.
+    elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    export OS="ubuntu"
+    # Arch
+    elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Arch ]]; then
+    export OS="arch"
+    else
+    export OS="NULL"
+    fi
+    return 0
+  elif [[ $OS == $1 ]]; then return 0; fi
   return 1
 }
+
 
 ################################################################################
 ## FUNCTIONS END                                                               #
 ################################################################################
 
-# Set OS type
-# OSX
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-export OS="osx" 
-# Ubuntu.
-elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
-export OS="ubuntu"
-# Arch
-elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Arch ]]; then
-export OS="arch"
-else
-export OS="NULL"
-fi
+get_os 
 
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
