@@ -61,7 +61,6 @@ export GREP_OPTIONS=--color=auto
 
 ZSH_COMPDUMP=$HOME/.zcompdump
 source $ZSH/oh-my-zsh.sh
-source /usr/local/share/zsh/site-functions/_aws
 
 rm -rf .zcompdump*
 zmodload -i zsh/complist

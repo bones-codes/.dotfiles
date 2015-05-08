@@ -19,7 +19,7 @@ export DOTFILES="$HOME/.dotfiles"
 
 # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
 # Add binaries into the path
-PATH=$DOTFILES/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
+PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
 export PATH
 
 #Some Sudo related stuff if your a STD user.
@@ -30,9 +30,6 @@ fi
 
 # Trim new lines and copy to clipboard
 alias c="tr -d '\n' | pbcopy"
-
-# Make 'less' more.
-eval "$(lesspipe.sh)"
 
 # Start ScreenSaver. This will lock the screen if locking is enabled.
 alias ss="open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app"
@@ -49,17 +46,12 @@ alias flush="dscacheutil -flushcache"
 # Recursively delete `.DS_Store` files
 alias dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
-
-# Setup DirColors DB to load on start
-alias dircolors='gdircolors'
-eval `dircolors ~/.oh-my-zsh-custom/themes/dircolors-solarized/dircolors.ansi-dark` 
-
 # Brew ZSH requires this
 unalias run-help &>/dev/null
 autoload run-help
 HELPDIR=/usr/local/share/zsh/helpfiles
 
-# Locks down a thumb drive so that Mac OS X will not write any metadata to it. TODO: verify this works
+# Locks down a thumb drive so that Mac OS X will not write any metadata to it.
 macosx_lockdown_drive() {
 	srm -r -s -v .Trashes
 	touch .Trashes
