@@ -105,7 +105,6 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * sslyze
    * masscan
    * nmap 
-   * wkhtmltopdf
    * youtube-dl 
    * pkg-config 
    * mutt --with-confirm-attachement-patch --with-gpgme --with-pgp-verbose-mime-patch --with-trash-patch --with-ignore-thread-patch
@@ -122,6 +121,8 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * adium 
    * vagrant 
    * mactex
+   * wkhtmltopdf
+   * razorsql
 
 * Fonts
    * font-source-code-pro
