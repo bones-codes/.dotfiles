@@ -88,6 +88,7 @@ function check_cmd_tools() {
     fi
     sleep 5
     sudo -u root reboot
+  fi
 }
 
 
