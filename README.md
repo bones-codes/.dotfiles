@@ -82,6 +82,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * gdbm --universal
    * openssl --universal
    * zsh 
+   * duplicity
    * wget --with-iri
    * grep 
    * git 

@@ -36,6 +36,7 @@ if [ "$local" ]; then
   apple-gcc42
   pkg-config
   dvtm
+  duplicity
   youtube-dl
   awscli
   masscan
