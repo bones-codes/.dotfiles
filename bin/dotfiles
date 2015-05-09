@@ -82,7 +82,7 @@ function check_cmd_tools() {
     # a. On a clean install before any mods upon issuing sudo reboot the terminal reopens as part of restore previous state
     # b. One a clean install .profile does not exist so it easy to manipulate and later delete.
     if [[ "$1" == "local" ]]; then 
-      echo 'export local=True' >> .profile; 
+      echo 'LOCAL=True; export LOCAL' >> .profile; 
     fi
     echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
     sleep 5
@@ -262,7 +262,7 @@ get_os
 
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
-if [[ "$1" == "local" ]]; then export local=True; fi
+if [[ "$1" == "local" ]]; then export LOCAL=True; fi
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
@@ -290,6 +290,12 @@ if get_os 'osx'; then
 fi
 
 #sleep 10
+read -p "Check .profile " yn
+case $yn in
+  * ) 
+    e_header "Continuing"
+    ;;
+esac
 
 if [[ -e "$USER_HOME/.profile" ]]; then
   e_header "Removing .profile"

@@ -240,7 +240,7 @@ defaults write com.apple.dock hide-mirror -bool true
 defaults write com.apple.dock orientation -string left
 defaults write com.apple.dock pinning -string start
 
-if [[ "$local" ]]; then
+if [[ "$LOCAL" ]]; then
   # Automatically hide and show the Dock
   defaults write com.apple.dock autohide -bool true
 
@@ -267,7 +267,7 @@ fi
 #"Wipe all (default) app icons from the Dock? (y/n)"
 #"(This is only really useful when setting up a new Mac, or if you don't use the Dock to launch apps.)"
 #read -r response
-if [[ "$new_dotfiles_install" && "$local" ]]; then
+if [[ "$new_dotfiles_install" && "$LOCAL" ]]; then
   defaults write com.apple.dock persistent-apps -array
 fi
 
