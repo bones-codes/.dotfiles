@@ -79,9 +79,9 @@ function check_cmd_tools() {
     e_header "Must Reboot Damn you Apple"
     # This creates a .profile and will continue the install upon reboot.
     # This works because:
-    # a. On a clean install before any mods upon issuing sudo reboot the terminal reopens as part of restore previous state
-    # b. One a clean install .profile does not exist so it easy to manipulate and later delete.
-    if [[ "$LOCAL" ]]; then 
+    # a. On a clean install, sudo reboot will cause the terminal to reopen as part of a restore previous state.
+    # b. On a clean install .profile does not exist so it easy to manipulate and later delete.
+    if [ "$LOCAL" ]; then 
       echo 'export LOCAL=True' >> .profile; 
     fi
     echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile

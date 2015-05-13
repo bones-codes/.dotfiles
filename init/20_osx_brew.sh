@@ -35,7 +35,6 @@ recipes=(
 if [ "$LOCAL" ]; then
   recipes+=(
   apple-gcc42
-  pkg-config
   dvtm
   duplicity
   youtube-dl

@@ -125,6 +125,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * mactex
    * wkhtmltopdf
    * razorsql
+   * remote-desktop-connection
 
 * Fonts
    * font-source-code-pro
