@@ -289,8 +289,6 @@ fi
 
 #sleep 10
 
-cat "$USER_HOME/.profile"
-
 if [[ -e "$USER_HOME/.profile" ]]; then
   e_header "Removing .profile"
   rm -rf "$USER_HOME/.profile"
