@@ -19,13 +19,16 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 # Show icons for hard drives, servers, and removable media on the desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
-defaults write com.apple.finder NewWindowTarget -string "PfHm"
-defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/huesos/"
-defaults write com.apple.finder FinderSpawnTab -bool true
+#defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+#defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+#defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+#defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+#defaults write com.apple.finder NewWindowTarget -string "PfHm"
+#defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/huesos/"
+#defaults write com.apple.finder FinderSpawnTab -bool true
+
+# Hide desktop icons
+defaults write com.apple.finder CreateDesktop false
 
 #Disable smart quotes and smart dashes
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
@@ -249,6 +252,13 @@ if [[ "$LOCAL" ]]; then
 
   # Remove the animation when hiding/showing the Dock
   defaults write com.apple.dock autohide-time-modifier -float 0
+
+  # Add blank space to the Dock
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
 
   # Start screen saver -- bottom right corner
   defaults write com.apple.dock wvous-br-corner -int 5
