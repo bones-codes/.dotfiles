@@ -41,12 +41,14 @@ if [ "$LOCAL" ]; then
   awscli
   masscan
   sslyze
-  urlview
   pass
   keybase
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   "mutt --with-confirm-attachment-patch --with-debug --with-gpgme 
   --with-ignore-thread-patch --with-pgp-verbose-mime-patch --with-trash-patch"
+  urlview
+  offlineimap
+  sqlite
   )
 
   if [[ $xcode_installed ]]; then
