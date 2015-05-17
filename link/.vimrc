@@ -25,6 +25,7 @@ let g:netrw_dirhist_cnt=0
 
 set number
 set numberwidth=3
+set clipboard=unnamed
 set hidden		                    " allow invisible buffers
 set ignorecase		                " case-insensitive search
 set smartcase		                " but be smart about it
