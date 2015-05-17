@@ -113,6 +113,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * contacts2 (https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb)
    * urlview
    * offlineimap
+   * notmuch
    * "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
 
 * Homebrew Casks

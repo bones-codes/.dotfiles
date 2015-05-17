@@ -48,7 +48,7 @@ if [ "$LOCAL" ]; then
   --with-ignore-thread-patch --with-pgp-verbose-mime-patch --with-trash-patch"
   urlview
   offlineimap
-  sqlite
+  notmuch
   )
 
   if [[ $xcode_installed ]]; then
