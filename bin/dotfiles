@@ -362,7 +362,7 @@ if [[ "$backup" ]]; then
 fi
 
 # Lest I forget to do a few additional things...
-if [[ "$new_dotfiles_install" && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
+if [[ ( "$new_dotfiles_install" || "$LOCAL" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
   e_header "First-Time Reminders"
   source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
 fi
