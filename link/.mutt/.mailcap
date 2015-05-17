@@ -37,8 +37,8 @@ application/vnd.openxmlformats-officedocument.presentationml.presentation; ~/.mu
 application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s ppt
 
 # iCal
-#text/calendar; ~/.mutt/icalview.rb; copiousoutput
 text/calendar; mv %s %s.ics && open %s.ics
+#text/calendar; ~/.mutt/icalview.rb; copiousoutput
 
 # Compressed files
 application/x-tar; tar tvf %s; copiousoutput
