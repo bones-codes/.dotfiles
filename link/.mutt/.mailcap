@@ -1,0 +1,53 @@
+# HTML
+text/html; ~/.mutt/view_attachment.sh %s html
+
+# PDF
+application/pdf;  ~/.mutt/view_attachment.sh %s pdf
+
+# Images
+image/jpg; ~/.mutt/view_attachment.sh %s jpg
+image/jpeg; ~/.mutt/view_attachment.sh %s jpg
+image/pjpeg; ~/.mutt/view_attachment.sh %s jpg
+image/png; ~/.mutt/view_attachment.sh %s png
+image/gif; ~/.mutt/view_attachment.sh %s gif
+
+# MS Excel
+application/x-msexcel; ~/.mutt/view_attachment.sh %s xls
+application/ms-exc; ~/.mutt/view_attachment.sh %s xls
+application/excel; ~/.mutt/view_attachment.sh %s xls
+application/msexcel; ~/.mutt/view_attachment.sh %s xls
+application/vnd.ms-exc; ~/.mutt/view_attachment.sh %s xls
+application/vnd.ms-excel; ~/.mutt/view_attachment.sh %s xls
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; ~/.mutt/view_attachment.sh %s xls
+application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s xls
+application/x-mspowerpoint; ~/.mutt/view_attachment.sh %s xls
+application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s xls
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; ~/.mutt/view_attachment.sh %s xls
+
+# MS Word
+application/msword; ~/.mutt/view_attachment.sh %s doc
+application/x-msword; ~/.mutt/view_attachment.sh %s doc
+application/vnd.openxml; ~/.mutt/view_attachment.sh %s doc
+application/vnd.openxmlformats-officedocument.wordprocessingml.template; ~/.mutt/view_attachment.sh %s doc
+
+# Powerpoint
+application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s ppt
+application/x-mspowerpoint; ~/.mutt/view_attachment.sh %s ppt
+application/vnd.openxmlformats-officedocument.presentationml.presentation; ~/.mutt/view_attachment.sh %s ppt
+application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s ppt
+
+# iCal
+application/ics; open -a /Applications/Calendar.app %s
+text/calendar; open -a /Applications/Calendar.app %s
+text/calendar; ~/.mutt/mutt-ical.py -i -e "cara@isecpartners.com" %s
+application/ics; ~/.mutt/mutt-ical.py -i -e "cara@isecpartners.com" %s
+text/calendar; ~/.mutt/icalview.rb; copiousoutput
+
+# Compressed files
+application/x-tar; tar tvf %s; copiousoutput
+application/x-tar-gz; tar tvfz %s; copiousoutput
+application/x-zip-compressed; unzip -v %s; copiousoutput
+application/zip; unzip -v %s; copiousoutput
+
+# Unidentified
+application/octet-stream; ~/.mutt/view_attachment.sh %s "-" 
