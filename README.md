@@ -120,6 +120,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * iterm2-nightly
    * java6 
    * firefox
+   * seil
    * vlc
    * transmit
    * adium 
