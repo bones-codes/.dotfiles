@@ -13,6 +13,11 @@ if [[ ! -e ~/Library/Preferences/com.googlecode.iterm2.plist ]]; then
     killall iTerm
 fi
 
+## Karabiner & Seil
+# Install keybinding settings
+sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
+sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
+
 # Now for iTerm to load its settting from an external location.
 defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool TRUE
 defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iTerm/";

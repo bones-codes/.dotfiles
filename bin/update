@@ -23,6 +23,10 @@ echo 'brew update, upgrade, cleanup and checkup'
 brew update && brew upgrade --all && brew upgrade brew-cask 
 brew cleanup && brew cask cleanup && brew doctor
 
+echo 'saving karabiner/seil sets'
+/Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
+/Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
+
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi

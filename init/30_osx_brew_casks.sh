@@ -6,7 +6,7 @@ $(get_os 'osx') || return 1
 # Exit if, for some reason, cask is not installed.
 [[ ! "$(brew ls --versions brew-cask)" ]] && e_error "Brew-cask failed to install." && return 1
 
-casks=(iterm2 firefox java6 karabiner seil)
+casks=(iterm2-nightly firefox java6 karabiner seil)
 
 if [ "$LOCAL" ]; then
     casks+=(transmit adium vagrant mactex vlc wkhtmltopdf razorsql remote-desktop-connection)
