@@ -37,11 +37,8 @@ application/vnd.openxmlformats-officedocument.presentationml.presentation; ~/.mu
 application/vnd.ms-powerpoint; ~/.mutt/view_attachment.sh %s ppt
 
 # iCal
-application/ics; open -a /Applications/Calendar.app %s
-text/calendar; open -a /Applications/Calendar.app %s
-text/calendar; ~/.mutt/mutt-ical.py -i -e "cara@isecpartners.com" %s
-application/ics; ~/.mutt/mutt-ical.py -i -e "cara@isecpartners.com" %s
-text/calendar; ~/.mutt/icalview.rb; copiousoutput
+#text/calendar; ~/.mutt/icalview.rb; copiousoutput
+text/calendar; mv %s %s.ics && open %s.ics
 
 # Compressed files
 application/x-tar; tar tvf %s; copiousoutput
