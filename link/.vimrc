@@ -35,6 +35,7 @@ set et			                    " expand tabs to spaces
 set tags=tags;/		                " ctags
 set guioptions=aAegiM	            " turn off the GUI
 set nocompatible
+set backspace=2
 set history=10000
 set tabstop=4
 set shiftwidth=4
@@ -46,7 +47,7 @@ set wildmenu
 
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
-" statusline
+" statusline ---------------------------------------
 " format markers:
 " %t File name (tail) of file in the buffer
 " %m Modified flag, text is " [+]"; " [-]" if 'modifiable' is off.
