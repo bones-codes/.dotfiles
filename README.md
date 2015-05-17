@@ -117,9 +117,10 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
 
 * Homebrew Casks
-   * iterm2-nightly
+   * iterm2
    * java6 
    * firefox
+   * karabiner
    * seil
    * vlc
    * transmit
