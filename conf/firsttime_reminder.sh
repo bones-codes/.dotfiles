@@ -14,6 +14,9 @@ if get_os 'osx'; then
   open https://www.obdev.at/products/littlesnitch/download.html
   #google-chrome
   open https://www.google.com/chrome
+  #vimium
+  open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
+  open https://addons.mozilla.org/en-us/firefox/addon/vimfx/
   #xcode
   open http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
   #keepassx
