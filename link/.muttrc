@@ -1,0 +1,169 @@
+# Mail Preferences/Settings
+# -------------------------
+set ssl_starttls=yes
+set ssl_force_tls=yes                   # always use TLS when connecting to a server
+set smtp_authenticators="login"
+
+#set imap_pipeline_depth=0               # The magic line that makes it all work
+set mbox_type = maildir
+set realname="cara marie"               # me settings
+set sig_on_top=yes
+
+source ~/.mutt/solar.muttrc             # custom colorscheme
+set entropy_file=/dev/urandom           # where to get chaos
+
+set mail_check = 5                      # how often to check for mail in seconds
+#set beep_new=no                         # noise for new mail
+
+# Editor settings
+#set fast_reply=yes                      # no prompting on reply
+set editor="vim -u ~/.mutt/mutt.vimrc"
+set tilde                               # show tildes like in vim
+set envelope_from=yes
+set attribution="%n writes:\n"
+set forward_format="FW: %s"
+set include=yes                         # quote msg in reply
+set markers=no                          # no + on wrapped lines
+set charset="utf-8"
+set send_charset="utf-8"
+
+# View sets
+set sort=reverse-threads
+set sort_aux=last-date-received
+set move=no
+set status_on_top                       # put status line at top
+set menu_scroll
+set quote_regexp="^([ \t]*[|>:}#%])+"
+set implicit_autoview                   # default no
+set mailcap_path= ~/.mutt/.mailcap      # entries for filetypes
+set mask="^."                           # show everything in folder view
+
+# Pager sets
+set pager_stop=yes
+set pager_format=""
+set pager_context=1
+set pager_index_lines=10                # show a mini-index in pager
+
+# Header sets
+ignore *
+unignore From:
+unignore To:
+unignore Reply-To:
+unignore Mail-Followup-To:
+unignore Subject:
+unignore Date:
+unignore Organization:
+unignore Newsgroups:
+unignore CC:
+unignore BCC:
+unignore Message-ID:
+unignore X-Mailer:
+unignore User-Agent:
+set edit_headers
+set use_from=yes
+set to_chars=""
+set autoedit
+set sig_dashes 
+set confirmappend=no                    # no prompt for save to =keep
+
+# Other settings
+set status_format=" mutt-$MUTT_ACCOUNT://%h/%f (%n)    %> %P of %m (%l) "
+set index_format="%3C %Z | %22F   %s %> %[%R | %a, %d %b]"
+set folder_format="%2C %t %8s %d %N %f"
+set date_format="%e %b %Y"
+set ascii_chars=yes
+set mask="!^\\.[^.]"
+set hidden_host=yes
+set hostname="null"
+set to_chars=" +TCF"                     # no L for mail_list
+#set net_inc=1
+
+# Key Bindings
+# ------------
+bind index gg  first-entry
+bind index G   last-entry
+bind index R   group-reply
+bind index B   bounce-message
+bind pager B   bounce-message
+bind index N search-opposite
+bind pager N search-opposite
+bind pager h display-toggle-weed  	    # toggle headers with h key
+bind index \' next-unread 		        # move to the next unread message
+bind index \C? what-key                 # display the keycode for a key press
+bind pager \C? what-key                 
+bind browser r check-new 		        # refresh file list on ^L"
+macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/search<enter><change-folder-readonly>~/.mail/search<enter>" "search mail (using notmuch)"
+macro index \cd "l~d `date +%d`\n" 'Show daily messages'
+macro index .i  "l((~N|~O|~F)!~D)|(~d<1w!~Q)\n" 'new,old,flagged but undeleted,unreplied'
+macro index .n  "l~N\n" 'new messages'
+macro index .f	"l~F\n" 'flagged messages'
+macro index .o  "l(~N|~O)\n" 'new and old unread messages'
+macro index .a  "l~A\n" 'all messages (reset)'
+macro index .t  "l~d<1d\n" 'todays messages'
+macro index .d  "l~d<2d|~F\n" 'todays and yesterdays, plus flagged'
+macro index .y  "l~d<2d ~d>1d\n" 'yesterdays messages'
+folder-hook .   push '.d'
+
+# Take me home now
+macro index H "c?\t"
+macro pager H "c?\t"
+
+# Change folders
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Use urlview to see links
+macro index \Cu "|urlview<enter>" "call urlview to open links"
+macro pager \Cu "|urlview<enter>" "call urlview to open links"
+set pipe_decode=yes                     # prevent urls from being cut off
+
+# Search contacts
+set query_command="contacts -Sf '%eTOKEN%n' '%s' | sed -e 's/TOKEN/\t/g'"
+bind editor <Tab> complete-query
+bind editor ^T    complete
+
+# Local Folders
+set folder = ~/.mail
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certs/certificates
+mailboxes +isec/inbox +apple/inbox +temporary/search
+set spoolfile = +isec/inbox             # Set the initial open mailbox
+
+# PGP Sets
+# --------
+#set keyserver subkeys.pgp.net
+#set crypt_use_gpgme=yes
+message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
+color body green default "-----BEGIN PGP SIGNED MESSAGE-----"
+color body green default "-----BEGIN PGP SIGNATURE-----"
+color body green default "-----END PGP SIGNED MESSAGE-----"
+color body green default "-----END PGP SIGNATURE-----"
+set pgp_auto_decode = yes
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+#set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+set pgp_use_gpg_agent = yes
+set pgp_autosign=yes
+set pgp_replyencrypt=yes
+set pgp_replysign=yes
+set pgp_replysignencrypted = yes
+set pgp_timeout=2800
+set pgp_verify_sig=yes
+set pgp_good_sign="^gpg: Good signature from"
+
+# Accounts
+# --------
+folder-hook ~/.mail/isec/ 'source "~/.mutt/local-isec.muttrc'
+folder-hook ~/.mail/apple/ 'source "~/.mutt/local-apple.muttrc'
+

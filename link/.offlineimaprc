@@ -2,7 +2,7 @@
 ui = Basic
 accounts = isec, Apple
 maxsyncaccounts = 2
-pythonfile=~/.mutt/offlineimap.py
+pythonfile=~/.mutt/local-offlineimap.py
 fsync = false
 socktimeout = 60
 
@@ -18,9 +18,10 @@ footer = "\n"
 remoterepository = isecRemote
 localrepository = isecLocal
 status_backend = sqlite
-autorefresh = 5
-quick = 10
-holdconnectionopen = yes
+postsynchook = notmuch new
+#autorefresh = 5
+#quick = 10
+#holdconnectionopen = yes
 
 [Repository isecRemote]
 type = IMAP
@@ -30,7 +31,8 @@ remoteport = 993
 sslcacertfile = ~/.mutt/certs/isec.pem 
 remoteusereval = "cmarie@isecpartners.com"
 remotepasseval = get_pass('isec')
-folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent Items', 'Archive']
+realdelete = no
+folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
 maxconnections = 3
 idlefolders = ['INBOX']
 
@@ -42,10 +44,10 @@ localfolders = ~/.mail/isec/
 remoterepository = AppleRemote
 localrepository = AppleLocal
 status_backend = sqlite
-autorefresh = 5
-quick = 10
-#holdconnectionopen = yes
 postsynchook = notmuch new
+#autorefresh = 5
+#quick = 10
+#holdconnectionopen = yes
 
 [Repository AppleRemote]
 type = IMAP
@@ -55,7 +57,8 @@ ssl = yes
 sslcacertfile = ~/.mutt/certs/apple.pem
 remoteusereval = "fienyx"
 remotepasseval = get_pass('apple')
-folderfilter = lambda folder: folder in ['INBOX', '[mail]/Drafts', '[mail]/Sent Mail', '[mail]/Trash']
+realdelete = no
+folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
 maxconnections = 3
 idlefolders = ['INBOX']
 
