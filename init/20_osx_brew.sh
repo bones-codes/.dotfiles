@@ -49,6 +49,8 @@ if [ "$LOCAL" ]; then
   urlview
   offlineimap
   notmuch
+  "weechat --with-curl --with-python --with-perl"
+  "bitlbee --with-libotr"
   )
 
   if [[ $xcode_installed ]]; then

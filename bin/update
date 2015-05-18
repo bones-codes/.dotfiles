@@ -27,6 +27,9 @@ echo 'saving karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
 
+echo 'updating bitlbee sets'
+cp /usr/local/var/bitlbee/lib/* $DOTFILES_HOME/conf/local/bitlbee/ 
+
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi

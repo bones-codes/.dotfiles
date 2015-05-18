@@ -115,6 +115,8 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * offlineimap
    * notmuch
    * "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
+   * "weechat --with-curl --with-python --with-perl"
+   * bitlbee
 
 * Homebrew Casks
    * iterm2-nightly

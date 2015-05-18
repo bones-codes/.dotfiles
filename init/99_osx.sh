@@ -15,6 +15,7 @@ fi
 
 ## Karabiner & Seil
 # Install keybinding settings
+e_header "Installing Karabiner and Seil sets"
 sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
 sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
 
