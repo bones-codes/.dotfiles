@@ -369,16 +369,17 @@ fi
 
 # All done!
 e_header "All done!"
-echo "For all changes to take effect you should relogin."
-read -p "Do you want to relogin now (y/n) ?: " yn
-case $yn in
-  [Yy]* ) 
-    sudo pkill loginwindow
-    ;;
+if [[ "$new_dotfiles_install" || "$LOCAL" ]]; then
+  echo "For all changes to take effect you should relogin."
+  read -p "Do you want to relogin now (y/n) ?: " yn
+  case $yn in
+    [Yy]* ) 
+      sudo pkill loginwindow
+      ;;
 
-  [Nn]* ) 
-    sudo -k
-    exit
-    ;;
-esac
-
+    [Nn]* ) 
+      sudo -k
+      exit
+      ;;
+  esac
+fi
