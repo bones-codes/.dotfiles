@@ -1,0 +1,8 @@
+folders:
+ - INBOX
+user:   'cmarie'
+domain: 'isecpartners.com'
+server: 'exch.corp.isecpartners.com'
+key_name:    'exch.isecpartners.com'
+key_account: 'cmarie@isecpartners.com'
+max: 10
