@@ -42,6 +42,7 @@ if [ "$LOCAL" ]; then
   masscan
   sslyze
   pass
+  onepass
   keybase
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   "mutt --with-confirm-attachment-patch --with-debug --with-gpgme 

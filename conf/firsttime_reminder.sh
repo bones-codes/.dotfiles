@@ -20,8 +20,6 @@ if get_os 'osx'; then
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
   #xcode
   open http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
-  #keepassx
-  open https://www.keepassx.org/dev/projects/keepassx/files
   #Paragon
   open https://www.paragon-software.com/home/ntfs-mac/
   #VB box
