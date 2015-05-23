@@ -42,6 +42,7 @@ alias top=htop
 alias rm=srm
 alias 'tmx=tmux -u attach'
 alias 'grep=grep -nr'
+alias "mutt=imap_notifier; mutt"
 
 # IP addresses
 alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"
