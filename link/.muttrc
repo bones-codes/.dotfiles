@@ -4,7 +4,6 @@ set ssl_starttls=yes
 set ssl_force_tls=yes                   # always use TLS when connecting to a server
 set smtp_authenticators="login"
 
-#set imap_pipeline_depth=0               # The magic line that makes it all work
 set mbox_type = maildir
 set realname="cara marie"               # me settings
 set sig_on_top=yes
@@ -16,7 +15,7 @@ set mail_check = 5                      # how often to check for mail in seconds
 #set beep_new=no                         # noise for new mail
 
 # Editor settings
-#set fast_reply=yes                      # no prompting on reply
+set fast_reply=yes                      # no prompting on reply
 set editor="vim -u ~/.mutt/mutt.vimrc"
 set tilde                               # show tildes like in vim
 set envelope_from=yes
@@ -76,7 +75,7 @@ set mask="!^\\.[^.]"
 set hidden_host=yes
 set hostname="null"
 set to_chars=" +TCF"                     # no L for mail_list
-#set net_inc=1
+set net_inc=1                            # display download progress every *k
 
 # Key Bindings
 # ------------
@@ -92,8 +91,8 @@ bind index \' next-unread 		        # move to the next unread message
 bind index \C? what-key                 # display the keycode for a key press
 bind pager \C? what-key                 
 bind browser r check-new 		        # refresh file list on ^L"
-macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
-macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+macro index O "<shell-escape>offlineimap -o<enter>"           "run offlineimap to sync all mail"
+macro index o "<shell-escape>offlineimap -qof INBOX<enter>" "run offlineimap to sync inbox"
 macro index S "<enter-command>unset wait_key<enter><shell-escape>mutt-notmuch-py ~/.mail/search<enter><change-folder-readonly>~/.mail/search<enter>" "search mail (using notmuch)"
 macro index \cd "l~d `date +%d`\n" 'Show daily messages'
 macro index .i  "l((~N|~O|~F)!~D)|(~d<1w!~Q)\n" 'new,old,flagged but undeleted,unreplied'
@@ -135,32 +134,19 @@ set spoolfile = +isec/inbox             # Set the initial open mailbox
 # PGP Sets
 # --------
 #set keyserver subkeys.pgp.net
-#set crypt_use_gpgme=yes
+set crypt_use_gpgme=yes
+set crypt_autosign=yes
+set crypt_verify_sig=yes
+set crypt_replysign=yes
+set crypt_replyencrypt=yes
+set crypt_replysignencrypted=yes
+set pgp_use_gpg_agent = yes
+set smime_is_default = no
 message-hook '!(~g|~G) ~b"^-----BEGIN\ PGP\ (SIGNED\ )?MESSAGE"' "exec check-traditional-pgp"
 color body green default "-----BEGIN PGP SIGNED MESSAGE-----"
 color body green default "-----BEGIN PGP SIGNATURE-----"
 color body green default "-----END PGP SIGNED MESSAGE-----"
 color body green default "-----END PGP SIGNATURE-----"
-set pgp_auto_decode = yes
-set pgp_decode_command="gpg %?p?--passphrase-fd 0? --verbose --batch --output - %f"
-set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
-set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
-#set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
-set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_import_command="gpg --no-verbose --import -v %f"
-set pgp_export_command="gpg --no-verbose --export --armor %r"
-set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
-set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
-set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
-set pgp_use_gpg_agent = yes
-set pgp_autosign=yes
-set pgp_replyencrypt=yes
-set pgp_replysign=yes
-set pgp_replysignencrypted = yes
-set pgp_timeout=2800
-set pgp_verify_sig=yes
-set pgp_good_sign="^gpg: Good signature from"
 
 # Accounts
 # --------
