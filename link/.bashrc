@@ -6,7 +6,7 @@ export GREP_OPTIONS='--color=auto'
 # yea, I'm lazy
 alias ls='ls -apG'
 alias grep='grep -nr'
-alias vim='vi'
+alias vi='vim'
 alias rm='srm'
 
 # use vim
