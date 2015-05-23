@@ -7,6 +7,7 @@ link/.password-store/
 *local*
 *.last-run
 *.cache/
+*error*
 
 # OS generated files #
 ######################

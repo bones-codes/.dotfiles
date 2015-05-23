@@ -17,10 +17,10 @@
     <key>RunAtLoad</key>
     <true />
     <key>StandardErrorPath</key>
-    <string>/Users/huesos/offlineimap_error.log</string>
+    <string>/Users/huesos/.mutt/offlineimap_error.log</string>
     <!-- <string>/dev/null</string> -->
     <key>StandardOutPath</key>
-    <string>/Users/huesos/offlineimap.log</string>
-    <!-- <string>/dev/null</string> -->
+    <!-- <string>/Users/huesos/offlineimap.log</string> -->
+    <string>/dev/null</string>
   </dict>
 </plist>
