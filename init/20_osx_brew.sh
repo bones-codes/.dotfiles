@@ -51,6 +51,7 @@ if [ "$LOCAL" ]; then
   notmuch
   "weechat --with-curl --with-python --with-perl"
   "bitlbee --with-libotr"
+  terminal-notifier
   )
 
   if [[ $xcode_installed ]]; then
