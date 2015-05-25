@@ -19,7 +19,7 @@ if get_os 'osx'; then
   #vimperator
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
   #xcode
-  open http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
+  open -a Safari http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
   #Paragon
   open https://www.paragon-software.com/home/ntfs-mac/
   #VB box
