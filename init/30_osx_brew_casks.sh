@@ -9,7 +9,7 @@ $(get_os 'osx') || return 1
 casks=(iterm2-nightly firefox java6 karabiner seil)
 
 if [ "$LOCAL" ]; then
-    casks+=(transmit adium vagrant 1password mactex vlc wkhtmltopdf razorsql remote-desktop-connection)
+    casks+=(transmit adium vagrant mactex vlc wkhtmltopdf razorsql remote-desktop-connection)
 fi
 
 # Install Homebrew casks.
