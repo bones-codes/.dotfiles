@@ -36,7 +36,7 @@ if [ "$LOCAL" ]; then
   recipes+=(
   apple-gcc42
   dvtm
-  duplicity
+  "duplicity --devel"
   youtube-dl
   awscli
   masscan
