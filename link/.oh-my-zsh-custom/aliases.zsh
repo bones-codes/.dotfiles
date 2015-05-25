@@ -39,7 +39,6 @@ function md() {
 }
 
 alias top=htop
-alias rm=srm
 alias 'tmx=tmux -u attach'
 alias 'grep=grep -nr'
 alias "mutt=imap_notifier; mutt"
