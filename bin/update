@@ -23,6 +23,9 @@ echo 'brew update, upgrade, cleanup and checkup'
 brew update && brew upgrade --all && brew upgrade brew-cask 
 brew cleanup && brew cask cleanup && brew doctor
 
+echo 'update pip and pip packages'
+pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+
 echo 'karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"

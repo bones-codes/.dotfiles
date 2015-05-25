@@ -53,6 +53,7 @@ if [ "$LOCAL" ]; then
   "weechat --with-curl --with-python --with-perl"
   "bitlbee --with-libotr"
   terminal-notifier
+  homebrew/versions/swig304
   )
 
   if [[ $xcode_installed ]]; then
