@@ -104,8 +104,8 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Set Arabesque screen saver
-defaults -currentHost write com.apple.screensaver moduleName -string "Arabesque"
-defaults -currentHost write com.apple.screensaver Path -string "/System/Library/Screen Savers/Arabesque.qtz"
+defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Arabesque"
+defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"
 
 # Save screenshots here instead of to desktop
 defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
