@@ -17,7 +17,7 @@ if (( ${#fonts[@]} > 0 )); then
   brew cask cleanup
 fi
 
-osx_conf_dir=$DOTFILES_HOME/.dotfiles/conf/osx
+osx_conf_dir=$DOTFILES_HOME/conf/osx
 msft_fonts_dir=$osx_conf_dir/msft_fonts/*
 
 for font in $msft_fonts_dir
