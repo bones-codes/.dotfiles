@@ -47,10 +47,10 @@ Accepted digests are:
     args = parser.parse_args()
     dfile = args.data_file
     digest = args.digest
-    checksum = args.checksum
+    checksum = args.checksum.upper()
 
-    csum = subprocess.check_output(["openssl", digest, dfile]).rstrip('\n').split(' ')
-    return compare(dfile, csum[-1], checksum)
+    csum = subprocess.Popen("openssl dgst -%s %s" % (digest, dfile), shell=True, stdout=subprocess.PIPE).stdout.read().strip('\n').split(' ')
+    return compare(dfile, csum[-1].upper(), checksum)
 
 
 if __name__ == "__main__":
