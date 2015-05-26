@@ -1,6 +1,7 @@
 #load aliasxs 
-if [[ -e "$HOME/.local_aliases.zsh" ]]; then
-    source "$HOME/.local_aliases.zsh"
+#.local_aliases.zsh -> .dotfiles/link/aliases-local.zsh
+if [[ -e "$HOME/.dotfiles/link/.oh-my-zsh-custom/aliases-local.zsh" ]]; then
+    source "$HOME/.dotfiles/link/.oh-my-zsh-custom/aliases-local.zsh"
 fi
 
 export DOTFILES="$HOME/.dotfiles"
