@@ -6,7 +6,7 @@ from onepassword import Keychain
 keys = argv[1]
 account = argv[2]
 my_keychain = Keychain(path='/Volumes/time machine/%s.agilekeychain' % argv[1])
-my_keychain.unlock(Popen("pass key", shell=True, stdout=PIPE).stdout.read().strip('\n'))
+my_keychain.unlock(Popen("security find-internet-password -a cara.marie@me.com -w", shell=True, stdout=PIPE).stdout.read().strip('\n'))
 
 print my_keychain.item(account).password
 
