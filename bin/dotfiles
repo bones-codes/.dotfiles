@@ -367,6 +367,13 @@ if [[ ( "$new_dotfiles_install" || "$LOCAL" ) && -e "$DOTFILES_HOME/conf/firstti
   source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
 fi
 
+if [[ "$LOCAL" && -e "$HOME/.burp" ]]; then
+  e_header "Installing Burp Suite"
+  python $HOME/.dotfiles/bin/burp_download
+  mv $HOME/tools/burp/burp.jar /Applications/
+fi
+
+
 # All done!
 e_header "All done!"
 if [[ "$new_dotfiles_install" || "$LOCAL" ]]; then
