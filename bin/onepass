@@ -1,12 +1,35 @@
 #!/usr/bin/python
-from sys import argv
 from subprocess import Popen, PIPE
 from onepassword import Keychain
+from argparse import ArgumentParser  
 
-keys = argv[1]
-account = argv[2]
-my_keychain = Keychain(path='/Volumes/time machine/%s.agilekeychain' % argv[1])
-my_keychain.unlock(Popen("security find-internet-password -a cara.marie@me.com -w", shell=True, stdout=PIPE).stdout.read().strip('\n'))
 
-print my_keychain.item(account).password
+def get_pass(vault, item):
+    my_keychain = Keychain(path=vault)
+    my_keychain.unlock(Popen("/usr/local/bin/pass master", shell=True,
+        stdout=PIPE).stdout.read().strip('\n'))
+
+    return my_keychain.item(item).password
+
+
+def main():
+    parser = ArgumentParser(description="""A 1pass wrapper.""")
+    parser.add_argument("-p", "--path", type=str, nargs="?",
+            default="/Volumes/time machine/", help="""Specify the Vault path.
+            Default is '/Volumes/time machine/'.""")
+    parser.add_argument("-v", "--vault", type=str, nargs="?",
+            default="1Password", help="""Specify the Vault. Default is
+            1Password.""") 
+    parser.add_argument("item", type=str, help="""Specify the 1Password
+            item.""")	
+    args = parser.parse_args()
+
+    vault = args.path+args.vault+'.agilekeychain'
+    item = args.item
+
+    print get_pass(vault, item)
+
+
+if __name__ == "__main__":
+    main()
 
