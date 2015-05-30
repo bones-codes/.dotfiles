@@ -30,7 +30,6 @@ set hidden		                    " allow invisible buffers
 set ignorecase		                " case-insensitive search
 set smartcase		                " but be smart about it
 set incsearch		                " search incrementally
-set et			                    " expand tabs to spaces
 "set tags=./tags		                " ctags
 set tags=tags;/		                " ctags
 set guioptions=aAegiM	            " turn off the GUI
@@ -38,8 +37,9 @@ set nocompatible
 set backspace=2
 set history=10000
 set tabstop=4
-set shiftwidth=4
+set softtabstop=0
 set expandtab
+set shiftwidth=4
 set cursorline                      " cursorcolumn
 set wildchar=<TAB>
 set wildmode=longest,list,full
