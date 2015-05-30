@@ -3,6 +3,6 @@ folders:
 user:   'cmarie'
 domain: 'isecpartners.com'
 server: 'exch.corp.isecpartners.com'
-key_name:    'exch.corp.isecpartners.com'
-key_account: 'cmarie@isecpartners.com'
+one_path: '/Volumes/time machine/iSEC.agilekeychain'
+onepass: 'Exchange'
 max: 10
