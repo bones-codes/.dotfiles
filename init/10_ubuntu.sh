@@ -36,7 +36,8 @@ sudo apt-get -qq upgrade
 
 # Install APT packages.
 packages=(
-  build-essential libssl-dev
+  build-essential 
+  libssl-dev
   git-core
   tree
   nmap telnet
@@ -59,11 +60,21 @@ if (( ${#list[@]} > 0 )); then
   done
 fi
 
-# Install Git Extras
-if [[ ! "$(type -P git-extras)" ]]; then
-  e_header "Installing Git Extras"
-  (
-    cd ~/.dotfiles/libs/git-extras &&
-    sudo make install
-  )
-fi
+e_header "Installing Google Chrome"
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+sudo apt-get update
+sudo apt-get install google-chrome-stable
+
+e_header "Installing Solarized theme"
+git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git
+cd gnome-terminal-colors-solarized
+./install.sh
+cd
+rm -rf gnome-terminal-colors-solarized
+wget https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-dark
+mv dircolors.ansi-dark ~/.dircolors
+eval dircolors ~/.dircolors
+
+e_header "Installing Vim"
+sudo apt-get install vim-gnome
