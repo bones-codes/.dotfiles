@@ -1,5 +1,6 @@
-# HTML
+# Text and HTML
 text/html; ~/.mutt/view_attachment.sh %s html
+text/plain; more
 
 # PDF
 application/pdf;  ~/.mutt/view_attachment.sh %s pdf

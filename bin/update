@@ -37,3 +37,5 @@ cp /usr/local/var/bitlbee/lib/* "$HOME/.dotfiles/conf/local/bitlbee/"
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi
+
+sudo softwareupdate --install --all
