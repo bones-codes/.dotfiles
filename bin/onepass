@@ -6,7 +6,8 @@ from argparse import ArgumentParser
 
 def get_pass(vault, item):
     my_keychain = Keychain(path=vault)
-    my_keychain.unlock(Popen("/usr/local/bin/pass master", shell=True,
+    my_keychain.unlock(Popen("""PATH='/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.'
+        /usr/local/bin/pass master""", shell=True,
         stdout=PIPE).stdout.read().strip('\n'))
 
     return my_keychain.item(item).password
