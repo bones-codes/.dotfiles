@@ -52,7 +52,6 @@ if [ "$LOCAL" ]; then
   notmuch
   "weechat --with-curl --with-python --with-perl --with-lua --with-guile --with-ruby"
   "bitlbee --with-libotr"
-  terminal-notifier
   homebrew/versions/swig304
   )
 
