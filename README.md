@@ -102,6 +102,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
    * pass
    * keybase
    * apple-gcc42
+   * onepass
    * dvtm
    * awscli
    * sslyze
