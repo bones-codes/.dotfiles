@@ -22,4 +22,3 @@ macosx_lockdown_drive() {
 	touch .Spotlight-V100
 	touch .metadata_never_index
 }
-

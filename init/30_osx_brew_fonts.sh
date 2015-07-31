@@ -1,4 +1,5 @@
 $(get_os 'osx') || return 1
+[[ "$MIN" ]] || return 1
 
 # Exit if Homebrew is not installed.
 [[ ! "$(type -P brew)" ]] && e_error "Brew recipes need Homebrew to install." && return 1
@@ -7,7 +8,7 @@ $(get_os 'osx') || return 1
 [[ ! "$(brew ls --versions brew-cask)" ]] && e_error "Brew-cask failed to install." && return 1
 
 # Install fonts.
-fonts=(font-source-code-pro font-source-sans-pro)
+fonts=(font-source-code-pro font-source-sans-pro font-anonymous-pro)
 fonts=($(setdiff "${fonts[*]}" "$(brew cask list 2>/dev/null)"))
 if (( ${#fonts[@]} > 0 )); then
   for font in "${fonts[@]}"; do

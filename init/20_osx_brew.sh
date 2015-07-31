@@ -5,6 +5,7 @@ $(get_os 'osx') || return 1
 
 
 # Install Homebrew recipes.
+if [[ ! $MIN ]]; then
 recipes=(
   ctags 
   "readline --universal" 
@@ -30,39 +31,66 @@ recipes=(
   "brew-cask"
   "vim --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
+  rbenv
+  ruby-build
 )
+fi
 
 if [ "$LOCAL" ]; then
   recipes+=(
   apple-gcc42
-  dvtm
   "duplicity --devel"
-  youtube-dl
-  awscli
-  masscan
-  sslyze
   pass
   onepass
   keybase
-  "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   "mutt --with-confirm-attachment-patch --with-debug --with-gpgme 
   --with-ignore-thread-patch --with-pgp-verbose-mime-patch --with-trash-patch"
+  "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   urlview
   offlineimap
+  msmtp
   notmuch
-  "weechat --with-curl --with-python --with-perl --with-lua --with-guile --with-ruby"
-  "bitlbee --with-libotr"
-  homebrew/versions/swig304
+  #"weechat --with-curl --with-python --with-perl --with-lua --with-guile --with-ruby"
+  #"bitlbee --with-libotr"
+  #homebrew/versions/swig304
   )
 
-  if [[ $xcode_installed ]]; then
-    recipes+=(
-    "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
-    nmap
-    )
-  fi
+fi
+
+if [[ $HACK || $NET || $WAPT || $IOS ]]; then
+  recipes+=(
+  sslyze
+  "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
+  )
   
 fi
+
+if [[ $HACK || $NET ]]; then
+  recipes+=(
+  masscan
+  nmap
+  )
+  
+fi
+
+if [[ $HACK || $IOS ]]; then
+  recipes+=(
+  qt 
+  cmake 
+  usbmuxd 
+  libimobiledevice
+  )
+  
+fi
+
+if [[ $MIN ]]; then
+  recipes+=(
+  tmux
+  reattach-to-user-namespace
+  )
+
+fi
+
 
 unset setdiffA setdiffB setdiffC;
 setdiffA=("${recipes[@]}"); setdiffB=( $(brew list) ); setdiff
@@ -79,7 +107,16 @@ brewroot="$(brew --config | awk '/HOMEBREW_PREFIX/ {print $2}')"
 binroot=$brewroot/bin
 cellarroot=$brewroot/Cellar
 
+e_header "Brew cleanup"
+# Remove outdated versions from the cellar
+brew cleanup
  
+if [[ $MIN ]]; then return; fi
+
+e_header "Linking brewed apps"
+##link all the apps 
+brew linkapps > /dev/null
+
 # htop
 if [[ "$(type -P $binroot/htop)" ]] && [[ "$(stat -L -f "%Su:%Sg" "$binroot/htop")" != "root:wheel" || ! "$(($(stat -L -f "%DMp" "$binroot/htop") & 4))" ]]; then
   e_header "Updating htop permissions"
@@ -97,17 +134,19 @@ fi
 
 
 # -rw-r--r-- 1 root wheel
-if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
+#if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
   # # Temp fix for wireshark interfaces
-  curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
-  tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
-  open /tmp/ChmodBPF/Install\ ChmodBPF.app
-fi
+#  curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
+#  tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
+#  open /tmp/ChmodBPF/Install\ ChmodBPF.app
+#fi
 
 # Install Slate
-if [[ ! -e "/Applications/Slate.app" ]]; then
-  e_header "Installing Slate"
-  cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+if [[ $LOCAL ]]; then
+  if [[ ! -e "/Applications/Slate.app" ]]; then
+    e_header "Installing Slate"
+    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+  fi
 fi
 
 if [[ "$(type -P pip)" ]]; then
@@ -121,12 +160,4 @@ if [[ "$(type -P pip)" ]]; then
   pip -q install --upgrade virtualenvwrapper
 
 fi
-
-e_header "Brew cleanup"
-# Remove outdated versions from the cellar
-brew cleanup
-
-e_header "Linking brewed apps"
-##link all the apps 
-brew linkapps > /dev/null
 

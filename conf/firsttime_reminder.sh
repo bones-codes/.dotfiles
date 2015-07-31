@@ -4,14 +4,18 @@
 if get_os 'osx'; then
   open -a Safari
   sleep 1
-  #tunnelblick-beta
-  open https://code.google.com/p/tunnelblick/wiki/DownloadsEntry#Tunnelblick_Beta_Release
+  if [[ $LOCAL ]]; then
+    #tunnelblick-beta
+    open https://code.google.com/p/tunnelblick/wiki/DownloadsEntry#Tunnelblick_Beta_Release
+    #vmware-fusion
+    open https://my.vmware.com/web/vmware/login
+    #Little-Snitch
+    open https://www.obdev.at/products/littlesnitch/download.html
+
+  fi
+
   #gpgtools
   open https://gpgtools.org/
-  #vmware-fusion
-  open https://my.vmware.com/web/vmware/login
-  #Little-Snitch
-  open https://www.obdev.at/products/littlesnitch/download.html
   #google-chrome
   open https://www.google.com/chrome
   #vimium
@@ -23,11 +27,11 @@ if get_os 'osx'; then
   #wireshark
   open https://www.wireshark.org/download.html
   #Paragon
-  open https://www.paragon-software.com/home/ntfs-mac/
+  #open https://www.paragon-software.com/home/ntfs-mac/
   #VB box
-  open https://www.virtualbox.org/wiki/Downloads
+  #open https://www.virtualbox.org/wiki/Downloads
   #xPRA
-  open https://www.xpra.org/
+  #open https://www.xpra.org/
 
 # Ubuntu.
 elif get_os 'ubuntu'; then

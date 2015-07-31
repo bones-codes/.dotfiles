@@ -1,8 +1,7 @@
 [user]
-	name = cara marie
-    email = cara@me
+    name = cara marie
+    email = bones@codes
 [core]
-    autocrlf = input
     whitespace = fix,space-before-tab,tab-in-indent,trailing-space
     excludesfile = ~/.gitignore
     excludesfile = ~/.gitignore_global
@@ -24,8 +23,6 @@
 	tool = opendiff
 [diff]
 	tool = vimdiff
-#[credential]
-#	helper = osxkeychain
 [color]
     ui = auto
 	diff = auto
@@ -45,3 +42,6 @@
     pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
+[gitlab]
+	url = https://gitlab.chi.matasano.com
+#	token = core.askpass

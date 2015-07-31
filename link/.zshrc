@@ -46,7 +46,8 @@ ZSH_THEME="eastwood"
 
 # OSX
 if [[ $(uname) == "Darwin" ]] ; then
-	plugins=(git osx github brew)
+	#plugins=(git osx github brew)
+	plugins=(osx github brew)
 
 # Linux
 else
@@ -60,9 +61,7 @@ export CLICOLOR=1
 export GREP_OPTIONS=--color=auto
 
 ZSH_COMPDUMP=$HOME/.zcompdump
-source $ZSH/oh-my-zsh.sh
 
 rm -rf .zcompdump*
 zmodload -i zsh/complist
 compinit -u "${ZSH_COMPDUMP}"
-

@@ -1,6 +1,6 @@
 [general]
 ui = Basic
-accounts = isec, Apple
+accounts = ncc, isec, Apple
 maxsyncaccounts = 2
 pythonfile=~/.mutt/local-offlineimap.py
 fsync = false
@@ -13,6 +13,32 @@ header = "mailboxes "
 peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
 footer = "\n"
+
+[Account ncc]
+remoterepository = nccRemote
+localrepository = nccLocal
+status_backend = sqlite
+postsynchook = /usr/local/bin/notmuch new
+quick = 10
+#autorefresh = 5
+#holdconnectionopen = yes
+
+[Repository nccRemote]
+type = IMAP
+remotehost = imaps.nccgroup.com
+ssl = yes
+cert_fingerprint = 30751fbad4622d49032898faf9fff071c443edef
+remoteport = 993
+remoteusereval = "cbonar171"
+remotepasseval = get_pass('NCC Exchange')
+realdelete = no
+folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
+maxconnections = 3
+idlefolders = ['INBOX']
+
+[Repository nccLocal]
+type = Maildir
+localfolders = ~/.mail/ncc/
 
 [Account isec]
 remoterepository = isecRemote
@@ -27,10 +53,10 @@ quick = 10
 type = IMAP
 remotehost = exch.corp.isecpartners.com
 ssl = yes
-cert_fingerprint = 710f87c87c89e621db4b2a9347ffd0e2adc1e39a
+cert_fingerprint = 959fde9f6cd8c7871c489c159f69b2a5189010a7
 remoteport = 993
 remoteusereval = "cmarie@isecpartners.com"
-remotepasseval = get_pass('Exchange')
+remotepasseval = get_pass('iSEC Exchange')
 realdelete = no
 folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
 maxconnections = 3

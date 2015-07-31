@@ -222,15 +222,6 @@ function set() {
   [[ "$2" ]] && echo "${setdiffC[@]}"
 }
 
-# For testing.
-function assert() {
-  local success modes equals actual expected
-  modes=(e_error e_success); equals=("!=" "=="); expected="$1"; shift
-  actual="$("$@")"
-  [[ "$actual" == "$expected" ]] && success=1 || success=0
-  ${modes[success]} "\"$actual\" ${equals[success]} \"$expected\""
-}
-
 function get_os() {
   if [ -z $1 ]; then
     # Set OS type
@@ -251,6 +242,32 @@ function get_os() {
   return 1
 }
 
+# Install vim plugins -- there has to be a better way to do this...
+function vim_bundle() {
+  plugins+=(
+  https://github.com/LaTeX-Box-Team/LaTeX-Box.git
+  https://github.com/Raimondi/delimitMate.git
+  https://github.com/scrooloose/syntastic.git
+  https://github.com/nelstrom/vim-markdown-folding.git
+  https://github.com/terryma/vim-multiple-cursors.git
+  )
+
+  e_header "Installing vim plugins"
+  echo; cd $DOTFILES_HOME/link/.vim/bundle
+  for i in "${plugins[@]}"; do
+    git clone $i; echo
+  done
+}
+
+# For testing.
+function assert() {
+  local success modes equals actual expected
+  modes=(e_error e_success); equals=("!=" "=="); expected="$1"; shift
+  actual="$("$@")"
+  [[ "$actual" == "$expected" ]] && success=1 || success=0
+  ${modes[success]} "\"$actual\" ${equals[success]} \"$expected\""
+}
+
 
 ################################################################################
 ## FUNCTIONS END                                                               #
@@ -260,7 +277,17 @@ get_os
 
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
-if [[ "$1" == "local" ]]; then export LOCAL=True; fi
+#------------------------------------------------------------------------------#
+#  FLAGS                                                                       #
+#------------------------------------------------------------------------------#
+# min   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
+#         .bash_profile, and .bashrc)
+# local : no hacking tools, just the basics
+# hack  : all pentest tools for vm or native env
+# net   : network pentest tools
+# ios   : ios hacking tools env
+# wapt  : web application hacking tools
+for arg in "$@"; do export "$(echo "$arg" | tr [a-z] [A-Z])"=True; done
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
@@ -310,7 +337,7 @@ if [[ ! "$(type -P git)" ]]; then
   exit 1
 fi
 
-# Initialize.
+# Initialize unless min install.
 if [[ ! -d $DOTFILES_HOME ]]; then
   # $DOTFILES directory doesn't exist? Clone it!
   new_dotfiles_install=1
@@ -339,44 +366,55 @@ export PATH
 shopt -s dotglob
 shopt -s nullglob
 
-# If backups are needed, this is where they'll go.
-backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
-backup=
+if [[ ! $MIN ]]; then
+  # If backups are needed, this is where they'll go.
+  backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
+  backup=
 
-read -p "Do you want to run the init scripts? " yn
-case $yn in 
-[Yy]* )
-  e_header "Running Init";
-  do_stuff "init";;
-[Nn]* )
-  e_header "Skipping Init";;
-esac
+  read -p "Do you want to run the init scripts? " yn
+  case $yn in 
+  [Yy]* )
+    e_header "Running Init";
+    do_stuff "init";;
+  [Nn]* )
+    e_header "Skipping Init";;
+  esac
 
-# Copy and Link Over Files 
-do_stuff "copy"
-do_stuff "link"
+  # Copy and Link Over Files 
+  do_stuff "copy"
+  do_stuff "link"
 
-# Alert if backups were made.
-if [[ "$backup" ]]; then
-  echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
-fi
+  # Install vim plugins
+  vim_bundle
 
-# Lest I forget to do a few additional things...
-if [[ ( "$new_dotfiles_install" || "$LOCAL" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
-  e_header "First-Time Reminders"
-  source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
-fi
+  # Alert if backups were made.
+  if [[ "$backup" ]]; then
+    echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
+  fi
 
-if [[ "$LOCAL" && -e "$HOME/.burp" ]]; then
+  # Lest I forget to do a few additional things...
+  if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
+    e_header "First-Time Reminders"
+    source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
+  fi
+
+if [[ $HACK || $NET || $IOS || $WAPT ]]; then
   e_header "Installing Burp Suite"
+  mkdir -p $USER_HOME/tools
   python $HOME/.dotfiles/bin/burp_download
   mv $HOME/tools/burp/burp.jar /Applications/
 fi
 
+else
+  # Bare minimum install
+  e_header "Running Init";
+  do_stuff "init";
+
+fi
 
 # All done!
 e_header "All done!"
-if [[ "$new_dotfiles_install" || "$LOCAL" ]]; then
+if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
   echo "For all changes to take effect you should relogin."
   read -p "Do you want to relogin now (y/n) ?: " yn
   case $yn in

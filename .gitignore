@@ -4,6 +4,7 @@ backups/
 link/.gnupg/
 link/.ssh/
 link/.password-store/
+link/.vim/bundle/*
 *local*
 *.last-run
 *.cache/

@@ -2,7 +2,7 @@
 # -------------------------
 set ssl_starttls=yes
 set ssl_force_tls=yes                   # always use TLS when connecting to a server
-set smtp_authenticators="login"
+set smtp_authenticators="login:plain"
 
 set mbox_type = maildir
 set realname="cara marie"               # me settings
@@ -57,8 +57,8 @@ unignore CC:
 unignore BCC:
 unignore Message-ID:
 unignore X-Mailer:
-unignore User-Agent:
 set edit_headers
+my_hdr User-Agent: Mutt
 set use_from=yes
 set to_chars=""
 set autoedit
@@ -128,8 +128,9 @@ set folder = ~/.mail
 set header_cache = ~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies
 set certificate_file = ~/.mutt/certs/certificates
-mailboxes +isec/inbox +apple/inbox +temporary/search
-set spoolfile = +isec/inbox             # Set the initial open mailbox
+mailboxes +isec/inbox +ncc/inbox +apple/inbox +temporary/search
+#set spoolfile = +isec/inbox             # Set the initial open mailbox
+set spoolfile = +ncc/inbox             # Set the initial open mailbox
 
 # PGP Sets
 # --------
@@ -151,5 +152,6 @@ color body green default "-----END PGP SIGNATURE-----"
 # Accounts
 # --------
 folder-hook ~/.mail/isec/ 'source "~/.mutt/local-isec.muttrc'
+folder-hook ~/.mail/ncc/ 'source "~/.mutt/local-ncc.muttrc'
 folder-hook ~/.mail/apple/ 'source "~/.mutt/local-apple.muttrc'
 

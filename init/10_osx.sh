@@ -30,6 +30,7 @@ e_header "Brew DR"
 brew doctor
 
 # Tap needed repo's
+if [[ ! $MIN ]]; then
 taps=("homebrew/dupes" "caskroom/cask" "caskroom/versions" "caskroom/fonts")
 taps=($(setdiff "${taps[*]}" "$(brew tap)"))
 if (( ${#taps[@]} > 0 )); then
@@ -37,6 +38,7 @@ if (( ${#taps[@]} > 0 )); then
     e_header "Tapping Homebrew: $a_tap"
     brew tap $a_tap
   done
+fi
 fi
 
 e_header "Running OSX Global Config"

@@ -98,17 +98,18 @@ defaults write com.apple.BezelServices kDimTime -int 300
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
+if [[ ! $MIN ]]; then
+  # Require password immediately after sleep or screen saver begins
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# Require password immediately after sleep or screen saver begins
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
+  # Set Arabesque screen saver
+  defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Arabesque"
+  defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"
 
-# Set Arabesque screen saver
-defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Arabesque"
-defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"
-
-# Save screenshots here instead of to desktop
-defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
+  # Save screenshots here instead of to desktop
+  defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
+fi
 
 # Disable drop shadow on screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
@@ -259,19 +260,19 @@ if [[ "$LOCAL" ]]; then
   defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
   defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
 
-  # Start screen saver -- bottom right corner
-  defaults write com.apple.dock wvous-br-corner -int 5
-  defaults write com.apple.dock wvous-br-modifier -int 0
-
-  # Disable screen saver -- top right corner
-  defaults write com.apple.dock wvous-tr-corner -int 6
-  defaults write com.apple.dock wvous-tr-modifier -int 0
-
-else
+elif [[ $MIN ]]; then
   # Always show the Dock
   defaults write com.apple.dock autohide -bool false
 
 fi
+
+# Start screen saver -- bottom right corner
+defaults write com.apple.dock wvous-br-corner -int 5
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+# Disable screen saver -- top right corner
+defaults write com.apple.dock wvous-tr-corner -int 6
+defaults write com.apple.dock wvous-tr-modifier -int 0
 
 #"Wipe all (default) app icons from the Dock? (y/n)"
 #"(This is only really useful when setting up a new Mac, or if you don't use the Dock to launch apps.)"
@@ -363,13 +364,14 @@ defaults write com.apple.DiskUtility advanced-image-options -bool true
 # Hide the legal disclaimer
 #defaults write org.m0k.transmission WarningLegal -bool false
 
-bad=("com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
-loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
-bad_list=($(setcomp "${bad[*]}" "$loaded"))
-if (( ${#bad_list[@]} > 0 )); then
-  for rmv in "${bad_list[@]}"; do
-    e_header "Unloading: $rmv"
-    launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
-  done
+if [[ ! $MIN ]]; then
+  bad=("com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
+  loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
+  bad_list=($(setcomp "${bad[*]}" "$loaded"))
+  if (( ${#bad_list[@]} > 0 )); then
+    for rmv in "${bad_list[@]}"; do
+      e_header "Unloading: $rmv"
+      launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
+    done
+  fi
 fi
-

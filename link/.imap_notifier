@@ -4,5 +4,5 @@ user:   'cmarie'
 domain: 'isecpartners.com'
 server: 'exch.corp.isecpartners.com'
 one_path: '/Volumes/time machine/iSEC.agilekeychain'
-onepass: 'Exchange'
+onepass: 'iSEC\ Exchange'
 max: 10
