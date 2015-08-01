@@ -83,7 +83,7 @@ fi
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
-[[ ! $LOCAL ]] || return 1
+[[ $LOCAL ]] || return 1
 
 ###############################################################################
 # Security                                                                    #
