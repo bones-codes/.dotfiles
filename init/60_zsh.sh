@@ -1,4 +1,4 @@
-[[ "$MIN" ]] || return 1
+[[ ! "$MIN" ]] || return 1
 # Setup OH-MY-ZSH  
 if [[ ! -e $USER_HOME/.oh-my-zsh ]]; then
     e_header "Setup oh-my-zsh"
