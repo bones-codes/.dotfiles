@@ -16,10 +16,10 @@ if [[ $MIN ]]; then
   done
 
   cd ~
-  curl https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf   
-  curl https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/abefed4fb30891d485170e30ac3d677eee261cbb/.vimrc 
+  curl -o .tmux.conf https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf
+  curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/abefed4fb30891d485170e30ac3d677eee261cbb/.vimrc 
 
-  return 1
+  return
 fi
 
 ## iTerm
