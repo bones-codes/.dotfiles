@@ -133,13 +133,13 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
 fi
 
 
+# Temp fix for wireshark interfaces
 # -rw-r--r-- 1 root wheel
-#if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
-  # # Temp fix for wireshark interfaces
-#  curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
-#  tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
-#  open /tmp/ChmodBPF/Install\ ChmodBPF.app
-#fi
+if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
+  curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
+  tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
+  open /tmp/ChmodBPF/Install\ ChmodBPF.app
+fi
 
 # Install Slate
 if [[ $LOCAL ]]; then
