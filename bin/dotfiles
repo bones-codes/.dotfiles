@@ -366,7 +366,7 @@ export PATH
 shopt -s dotglob
 shopt -s nullglob
 
-if [[ ! $MIN ]]; then
+if [[ ! "$MIN" ]]; then
   # If backups are needed, this is where they'll go.
   backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
   backup=
@@ -398,12 +398,13 @@ if [[ ! $MIN ]]; then
     source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
   fi
 
-if [[ $HACK || $NET || $IOS || $WAPT ]]; then
-  e_header "Installing Burp Suite"
-  mkdir -p $USER_HOME/tools
-  python $HOME/.dotfiles/bin/burp_download
-  mv $HOME/tools/burp/burp.jar /Applications/
-fi
+  if [[ $HACK || $NET || $IOS || $WAPT ]]; then
+    e_header "Installing Burp Suite"
+    mkdir -p $USER_HOME/tools
+    cp $DOTFILES_HOME/conf/local/.burp ~/
+    python $HOME/.dotfiles/bin/burp_download
+    mv $HOME/tools/burp/burp.jar /Applications/
+  fi
 
 else
   e_header "Cleaning up vim"
