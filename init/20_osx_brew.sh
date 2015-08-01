@@ -5,7 +5,7 @@ $(get_os 'osx') || return 1
 
 
 # Install Homebrew recipes.
-if [[ ! $MIN ]]; then
+if [ ! "$MIN" ]; then
 recipes=(
   ctags 
   "readline --universal" 
@@ -107,7 +107,7 @@ brewroot="$(brew --config | awk '/HOMEBREW_PREFIX/ {print $2}')"
 binroot=$brewroot/bin
 cellarroot=$brewroot/Cellar
  
-if [[ $MIN ]]; then return; fi
+[[ ! $MIN ]] || return 1
 
 e_header "Brew cleanup"
 # Remove outdated versions from the cellar

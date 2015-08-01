@@ -366,7 +366,7 @@ export PATH
 shopt -s dotglob
 shopt -s nullglob
 
-if [[ ! "$MIN" ]]; then
+if [[ ! $MIN ]]; then
   # If backups are needed, this is where they'll go.
   backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
   backup=

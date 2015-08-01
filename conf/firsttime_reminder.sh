@@ -24,8 +24,6 @@ if get_os 'osx'; then
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
   #xcode
   open -a Safari http://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12
-  #wireshark
-  open https://www.wireshark.org/download.html
   #Paragon
   #open https://www.paragon-software.com/home/ntfs-mac/
   #VB box
