@@ -48,13 +48,8 @@ Root enabled:
    ```
 #### On First Run
   * On OSX you will be prompted if you need to run as a standard user. Saying Yes will cause the script to run the brew install as `sudo` and anything that needs root access as `sudo -u root` but will otherwise default to current user allowing you to customize user current preferences. 
-  * On systems where u do know the root password no special steps are needed. The script just runs sudo as always, making use of roots actual password. 
+  * On systems where u do know the root password no special steps are needed. The script just runs sudo as always, making use of root's actual password. 
 
-### General Notes
-* In order to run init scripts files that have an alphanumeric value < "50_" `sudo` privileges are required.
-   * __You can skip the entire "init" step when prompted.__
-   * The reason it is all or nothing for the "init" step is because the sudo steps install necessary software needed by the rest of the script. 
-   * If you skip the "init" step, only copy/link will be executed.  
 
 ### Actual Installation 
 ```sh
