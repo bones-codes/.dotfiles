@@ -26,7 +26,7 @@ recipes=(
   p7zip 
   tmux
   reattach-to-user-namespace
-  "lesspipe --syntax-highlighting"
+  "lesspipe --with-syntax-highlighting"
   "python --universal" 
   "brew-cask"
   "vim --with-python --with-ruby --with-perl --enable-cscope 
