@@ -106,12 +106,12 @@ done
 brewroot="$(brew --config | awk '/HOMEBREW_PREFIX/ {print $2}')"
 binroot=$brewroot/bin
 cellarroot=$brewroot/Cellar
+ 
+if [[ $MIN ]]; then return; fi
 
 e_header "Brew cleanup"
 # Remove outdated versions from the cellar
 brew cleanup
- 
-if [[ $MIN ]]; then return; fi
 
 e_header "Linking brewed apps"
 ##link all the apps 
