@@ -58,7 +58,7 @@ Root enabled:
 
 ### Actual Installation 
 ```sh
-bash -c "$(curl -fsSL http://bit.ly/bones-dots)"
+bash -c "$(curl -fsSL http://bit.ly/bones--dots)"
 ```
 
 If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
