@@ -4013,7 +4013,7 @@
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
 	<key>NoSyncLastTipTime</key>
-	<real>459784748.871755</real>
+	<real>460074131.95150298</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -4039,6 +4039,8 @@
 		<string>0015</string>
 		<string>0016</string>
 		<string>0017</string>
+		<string>0018</string>
+		<string>0019</string>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
@@ -4112,7 +4114,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-07-29T13:59:12Z</date>
+	<date>2015-07-31T13:59:10Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -4160,6 +4162,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.9.20150722-nightly</string>
+	<string>2.9.20150730-nightly</string>
 </dict>
 </plist>

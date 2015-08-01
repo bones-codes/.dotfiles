@@ -22,6 +22,12 @@ if [[ $MIN ]]; then
   return
 fi
 
+## Karabiner & Seil
+# Install keybinding settings TODO does this work?!?
+e_header "Installing Karabiner and Seil sets"
+sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
+sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
+
 ## iTerm
 # If iTerm has never been run this wont exist. 
 # We then run iTerm so we can config it.
@@ -30,12 +36,6 @@ if [[ ! -e ~/Library/Preferences/com.googlecode.iterm2.plist ]]; then
     sleep 1
     killall iTerm
 fi
-
-## Karabiner & Seil
-# Install keybinding settings TODO does this work?!?
-e_header "Installing Karabiner and Seil sets"
-sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
-sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
 
 # Now for iTerm to load its setting from an external location.
 defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool TRUE
