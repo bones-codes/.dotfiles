@@ -406,6 +406,9 @@ if [[ $HACK || $NET || $IOS || $WAPT ]]; then
 fi
 
 else
+  e_header "Cleaning up vim"
+  rm -rf $DOTFILES_HOME/link/.vim/bundle/*
+
   # Bare minimum install
   e_header "Running Init";
   do_stuff "init";
