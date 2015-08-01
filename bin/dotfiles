@@ -370,14 +370,8 @@ shopt -s nullglob
 backup_dir="$DOTFILES_HOME/backups/$(date "+%Y_%m_%d-%H_%M_%S")/"
 backup=
 
-#  read -p "Do you want to run the init scripts? " yn
-#  case $yn in 
-#  [Yy]* )
 e_header "Running Init"
 do_stuff "init"
-#  [Nn]* )
-#    e_header "Skipping Init";;
-#  esac
 
 if [[ ! $MIN ]]; then
   # Copy and Link Over Files 
@@ -405,10 +399,6 @@ if [[ ! $MIN ]]; then
     python $HOME/.dotfiles/bin/burp_download
     mv $HOME/tools/burp/burp.jar /Applications/
   fi
-
-else
-  e_header "Cleaning up vim"
-  rm -rf $DOTFILES_HOME/link/.vim/bundle/*
 
 fi
 
