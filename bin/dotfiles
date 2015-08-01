@@ -395,7 +395,7 @@ if [[ ! $MIN ]]; then
   if [[ $HACK || $NET || $IOS || $WAPT ]]; then
     e_header "Installing Burp Suite"
     mkdir -p $USER_HOME/tools
-    cp $DOTFILES_HOME/conf/local/.burp ~/
+    cp "$DOTFILES_HOME/conf/local/.burp" ~/
     python $HOME/.dotfiles/bin/burp_download
     mv $HOME/tools/burp/burp.jar /Applications/
   fi
