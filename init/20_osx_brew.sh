@@ -163,7 +163,8 @@ fi
 
 # Install RVM
 e_header "Installing rbenv"
+export PATH="$HOME/.rbenv/bin:$PATH"
 rbenv init -
-rbenv install 2.0.0-p481
-rbenv rehash
-rbenv global 2.0.0-p481
+CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
+rbenv global 2.1.0
+gem update --system

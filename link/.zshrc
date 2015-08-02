@@ -67,4 +67,4 @@ zmodload -i zsh/complist
 compinit -u "${ZSH_COMPDUMP}"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-echo 'eval "$(rbenv init -)"'
+eval "$(rbenv init -)"
