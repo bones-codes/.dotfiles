@@ -392,12 +392,16 @@ if [[ ! $MIN ]]; then
     source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
   fi
 
+  e_header "Installing Burp Suite"
+  mkdir -p $USER_HOME/tools
   if [[ -e "$DOTFILES_HOME/conf/local/.burp" && ! $MIN && ! $LOCAL ]]; then
-    e_header "Installing Burp Suite"
-    mkdir -p $USER_HOME/tools
     cp "$DOTFILES_HOME/conf/local/.burp" ~/
     python $HOME/.dotfiles/bin/burp_download
     mv $HOME/tools/burp/burp.jar /Applications/
+  else
+    mkdir -p $USER_HOME/tools/burp/backup/
+    cd $USER_HOME/tools/
+    curl https://portswigger.net/DownloadUpdate.ashx?Product=Free >> burp.jar
   fi
 
 fi
