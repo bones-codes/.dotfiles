@@ -161,3 +161,9 @@ if [[ "$(type -P pip)" ]]; then
 
 fi
 
+# Install RVM
+e_header "Installing rbenv"
+rbenv init -
+rbenv install 2.0.0-p481
+rbenv rehash
+rbenv global 2.0.0-p481

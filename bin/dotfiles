@@ -392,7 +392,7 @@ if [[ ! $MIN ]]; then
     source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
   fi
 
-  if [[ $HACK || $NET || $IOS || $WAPT ]]; then
+  if [[ -e "$DOTFILES_HOME/conf/local/.burp" && ! $MIN && ! $LOCAL ]]; then
     e_header "Installing Burp Suite"
     mkdir -p $USER_HOME/tools
     cp "$DOTFILES_HOME/conf/local/.burp" ~/
