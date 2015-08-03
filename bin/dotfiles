@@ -287,7 +287,11 @@ get_os
 # net   : network pentest tools
 # ios   : ios hacking tools env
 # wapt  : web application hacking tools
-for arg in "$@"; do export "$(echo "$arg" | tr [a-z] [A-Z])"=True; done
+for arg in "$@"; do 
+  X=`echo "$arg" | tr [a-z] [A-Z]`
+  export "$X"=True
+  echo 'export "$X"=True' >> $USER_HOME/.bashrc
+done
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
