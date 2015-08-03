@@ -81,7 +81,7 @@ function check_cmd_tools() {
     # This works because:
     # a. On a clean install, sudo reboot will cause the terminal to reopen as part of a restore previous state.
     # b. On a clean install .profile does not exist so it easy to manipulate and later delete.
-    if [ "$LOCAL" ]; then echo 'export LOCAL=True' >> .profile; fi
+    #if [ "$LOCAL" ]; then echo 'export LOCAL=True' >> .profile; fi
     echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
     sleep 5
     sudo -u root reboot
@@ -297,7 +297,8 @@ get_os
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   export "$X"=True
-  echo 'export '"$X"'=True' | tee $HOME/.bashrc >> $HOME/.profile
+  echo 'export '"$X"'=True' >> tee $HOME/.bashrc
+  echo 'export '"$X"'=True' >> $HOME/.profile
   if [[ $LOCAL || $IOS ]]; then
     echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.bashrc
     echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
