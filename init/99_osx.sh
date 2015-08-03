@@ -70,6 +70,7 @@ rm $filename
 
 done
 
+echo env
 if [[ $HACK || $IOS ]]; then
   # Setup tools/env for iOS hacking
   e_header "Installing idb (iOS)"
