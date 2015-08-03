@@ -400,7 +400,8 @@ if [[ ! $MIN ]]; then
     mv $HOME/tools/burp/burp.jar /Applications/
   else
     mkdir -p $USER_HOME/tools/burp/backup/
-    curl https://portswigger.net/DownloadUpdate.ashx?Product=Free >> $USER_HOME/tools/burp.jar
+    cd $USER_HOME/tools/burp/
+    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free burp.jar
   fi
 
 fi
