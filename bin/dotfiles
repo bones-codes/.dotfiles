@@ -290,7 +290,7 @@ get_os
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   export "$X"=True
-  echo 'export "$X"=True' >> $USER_HOME/.bashrc
+  echo 'export "$X"=True' >> $HOME/.bashrc
 done
 
 #Setup the USER_HOME variable to be the current users home.
