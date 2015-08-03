@@ -85,6 +85,7 @@ fi
 
 if [[ $MIN ]]; then
   recipes+=(
+  wget
   tmux
   reattach-to-user-namespace
   )
