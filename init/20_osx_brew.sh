@@ -163,8 +163,9 @@ fi
 
 # Install RVM
 e_header "Installing rbenv"
-export PATH="$HOME/.rbenv/bin:$PATH"
-rbenv init -
+export PATH=$HOME/.rbenv/bin:$PATH
+echo $PATH
+eval "$(rbenv init -)"
 CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
 rbenv global 2.1.0
 gem update --system
