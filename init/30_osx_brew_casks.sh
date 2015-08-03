@@ -10,7 +10,7 @@ $(get_os 'osx') || return 1
 casks=(iterm2 firefox karabiner seil)
 
 if [[ $HACK || $NET || $IOS || $WAPT ]]; then
-  casks+=(java6)
+  casks+=(java)
 fi
 
 if [[ $HACK || $NET ]]; then
