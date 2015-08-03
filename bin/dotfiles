@@ -297,7 +297,7 @@ get_os
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   export "$X"=True
-  echo 'export "$X"=True' | tee $HOME/.bashrc >> $HOME/.profile
+  echo 'export '"$X"'=True' | tee $HOME/.bashrc >> $HOME/.profile
   if [[ $LOCAL || $IOS ]]; then
     echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.bashrc
     echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
