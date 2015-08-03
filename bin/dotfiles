@@ -259,6 +259,13 @@ function vim_bundle() {
   done
 }
 
+function remove_profile() {
+  if [[ -e "$USER_HOME/.profile" ]]; then
+    e_header "Removing .profile"
+    rm -rf "$USER_HOME/.profile"
+  fi
+}
+
 # For testing.
 function assert() {
   local success modes equals actual expected
@@ -290,9 +297,11 @@ get_os
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   export "$X"=True
-  echo 'export "$X"=True' >> $HOME/.bashrc
-  echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.bashrc
-  echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+  echo 'export "$X"=True' | tee $HOME/.bashrc >> $HOME/.profile
+  if [[ $LOCAL || $IOS ]]; then
+    echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.bashrc
+    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
+  fi
 done
 
 #Setup the USER_HOME variable to be the current users home.
@@ -322,10 +331,7 @@ fi
 
 #sleep 10
 
-if [[ -e "$USER_HOME/.profile" ]]; then
-  e_header "Removing .profile"
-  rm -rf "$USER_HOME/.profile"
-fi
+remove_profile
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
@@ -411,6 +417,8 @@ if [[ ! $MIN ]]; then
   fi
 
 fi
+
+remove_profile
 
 # All done!
 e_header "All done!"
