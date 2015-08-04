@@ -31,8 +31,6 @@ recipes=(
   "brew-cask"
   "vim --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
-  rbenv
-  ruby-build
 )
 fi
 
@@ -57,6 +55,14 @@ if [ "$LOCAL" ]; then
 
 fi
 
+if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
+  recipes+=(
+  rbenv
+  ruby-build
+  )
+  
+fi
+
 if [[ $HACK || $NET || $WAPT || $IOS ]]; then
   recipes+=(
   sslyze
@@ -75,6 +81,8 @@ fi
 
 if [[ $HACK || $IOS ]]; then
   recipes+=(
+  rbenv
+  ruby-build
   qt 
   cmake 
   usbmuxd 
@@ -91,7 +99,6 @@ if [[ $MIN ]]; then
   )
 
 fi
-
 
 unset setdiffA setdiffB setdiffC;
 setdiffA=("${recipes[@]}"); setdiffB=( $(brew list) ); setdiff
@@ -132,7 +139,6 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
     echo "$binroot/zsh" | sudo tee -a /etc/shells >/dev/null
   fi
 fi
-
 
 # Temp fix for wireshark interfaces
 # -rw-r--r-- 1 root wheel
