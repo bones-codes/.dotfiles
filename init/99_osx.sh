@@ -72,6 +72,8 @@ done
 
 if [[ $HACK || $IOS ]]; then
   # Setup tools/env for iOS hacking
+  # https://code.google.com/p/ccl-bplist/
+  # http://www.crypticbit.com/zen/products/iphoneanalyzer
   e_header "Installing idb (iOS)"
   gem install idb
 fi
