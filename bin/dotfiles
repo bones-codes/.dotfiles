@@ -410,7 +410,7 @@ if [[ ! $MIN ]]; then
     cp "$DOTFILES_HOME/conf/local/.burp" ~/
     python $HOME/.dotfiles/bin/burp_download
     mv $HOME/tools/burp/burp.jar /Applications/
-  else
+  elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
     mkdir -p $USER_HOME/tools/burp/backup/
     cd $USER_HOME/tools/burp/
     wget https://portswigger.net/DownloadUpdate.ashx?Product=Free burp.jar
