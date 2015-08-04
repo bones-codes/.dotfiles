@@ -76,11 +76,11 @@ if [[ $HACK || $IOS ]]; then
   gem install idb
 fi
 
-if [[ $HACK || $RUBY ]]; then
+#if [[ $HACK || $RUBY ]]; then
   # https://hakiri.io/blog/ruby-security-tools-and-resources
-  e_header "Installing ruby"
-  gem install brakeman bundler-audit
-fi
+#  e_header "Installing ruby"
+#  gem install brakeman bundler-audit
+#fi
 
 if [[ $HACK || $NET ]]; then
   # Link RazorSQL profiles.txt
