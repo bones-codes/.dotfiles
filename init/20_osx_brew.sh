@@ -162,11 +162,13 @@ if [[ "$(type -P pip)" ]]; then
 
 fi
 
-# Install RVM
-e_header "Installing rbenv"
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-source $USER_HOME/.bashrc
-CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
-rbenv global 2.1.0
-gem update --system
+if [[ $LOCAL || $IOS || $RUBY ]]; then 
+  # Install RVM
+  e_header "Installing rbenv"
+  export PATH=$HOME/.rbenv/bin:$PATH
+  eval "$(rbenv init -)"
+  source $USER_HOME/.bashrc
+  CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
+  rbenv global 2.1.0
+  gem update --system
+fi

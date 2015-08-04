@@ -70,13 +70,16 @@ rm $filename
 
 done
 
-echo env
 if [[ $HACK || $IOS ]]; then
   # Setup tools/env for iOS hacking
   e_header "Installing idb (iOS)"
   gem install idb
-  # TODO need pentest-dev flag / isec flag
-  # gem install brakeman bundler-audit
+fi
+
+if [[ $HACK || $RUBY ]]; then
+  # https://hakiri.io/blog/ruby-security-tools-and-resources
+  e_header "Installing ruby"
+  gem install brakeman bundler-audit
 fi
 
 if [[ $HACK || $NET ]]; then
