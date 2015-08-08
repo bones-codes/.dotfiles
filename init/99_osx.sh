@@ -12,14 +12,13 @@ if [[ $MIN ]]; then
 
   for i in "${rcs_array[@]}"
   do
-    e_header "Installing" $i
+    e_header "Installing $i"
     ln -s $DOTFILES_HOME/link/$i $USER_HOME/$i 
   done
 
+  e_header "Installing .tmux.conf and .vimrc"
   cd ~
-  e_header "Installing .tmux.conf"
   curl -o .tmux.conf https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf
-  e_header "Installing .vimrc"
   curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/abefed4fb30891d485170e30ac3d677eee261cbb/.vimrc 
 
   return
