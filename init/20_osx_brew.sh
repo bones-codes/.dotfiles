@@ -7,30 +7,30 @@ $(get_os 'osx') || return 1
 # Install Homebrew recipes.
 if [ ! "$MIN" ]; then
 recipes=(
-  ctags 
-  "readline --universal" 
-  "sqlite --universal" 
-  "gdbm --universal" 
-  "openssl --universal" 
-  zsh 
-  "wget --with-iri" 
-  grep 
-  git 
-  ssh-copy-id  
-  git-extras
-  htop-osx  
-  coreutils 
-  findutils 
   ack 
-  rename 
-  p7zip 
-  tmux
-  reattach-to-user-namespace
-  "lesspipe --with-syntax-highlighting"
-  "python --universal" 
   "brew-cask"
+  coreutils 
+  ctags 
+  findutils 
+  "gdbm --universal" 
+  git 
+  git-extras
+  grep 
+  htop-osx  
+  "lesspipe --with-syntax-highlighting"
+  "openssl --universal" 
+  p7zip 
+  "python --universal" 
+  "readline --universal" 
+  reattach-to-user-namespace
+  rename 
+  "sqlite --universal" 
+  ssh-copy-id  
+  tmux
   "vim --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
+  "wget --with-iri" 
+  zsh 
 )
 fi
 
@@ -140,12 +140,14 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
   fi
 fi
 
+if [[ $HACK || $NET || $WAPT || $IOS ]]; then
 # Temp fix for wireshark interfaces
 # -rw-r--r-- 1 root wheel
-if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
-  curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
-  tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
-  open /tmp/ChmodBPF/Install\ ChmodBPF.app
+  if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
+    curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
+    tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
+    open /tmp/ChmodBPF/Install\ ChmodBPF.app
+  fi
 fi
 
 # Install Slate

@@ -14,7 +14,7 @@ if [[ $HACK || $NET || $IOS || $WAPT ]]; then
 fi
 
 if [[ $HACK || $NET ]]; then
-  casks+=(transmit vlc razorsql)
+  casks+=(transmit vlc razorsql transmit)
 fi
 
 if [[ $HACK || $IOS ]]; then

@@ -75,66 +75,38 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
    * caskroom/versions 
 
 * Homebrew recipes
-   * brew-cask 
-   * ctags
-   * readline --universal
-   * sqlite --universal
-   * gdbm --universal
-   * openssl --universal
-   * zsh 
-   * duplicity
-   * wget --with-iri
-   * grep 
-   * git 
-   * ssh-copy-id  
-   * git-extras
-   * htop-osx 
-   * coreutils 
-   * findutils 
    * ack 
-   * rename 
+   * brew-cask
+   * coreutils 
+   * ctags 
+   * findutils 
+   * gdbm --universal 
+   * git 
+   * git-extras
+   * grep 
+   * htop-osx  
+   * lesspipe --with-syntax-highlighting
+   * openssl --universal 
    * p7zip 
-   * tmux
+   * python --universal 
+   * readline --universal 
    * reattach-to-user-namespace
-   * lesspipe --syntax-highlighting
-   * python --universal
+   * rename 
+   * sqlite --universal 
+   * ssh-copy-id  
+   * tmux
    * vim --with-python --with-ruby --with-perl --enable-cscope --enable-pythoninterp --override-system-vi
-   * pass
-   * keybase
-   * apple-gcc42
-   * onepass
-   * dvtm
-   * awscli
-   * sslyze
-   * masscan
-   * nmap 
-   * youtube-dl 
-   * pkg-config 
-   * mutt --with-confirm-attachement-patch --with-gpgme --with-pgp-verbose-mime-patch --with-trash-patch --with-ignore-thread-patch
-   * contacts2 (https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb)
-   * urlview
-   * offlineimap
-   * notmuch
-   * "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
-   * "weechat --with-curl --with-python --with-perl"
-   * bitlbee
+   * wget --with-iri 
+   * zsh 
 
 * Homebrew Casks
    * iterm2-nightly
-   * java6 
    * firefox
    * karabiner
    * seil
-   * vlc
-   * transmit
-   * adium 
-   * vagrant 
-   * mactex
-   * wkhtmltopdf
-   * razorsql
-   * remote-desktop-connection
 
 * Fonts
+   * font-anonymous-pro
    * font-source-code-pro
    * font-source-sans-pro 
 
