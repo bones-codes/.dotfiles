@@ -21,7 +21,6 @@ recipes=(
   "openssl --universal" 
   p7zip 
   "python --universal" 
-  "readline --universal" 
   reattach-to-user-namespace
   rename 
   "sqlite --universal" 
@@ -48,9 +47,6 @@ if [ "$LOCAL" ]; then
   offlineimap
   msmtp
   notmuch
-  #"weechat --with-curl --with-python --with-perl --with-lua --with-guile --with-ruby"
-  #"bitlbee --with-libotr"
-  #homebrew/versions/swig304
   )
 
 fi

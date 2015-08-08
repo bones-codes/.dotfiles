@@ -89,7 +89,6 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
    * openssl --universal 
    * p7zip 
    * python --universal 
-   * readline --universal 
    * reattach-to-user-namespace
    * rename 
    * sqlite --universal 
