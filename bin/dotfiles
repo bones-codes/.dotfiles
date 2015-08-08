@@ -350,7 +350,7 @@ if [[ ! "$(type -P git)" ]]; then
 fi
 
 # Initialize unless min install.
-if [[ ! -d $DOTFILES_HOME ]]; then
+if [[ ! -d $DOTFILES_HOME && ! $MIN ]]; then
   # $DOTFILES directory doesn't exist? Clone it!
   new_dotfiles_install=1
   prompt_delay=15

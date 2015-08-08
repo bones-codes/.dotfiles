@@ -5,19 +5,10 @@ e_header "Running OSX Config"
 source $DOTFILES_HOME/conf/osx/conf_osx.sh
 
 if [[ $MIN ]]; then 
-  rcs_array=(.ackrc
-    .bashrc
-    .bash_profile
-    )
-
-  for i in "${rcs_array[@]}"
-  do
-    e_header "Installing $i"
-    ln -s $DOTFILES_HOME/link/$i $USER_HOME/$i 
-  done
-
-  e_header "Installing .tmux.conf and .vimrc"
+  e_header "Installing dot gists (MIN only)"
   cd ~
+  curl -o .ackrc https://gist.githubusercontent.com/bones-codes/05d8bb86e2b7309cb769/raw/29dd74ff3a083c971c52669fd160533310d7696e/.ackrc
+  rm .bashrc; curl -o .bashrc https://gist.githubusercontent.com/bones-codes/fa90062beaf08ff67f82/raw/270b5c93de35f87dce30a6aea58cfb15042a77bd/.bashrc 
   curl -o .tmux.conf https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf
   curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/abefed4fb30891d485170e30ac3d677eee261cbb/.vimrc 
 
