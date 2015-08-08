@@ -67,7 +67,7 @@ Use the following to install with options.
 curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
 ```
 
-### OS X
+### OS X (sans options)
 * Hombrew taps
    * homebrew/dupes 
    * caskroom/cask 
@@ -111,7 +111,7 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
 
 * OSX config script
 
-### Ubuntu
+### Ubuntu (sans options)
 (Outdated)
 * APT packages
   * build-essential
