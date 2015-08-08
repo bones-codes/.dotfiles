@@ -7,7 +7,7 @@ $(get_os 'osx') || return 1
 # Exit if, for some reason, cask is not installed.
 [[ ! "$(brew ls --versions brew-cask)" ]] && e_error "Brew-cask failed to install." && return 1
 
-casks=(iterm2 firefox karabiner seil)
+casks=(iterm2-nightly firefox karabiner seil)
 
 if [[ $HACK || $NET || $IOS || $WAPT ]]; then
   casks+=(java)
@@ -22,7 +22,7 @@ if [[ $HACK || $IOS ]]; then
 fi
 
 if [ "$LOCAL" ]; then
-  casks+=(adium vagrant mactex)
+  casks+=(1password adium vagrant mactex)
 fi
 
 # Install Homebrew casks.
