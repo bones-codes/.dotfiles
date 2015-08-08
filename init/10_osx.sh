@@ -15,9 +15,6 @@ PATH=/usr/local/bin:$(path_remove /usr/local/bin)
 PATH=/usr/local/sbin:$(path_remove /usr/local/sbin)
 export PATH
 
-e_header "Brew DR"
-brew doctor
-
 # Make sure we’re using the latest Homebrew
 e_header "Brew update"
 brew update
