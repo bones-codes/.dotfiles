@@ -254,6 +254,7 @@ function vim_bundle() {
 
   e_header "Installing vim plugins"
   echo; cd $DOTFILES_HOME/link/.vim/bundle
+  rm -rf *
   for i in "${plugins[@]}"; do
     git clone $i; echo
   done
