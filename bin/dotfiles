@@ -76,7 +76,7 @@ function check_cmd_tools() {
     fi
     # Install the rest of the updated
     softwareupdate -iav
-    e_header "Must Reboot Damn you Apple"
+    e_header "Must reboot --- damn you Apple"
     # This creates a .profile and will continue the install upon reboot.
     # This works because:
     # a. On a clean install, sudo reboot will cause the terminal to reopen as part of a restore previous state.
