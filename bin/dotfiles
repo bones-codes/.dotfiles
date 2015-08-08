@@ -413,7 +413,7 @@ if [[ ! $MIN ]]; then
   elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
     mkdir -p $USER_HOME/tools/burp/backup/
     cd $USER_HOME/tools/burp/
-    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free burp.jar
+    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free -O burp.jar
   fi
 
 fi
