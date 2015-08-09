@@ -100,7 +100,9 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
 
 * Homebrew Casks
    * firefox
+   * gpgtools
    * iterm2-nightly
+   * java
    * karabiner
    * seil
 
