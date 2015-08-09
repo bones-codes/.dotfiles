@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'vim plugins'
+echo 'Updating vim plugins'
 cd "$HOME/.dotfiles/link/.vim/bundle"
 for i in `ls`; do
   echo $i
@@ -10,7 +10,7 @@ for i in `ls`; do
   echo
 done
 
-echo 'fuzzdb'
+echo 'Updating fuzzdb'
 if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
   cd "$HOME/tools/burp/fuzzdb"
   svn update
@@ -19,23 +19,20 @@ else
   svn checkout http://fuzzdb.googlecode.com/svn/trunk/ fuzzdb
 fi
 
-echo; echo 'brew update, upgrade, cleanup and checkup'
+echo; echo 'Running brew update, upgrade, cleanup and checkup'
 brew update && brew upgrade --all && brew upgrade brew-cask 
 brew cleanup && brew cask cleanup && brew doctor
 
-echo; echo 'update pip and pip packages'
+echo; echo 'Updating pip and pip packages'
 pip install --upgrade pip setuptools
 pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 
 #echo; echo 'update gems'
 #gem update --system
 
-echo; echo 'karabiner/seil sets'
+echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
-
-echo; echo 'bitlbee sets'
-cp /usr/local/var/bitlbee/lib/* "$HOME/.dotfiles/conf/local/bitlbee/"
 
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
