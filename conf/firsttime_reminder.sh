@@ -14,6 +14,11 @@ if get_os 'osx'; then
 
   fi
 
+  if [[ $HACK || $IOS ]]; then
+    #ioregistryexplorer
+    open http://www.hackintoshosx.com/files/file/3600-ioregistryexplorer/
+  fi
+
   #gpgtools
   open https://gpgtools.org/
   #google-chrome
