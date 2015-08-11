@@ -27,6 +27,7 @@ sudo defaults write -g AppleAquaColorVariant -int 6
 # Link to the airport command
 sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/sbin/airport
 
+[[ $LOCAL ]] || return 1
 
 ###############################################################################
 # Screen                                                                      #
@@ -35,46 +36,43 @@ sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Curr
 # Enable HiDPI display modes (requires restart)
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
-
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
 
-if [[ ! $MIN ]]; then 
   #Disable Spotlight indexing from indexing /volume
   sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
-  #Change indexing order and disable some search results in Spotlight
-  sudo defaults write com.apple.spotlight orderedItems -array \
-      '{"enabled" = 1;"name" = "APPLICATIONS";}' \
-      '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-      '{"enabled" = 1;"name" = "DIRECTORIES";}' \
-      '{"enabled" = 1;"name" = "PDF";}' \
-      '{"enabled" = 0;"name" = "FONTS";}' \
-      '{"enabled" = 1;"name" = "DOCUMENTS";}' \
-      '{"enabled" = 0;"name" = "MESSAGES";}' \
-      '{"enabled" = 0;"name" = "CONTACT";}' \
-      '{"enabled" = 0;"name" = "EVENT_TODO";}' \
-      '{"enabled" = 0;"name" = "IMAGES";}' \
-      '{"enabled" = 0;"name" = "BOOKMARKS";}' \
-      '{"enabled" = 0;"name" = "MUSIC";}' \
-      '{"enabled" = 0;"name" = "MOVIES";}' \
-      '{"enabled" = 1;"name" = "PRESENTATIONS";}' \
-      '{"enabled" = 1;"name" = "SPREADSHEETS";}' \
-      '{"enabled" = 0;"name" = "SOURCE";}' \
-      '{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
-      '{"enabled" = 0;"name" = "MENU_OTHER";}' \
-      '{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
-      '{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
-      '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
-      '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
-  # Load new settings before rebuilding the index
-  killall mds > /dev/null 2>&1
-  # Make sure indexing is enabled for the main volume
-  sudo mdutil -i on / > /dev/null
-  # Rebuild the index from scratch
-  sudo mdutil -E / > /dev/null
-fi
+#Change indexing order and disable some search results in Spotlight
+sudo defaults write com.apple.spotlight orderedItems -array \
+    '{"enabled" = 1;"name" = "APPLICATIONS";}' \
+    '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+    '{"enabled" = 1;"name" = "DIRECTORIES";}' \
+    '{"enabled" = 1;"name" = "PDF";}' \
+    '{"enabled" = 0;"name" = "FONTS";}' \
+    '{"enabled" = 1;"name" = "DOCUMENTS";}' \
+    '{"enabled" = 0;"name" = "MESSAGES";}' \
+    '{"enabled" = 0;"name" = "CONTACT";}' \
+    '{"enabled" = 0;"name" = "EVENT_TODO";}' \
+    '{"enabled" = 0;"name" = "IMAGES";}' \
+    '{"enabled" = 0;"name" = "BOOKMARKS";}' \
+    '{"enabled" = 0;"name" = "MUSIC";}' \
+    '{"enabled" = 0;"name" = "MOVIES";}' \
+    '{"enabled" = 1;"name" = "PRESENTATIONS";}' \
+    '{"enabled" = 1;"name" = "SPREADSHEETS";}' \
+    '{"enabled" = 0;"name" = "SOURCE";}' \
+    '{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
+    '{"enabled" = 0;"name" = "MENU_OTHER";}' \
+    '{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
+    '{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
+    '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
+    '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+# Load new settings before rebuilding the index
+killall mds > /dev/null 2>&1
+# Make sure indexing is enabled for the main volume
+sudo mdutil -i on / > /dev/null
+# Rebuild the index from scratch
+sudo mdutil -E / > /dev/null
 
 ###############################################################################
 # Time Machine                                                                #
@@ -83,7 +81,6 @@ fi
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
-[[ $LOCAL ]] || return 1
 
 ###############################################################################
 # Security                                                                    #
