@@ -13,7 +13,7 @@ if [[ $HACK || $NET ]]; then
   casks+=(transmit vlc razorsql transmit)
 fi
 
-if [[ $HACK || $IOS ]]; then
+if [[ $HACK || $REV ]]; then
   casks+=(hopper-disassembler)
 fi
 
