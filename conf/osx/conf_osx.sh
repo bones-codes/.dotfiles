@@ -231,8 +231,12 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 # Stop doing the stupid desktop reordering thing
 defaults write com.apple.dock mru-spaces -bool false
 
-# Setting the icon size of Dock items to 24 pixels
-defaults write com.apple.dock tilesize -int 24
+if [[ "$LOCAL" ]]; then
+  # Setting the icon size of Dock items to 24 pixels
+  defaults write com.apple.dock tilesize -int 24
+else
+  defaults write com.apple.dock tilesize -int 45
+fi
 
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
@@ -263,16 +267,15 @@ if [[ "$LOCAL" ]]; then
 elif [[ $MIN ]]; then
   # Always show the Dock
   defaults write com.apple.dock autohide -bool false
-
 fi
 
 # Start screen saver -- bottom right corner
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0
 
-# Disable screen saver -- top right corner
-defaults write com.apple.dock wvous-tr-corner -int 6
-defaults write com.apple.dock wvous-tr-modifier -int 0
+# Disable screen saver -- bottom left corner
+defaults write com.apple.dock wvous-bl-corner -int 6
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 #"Wipe all (default) app icons from the Dock? (y/n)"
 #"(This is only really useful when setting up a new Mac, or if you don't use the Dock to launch apps.)"

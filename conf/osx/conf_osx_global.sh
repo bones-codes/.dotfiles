@@ -5,7 +5,7 @@
 # It's my library. Let me see it.
 sudo chflags nohidden ~/Library/
 sudo chflags nohidden /tmp
-sudo chflags nohidden /usr
+#sudo chflags nohidden /usr
 
 #Disable Spotlight indexing from indexing /Volumes
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
@@ -25,7 +25,7 @@ sudo defaults write -g AppleAquaColorVariant -int 6
 
 ## EXTRAA
 # Link to the airport command
-sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/sbin/airport
+sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/local/bin/airport
 
 [[ $LOCAL ]] || return 1
 
