@@ -18,7 +18,9 @@ alias edot="vim $HOME/.dotfiles/"
 # dirs  755 drwxr-xr-x (777 minus 022)
 umask 022
 
+
 ##Also Fix ll
+alias l='ls -F'
 alias ll='ls -ltrh'
 alias lla='ls -altrh'
 alias la='ls -lhA'
