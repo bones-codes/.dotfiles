@@ -23,7 +23,7 @@ recipes=(
   "python --universal" 
   reattach-to-user-namespace
   rename 
-  "sqlite --universal" 
+  #"sqlite --universal" 
   ssh-copy-id  
   tmux
   "vim --with-python --with-ruby --with-perl --enable-cscope 
@@ -35,8 +35,6 @@ fi
 
 if [ "$LOCAL" ]; then
   recipes+=(
-  apple-gcc42
-  "duplicity --devel"
   pass
   onepass
   keybase
@@ -45,8 +43,9 @@ if [ "$LOCAL" ]; then
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   urlview
   offlineimap
-  msmtp
   notmuch
+  "profanity --with-terminal-notifier"
+  w3m
   )
 
 fi
@@ -54,12 +53,12 @@ fi
 if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   recipes+=(
   rbenv
-  ruby-build
+#  ruby-build
   )
   
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS ]]; then
+if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
   sslyze
   "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
@@ -71,14 +70,13 @@ if [[ $HACK || $NET ]]; then
   recipes+=(
   masscan
   nmap
+  netcat
   )
   
 fi
 
 if [[ $HACK || $IOS ]]; then
   recipes+=(
-  rbenv
-  ruby-build
   qt 
   cmake 
   usbmuxd 
@@ -87,9 +85,18 @@ if [[ $HACK || $IOS ]]; then
   
 fi
 
+if [[ $HACK || $BT ]]; then
+  recipes+=(
+  libusb 
+  pkg-config 
+  homebrew/dupes/libpcap
+  )
+  
+fi
+
 if [[ $MIN ]]; then
   recipes+=(
-  wget
+  "wget --with-iri" 
   tmux
   reattach-to-user-namespace
   )
@@ -111,8 +118,6 @@ brewroot="$(brew --config | awk '/HOMEBREW_PREFIX/ {print $2}')"
 binroot=$brewroot/bin
 cellarroot=$brewroot/Cellar
  
-[[ ! $MIN ]] || return 1
-
 e_header "Brew cleanup"
 # Remove outdated versions from the cellar
 brew cleanup
@@ -121,58 +126,3 @@ e_header "Linking brewed apps"
 ##link all the apps 
 brew linkapps > /dev/null
 
-# htop
-if [[ "$(type -P $binroot/htop)" ]] && [[ "$(stat -L -f "%Su:%Sg" "$binroot/htop")" != "root:wheel" || ! "$(($(stat -L -f "%DMp" "$binroot/htop") & 4))" ]]; then
-  e_header "Updating htop permissions"
-  sudo chown root:wheel "$binroot/htop"
-  sudo chmod u+s "$binroot/htop"
-fi
-
-# ZSH
-if [[ "$(type -P $binroot/zsh)" ]]; then
-  if ! grep -q "$binroot/zsh" "/etc/shells"; then
-    e_header "Adding $binroot/zsh to the list of acceptable shells"
-    echo "$binroot/zsh" | sudo tee -a /etc/shells >/dev/null
-  fi
-fi
-
-if [[ $HACK || $NET || $WAPT || $IOS ]]; then
-# Temp fix for wireshark interfaces
-# -rw-r--r-- 1 root wheel
-  if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
-    curl "https://bugs.wireshark.org/bugzilla/attachment.cgi?id=3373" -o /tmp/ChmodBPF.tar.gz
-    tar zxvf /tmp/ChmodBPF.tar.gz -C /tmp
-    open /tmp/ChmodBPF/Install\ ChmodBPF.app
-  fi
-fi
-
-# Install Slate
-if [[ $LOCAL ]]; then
-  if [[ ! -e "/Applications/Slate.app" ]]; then
-    e_header "Installing Slate"
-    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
-  fi
-fi
-
-if [[ "$(type -P pip)" ]]; then
-  e_header "Install and/or Upgrade PIP"
-  pip -q install --upgrade pip
-  pip -q install --upgrade setuptools
-  pip -q install --upgrade distribute
-
-  e_header "Install VirualEnv + VirtualEnvWrapper"
-  pip -q install --upgrade virtualenv 
-  pip -q install --upgrade virtualenvwrapper
-
-fi
-
-if [[ $LOCAL || $IOS || $RUBY ]]; then 
-  # Install RVM
-  e_header "Installing rbenv"
-  export PATH=$HOME/.rbenv/bin:$PATH
-  eval "$(rbenv init -)"
-  source $USER_HOME/.bashrc
-  CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
-  rbenv global 2.1.0
-  gem update --system
-fi
