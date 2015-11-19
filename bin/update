@@ -13,10 +13,10 @@ done
 echo 'Updating fuzzdb'
 if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
   cd "$HOME/tools/burp/fuzzdb"
-  svn update
+  git pull
 else
   cd "$HOME/tools/burp"
-  svn checkout http://fuzzdb.googlecode.com/svn/trunk/ fuzzdb
+  git clone https://github.com/fuzzdb-project/fuzzdb.git
 fi
 
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
