@@ -1,7 +1,13 @@
 # Mail Preferences/Settings
 # -------------------------
-set ssl_starttls=yes
 set ssl_force_tls=yes                   # always use TLS when connecting to a server
+set ssl_use_sslv2=no
+set ssl_use_sslv3=no
+set ssl_use_tlsv1=yes
+set ssl_use_tlsv1_1=yes
+set ssl_use_tlsv1_2=yes
+set ssl_ciphers="ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK"
+
 set smtp_authenticators="login:plain"
 
 set mbox_type = maildir
@@ -36,6 +42,9 @@ set quote_regexp="^([ \t]*[|>:}#%])+"
 set implicit_autoview                   # default no
 set mailcap_path= ~/.mutt/.mailcap      # entries for filetypes
 set mask="^."                           # show everything in folder view
+
+auto_view text/html                     # view html automatically -- fuck you outlook
+alternative_order text/plain text/enriched text/html
 
 # Pager sets
 set pager_stop=yes
@@ -76,6 +85,8 @@ set hidden_host=yes
 set hostname="null"
 set to_chars=" +TCF"                     # no L for mail_list
 set net_inc=1                            # display download progress every *k
+set mime_forward_rest = yes
+set mime_forward = ask-no
 
 # Key Bindings
 # ------------
