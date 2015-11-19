@@ -8,15 +8,13 @@ if [[ $MIN ]]; then
   e_header "Installing dot gists (MIN only)"
   cd ~
   curl -o .ackrc https://gist.githubusercontent.com/bones-codes/05d8bb86e2b7309cb769/raw/29dd74ff3a083c971c52669fd160533310d7696e/.ackrc
-  rm .bashrc; curl -o .bashrc https://gist.githubusercontent.com/bones-codes/fa90062beaf08ff67f82/raw/270b5c93de35f87dce30a6aea58cfb15042a77bd/.bashrc 
+  rm .bashrc; curl -o .bashrc https://gist.githubusercontent.com/bones-codes/fa90062beaf08ff67f82/raw/cf6b89d44908c171d2e840a7d5371ab7e6c9636b/.bashrc 
   curl -o .tmux.conf https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf
-  curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/abefed4fb30891d485170e30ac3d677eee261cbb/.vimrc 
+  curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/35df943415b5aa67484f397115446f5388fda4ce/.vimrc 
 
   return
 fi
 
-## Karabiner & Seil
-# Install keybinding settings TODO does this work?!?
 e_header "Installing Karabiner and Seil sets"
 sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
 sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
@@ -36,7 +34,8 @@ defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist PrefsCustomFol
     
 # Download all the needed themes.
 # Theme URL array
-themes_array=("https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/Solarized%20Dark.terminal"
+themes_array=(
+      "https://raw.githubusercontent.com/tomislav/osx-terminal.app-colors-solarized/master/Solarized%20Dark.terminal"
       "https://raw.githubusercontent.com/altercation/solarized/master/iterm2-colors-solarized/Solarized%20Dark.itermcolors"
       )
 for i in "${themes_array[@]}"
@@ -60,35 +59,54 @@ open $filename
 sleep 1
 # Delete the no longer needed file.
 rm $filename
-
 done
+
+if [[ ! $MIN ]]; then 
+  mkdir -p $USER_HOME/dev
+  mkdir -p $USER_HOME/tools
+fi
+
+if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
+  e_header "Installing Burp Suite"
+  mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
+  if [[ -e "$DOTFILES_HOME" && ! $MIN && ! $LOCAL ]]; then
+    ln -s $DOTFILES/conf/local/tools/burpsuite_pro_v*.jar $USER_HOME/tools/burp/
+    cp $DOTFILES_HOME/conf/local/licenses/burp.txt $USER_HOME/tools/burp/burp-license.txt
+  elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
+    cd $USER_HOME/tools/burp/
+    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free -O burp.jar
+  fi
+
+  e_header "Installing fuzzdb"
+  cd $USER_HOME/tools/burp
+  git clone https://github.com/fuzzdb-project/fuzzdb.git fuzzdb
+  cd
+fi
+
+#if [[ $HACK || $IOS || $REV ]]; then
+  #TODO
+  #  install from levine's site
+  #  include https://code.google.com/p/iphone-dataprotection/source/browse/usbmuxd-python-client/tcprelay.py?r=1eae3bba5cd2713a372f6eff64e2778ba9d864e4 (move python scripts to gists)
+  # script up the debugserver install (including sending to idevice)
+  #nsxpc.d ---> gist
+  #install xvim
+  #ioregistryexplorer
+  #open http://www.hackintoshosx.com/files/file/3600-ioregistryexplorer/
+#fi
 
 if [[ $HACK || $IOS ]]; then
   # Setup tools/env for iOS hacking
+  # https://github.com/NitinJami/keychaineditor.git (iDevice)
+  # https://github.com/nabla-c0d3/ssl-kill-switch2 (iDevice)
+  # https://nabla-c0d3.github.io/blog/2013/08/20/intercepting-the-app-stores-traffic-on-ios/
   # https://code.google.com/p/ccl-bplist/
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
   e_header "Installing idb (iOS)"
   gem install idb
+
+  e_header "Installing iReSign (iOS)"
+  git clone https://github.com/maciekish/iReSign.git
+  mv iReSign/iReSign.app /Applications/
+  rm -rf iReSign/
 fi
 
-#if [[ $HACK || $RUBY ]]; then
-  # https://hakiri.io/blog/ruby-security-tools-and-resources
-#  e_header "Installing ruby"
-#  gem install brakeman bundler-audit
-#fi
-
-if [[ $HACK || $NET ]]; then
-  # Link RazorSQL profiles.txt
-  e_header "Installing RazorSQL connection profiles"
-  # If RazorSQL has never been run this wont exist. 
-  # We then run RazorSQL so we can config it.
-  if [[ ! -e ~/Library/RazorSQL/data/profiles.txt ]]; then
-      open -a RazorSQL
-      sleep 1
-      killall RazorSQL
-  fi
-  ln -s $DOTFILES_HOME/conf/local/profiles.txt $USER_HOME/Library/RazorSQL/data/
-fi
-
-mkdir -p $USER_HOME/dev
-mkdir -p $USER_HOME/tools
