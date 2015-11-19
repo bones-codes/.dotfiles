@@ -50,9 +50,7 @@ function check_sudo() {
       e_error "Sorry, you need root to run parts of this script exiting."
       exit 1
     fi
-    
   fi
-
 }
 
 function check_cmd_tools() {
@@ -68,7 +66,7 @@ function check_cmd_tools() {
     # install all the updates
     # Find the last listed update in the Software Update feed with "Command Line Tools" in the name
     cmd_line_tools=$(softwareupdate -l | awk '/\*\ Command Line Tools/ { $1=$1;print }' | tail -1 | sed 's/^[[ \t]]*//;s/[[ \t]]*$//;s/*//' | cut -c 2-)
-    #Install the command line tools
+    # Install the command line tools
     softwareupdate -i "$cmd_line_tools" -v
     # Remove the temp file
     if [[ -f "/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress" ]]; then
@@ -76,18 +74,36 @@ function check_cmd_tools() {
     fi
     # Install the rest of the updated
     softwareupdate -iav
+    
+    pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
+    if [[ $? != 0 ]]; then
+      if [[ $LOCAL || $HACK || $IOS ]]; then
+        e_header "You need to install XCode... cause sometimes the cli tools just aren't enough"
+        open https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12#
+        while true; do
+          pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
+          if [[ $? != 0 ]]; then 
+            sleep 120
+          else
+            e_header "Please to accept the Xcode User Agreement cause lawyers"
+            #sudo xcodebuild -license
+            open -a Xcode
+            sleep 120
+            break
+          fi
+        done
+      fi
+    fi
     e_header "Must reboot --- damn you Apple"
     # This creates a .profile and will continue the install upon reboot.
     # This works because:
     # a. On a clean install, sudo reboot will cause the terminal to reopen as part of a restore previous state.
     # b. On a clean install .profile does not exist so it easy to manipulate and later delete.
-    #if [ "$LOCAL" ]; then echo 'export LOCAL=True' >> .profile; fi
     echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
     sleep 5
     sudo -u root reboot
   fi
 }
-
 
 # Initialize.
 function init_do() {
@@ -180,7 +196,6 @@ function setdiff() {
   else
     set "diff" "$@"
   fi
-  
 }
 
 function setcomp() {
@@ -189,7 +204,6 @@ function setcomp() {
   else
     set "comp" "$@"
   fi
-  
 }
 
 # Given strings containing space-delimited words A and B, "setdiff A B" will
@@ -222,9 +236,9 @@ function set() {
   [[ "$2" ]] && echo "${setdiffC[@]}"
 }
 
+# Get the system OS and set the var
 function get_os() {
   if [ -z $1 ]; then
-    # Set OS type
     # OSX
     if [[ "$OSTYPE" =~ ^darwin ]]; then
     export OS="osx" 
@@ -242,14 +256,15 @@ function get_os() {
   return 1
 }
 
-# Install vim plugins -- there has to be a better way to do this...
+# Install vim plugins
 function vim_bundle() {
-  plugins+=(
+  plugins=(
   https://github.com/LaTeX-Box-Team/LaTeX-Box.git
   https://github.com/Raimondi/delimitMate.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/nelstrom/vim-markdown-folding.git
   https://github.com/terryma/vim-multiple-cursors.git
+  https://github.com/will133/vim-dirdiff.git
   )
 
   e_header "Installing vim plugins"
@@ -290,7 +305,7 @@ get_os
 #------------------------------------------------------------------------------#
 # min   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
 #         .bash_profile, and .bashrc)
-# local : no hacking tools, just the basics
+# local : no hacking tools, just the basics + ncc reqs
 # hack  : all pentest tools for vm or native env
 # net   : network pentest tools
 # ios   : ios hacking tools env
@@ -299,10 +314,6 @@ for arg in "$@"; do
   X=`echo "$arg" | tr [a-z] [A-Z]`
   export "$X"=True
   echo 'export '"$X"'=True' | tee -a $HOME/.profile >> $HOME/.bashrc
-  if [[ $LOCAL || $IOS ]]; then
-    echo 'export PATH=$HOME/.rbenv/bin:$PATH' >> $HOME/.bashrc
-    echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
-  fi
 done
 
 #Setup the USER_HOME variable to be the current users home.
@@ -329,8 +340,6 @@ if get_os 'osx'; then
   fi    
 
 fi
-
-#sleep 10
 
 remove_profile
 
@@ -405,18 +414,6 @@ if [[ ! $MIN ]]; then
     source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
   fi
 
-  e_header "Installing Burp Suite"
-  mkdir -p $USER_HOME/tools
-  if [[ -e "$DOTFILES_HOME/conf/local/.burp" && ! $MIN && ! $LOCAL ]]; then
-    cp "$DOTFILES_HOME/conf/local/.burp" ~/
-    python $HOME/.dotfiles/bin/burp_download
-    mv $HOME/tools/burp/burp.jar /Applications/
-  elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
-    mkdir -p $USER_HOME/tools/burp/backup/
-    cd $USER_HOME/tools/burp/
-    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free -O burp.jar
-  fi
-
 fi
 
 remove_profile
@@ -425,6 +422,8 @@ remove_profile
 e_header "All done!"
 if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
   echo "For all changes to take effect you should relogin."
+#  echo "Remember to add "use-standard-socket" to your ~/.gnupg/gpg-agent.conf file."
+
   read -p "Do you want to relogin now (y/n) ?: " yn
   case $yn in
     [Yy]* ) 
