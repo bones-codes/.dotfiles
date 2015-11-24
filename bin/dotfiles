@@ -418,11 +418,9 @@ fi
 
 remove_profile
 
-# All done!
 e_header "All done!"
 if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
   echo "For all changes to take effect you should relogin."
-#  echo "Remember to add "use-standard-socket" to your ~/.gnupg/gpg-agent.conf file."
 
   read -p "Do you want to relogin now (y/n) ?: " yn
   case $yn in
