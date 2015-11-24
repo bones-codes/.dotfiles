@@ -10,7 +10,7 @@ $(get_os 'osx') || return 1
 casks=(gpgtools java iterm2-nightly firefox karabiner seil)
 
 if [[ $HACK || $NET ]]; then
-  casks+=(transmit vlc razorsql transmit)
+  casks+=(transmit vlc razorsql)
 fi
 
 if [[ $HACK || $REV ]]; then
