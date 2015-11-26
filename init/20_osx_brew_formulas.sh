@@ -71,6 +71,8 @@ if [[ $HACK || $NET ]]; then
   masscan
   nmap
   netcat
+  "--with-python libdnet"
+  scapy
   )
   
 fi
