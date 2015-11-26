@@ -5,7 +5,6 @@
 # It's my library. Let me see it.
 sudo chflags nohidden ~/Library/
 sudo chflags nohidden /tmp
-#sudo chflags nohidden /usr
 
 #Disable Spotlight indexing from indexing /Volumes
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
@@ -23,7 +22,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME 0
 sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
 sudo defaults write -g AppleAquaColorVariant -int 6
 
-## EXTRAA
+## EXTRA
 # Link to the airport command
 sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/local/bin/airport
 
@@ -40,8 +39,8 @@ sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutio
 # Spotlight                                                                   #
 ###############################################################################
 
-  #Disable Spotlight indexing from indexing /volume
-  sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+#Disable Spotlight indexing from indexing /volume
+sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
 #Change indexing order and disable some search results in Spotlight
 sudo defaults write com.apple.spotlight orderedItems -array \
@@ -81,22 +80,22 @@ sudo mdutil -E / > /dev/null
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
-
 ###############################################################################
 # Security                                                                    #
 ###############################################################################
+# https://github.com/drduh/OS-X-Security-and-Privacy-Guide
 # Enable Firewall.
 # Replace value with
 # 0 = off
 # 1 = on for specific services
 # 2 = on for essential services
-sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
 # Enable Stealth mode.
-sudo defaults write /Library/Preferences/com.apple.alf stealthenabled 1
+sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
 # Enable Firewall Logging.
-sudo defaults write /Library/Preferences/com.apple.alf loggingenabled 1
+sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
 # Allow signed APPS
-sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -int 1
+sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
 # Enable Require password to wake this computer from sleep or screen saver.
 sudo defaults -currentHost write com.apple.screensaver askForPassword -int 1
@@ -104,7 +103,7 @@ sudo defaults -currentHost write com.apple.screensaver askForPassword -int 1
 sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
 sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
 # Disable Guest login.
-sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
 
 # Require password to unlock each System Preference pane.
 # Edit the /etc/authorization file using a text editor.

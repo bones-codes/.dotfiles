@@ -18,17 +18,10 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
-# Show icons for hard drives, servers, and removable media on the desktop
-#defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-#defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-#defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-#defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
-#defaults write com.apple.finder NewWindowTarget -string "PfHm"
-#defaults write com.apple.finder NewWindowTargetPath -string "file:///Users/huesos/"
-#defaults write com.apple.finder FinderSpawnTab -bool true
-
-# Hide desktop icons
-defaults write com.apple.finder CreateDesktop false
+if [[ "$LOCAL" ]]; then
+  # Hide desktop icons
+  defaults write com.apple.finder CreateDesktop false
+fi
 
 #Disable smart quotes and smart dashes
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
@@ -117,7 +110,6 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # Enable subpixel font rendering on non-Apple LCDs
 defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
-
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 #defaults write com.apple.screencapture type -string "png"
 
@@ -162,7 +154,6 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 # I do not need my documents to be cloud
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-
 ###############################################################################
 # Safari & WebKit                                                             #
 ###############################################################################
@@ -202,7 +193,6 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
 
 ##############################################################################
 # Dock, Dashboard, and hot corners                                            #
@@ -285,7 +275,6 @@ if [[ "$new_dotfiles_install" && "$LOCAL" ]]; then
 fi
 
 
-###############################################################################
 # Mail                                                                        #
 ###############################################################################
 
@@ -296,9 +285,6 @@ defaults write com.apple.mail DisableSendAnimations -bool true
 # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
 defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-#defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" -string "@\\U21a9"
-
 # Display emails in threaded mode, sorted by date (oldest at the top)
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
 defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
@@ -306,7 +292,6 @@ defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -stri
 
 # Disable inline attachments (just show the icons)
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
-
 
 ###############################################################################
 # Messages                                                                    #
@@ -347,25 +332,6 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 # Enable the debug menu in Disk Utility
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
-
-# Transmission
-# ============
-
-# Use `~/Documents/Torrents` to store incomplete downloads
-#defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-#defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
-
-# Don’t prompt for confirmation before downloading
-#defaults write org.m0k.transmission DownloadAsk -bool false
-
-# Trash original torrent files
-#defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# Hide the donate message
-#defaults write org.m0k.transmission WarningDonate -bool false
-
-# Hide the legal disclaimer
-#defaults write org.m0k.transmission WarningLegal -bool false
 
 if [[ ! $MIN ]]; then
   bad=("com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
