@@ -43,6 +43,7 @@ if [ "$LOCAL" ]; then
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   urlview
   offlineimap
+  swig
   notmuch
   "profanity --with-terminal-notifier"
   w3m

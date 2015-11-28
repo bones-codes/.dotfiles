@@ -62,8 +62,8 @@ if [[ ! $MIN ]]; then
 fi
 
 if [[ $HACK || $NET ]]; then
-  # Install Airtool
   # http://www.adriangranados.com/apps/airtool
+  e_header "Installing Airtool"
   wget https://s3.amazonaws.com/airtool/airtool_1.2.1.pkg
   open airtool_1.2.1.pkg
 fi
