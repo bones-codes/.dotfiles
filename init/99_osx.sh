@@ -24,7 +24,7 @@ if [[ ! -e ~/Library/Preferences/com.googlecode.iterm2.plist ]]; then
 fi
 
 # Now for iTerm to load its setting from an external location.
-defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool TRUE
+defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 defaults write  ~/Library/Preferences/com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iTerm/";
     
 # Download all the needed themes.
