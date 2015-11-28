@@ -20,7 +20,7 @@ fi
 if [[ ! -e ~/Library/Preferences/com.googlecode.iterm2.plist ]]; then
     open -a iTerm
     sleep 1
-    killall iTerm
+    killall iTerm2
 fi
 
 # Now for iTerm to load its setting from an external location.
@@ -55,7 +55,6 @@ sleep 1
 # Delete the no longer needed file.
 rm $filename
 done
-killall iTerm
 
 if [[ ! $MIN ]]; then 
   mkdir -p $USER_HOME/dev
