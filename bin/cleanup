@@ -10,6 +10,5 @@ function clean_up() {
 clean_up $HOME/.dotfiles/copy
 clean_up $HOME/.dotfiles/link
 
-rm $HOME/.burp
-rm -rf $HOME/tools/burp
-rm $HOME/.dotfiles
+rm -rf $HOME/tools
+rm -rf $HOME/.dotfiles
