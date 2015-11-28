@@ -18,7 +18,6 @@ alias edot="vim $HOME/.dotfiles/"
 # dirs  755 drwxr-xr-x (777 minus 022)
 umask 022
 
-
 ##Also Fix ll
 alias l='ls -F'
 alias ll='ls -ltrh'
@@ -52,6 +51,3 @@ alias whois="whois -h whois-servers.net"
 
 # View HTTP traffic
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-
-# Update Burp
-alias uburp='python $HOME/.dotfiles/bin/burp_download'
