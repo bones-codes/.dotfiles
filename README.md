@@ -151,4 +151,3 @@ On top of the scripts in [.oh-my-zsh-custom](link/.oh-my-zsh-custom), there are 
    * multi_firefox - app-named profiles for firefox
    * scan - wrapper around nmap
    * update - simple script to update vim plugins, brews, and dotfiles
-   * vimman - vim man page viewer
