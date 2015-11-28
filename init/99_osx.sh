@@ -11,7 +11,6 @@ if [[ $MIN ]]; then
   rm .bashrc; curl -o .bashrc https://gist.githubusercontent.com/bones-codes/fa90062beaf08ff67f82/raw/cf6b89d44908c171d2e840a7d5371ab7e6c9636b/.bashrc 
   curl -o .tmux.conf https://gist.githubusercontent.com/bones-codes/c66c5974aa507f3ab6f9/raw/873a3e26fb17387ea3be30357de3f0489625090f/.tmux.conf
   curl -o .vimrc https://gist.githubusercontent.com/bones-codes/8a0b86468e9f7f226f94/raw/35df943415b5aa67484f397115446f5388fda4ce/.vimrc 
-
   return
 fi
 
@@ -68,6 +67,13 @@ if [[ ! $MIN ]]; then
   mkdir -p $USER_HOME/tools
 fi
 
+if [[ $HACK || $NET ]]; then
+  # Install Airtool
+  # http://www.adriangranados.com/apps/airtool
+  wget https://s3.amazonaws.com/airtool/airtool_1.2.1.pkg
+  open airtool_1.2.1.pkg
+fi
+
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
@@ -101,6 +107,7 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/NitinJami/keychaineditor.git (iDevice)
   # https://github.com/nabla-c0d3/ssl-kill-switch2 (iDevice)
   # https://nabla-c0d3.github.io/blog/2013/08/20/intercepting-the-app-stores-traffic-on-ios/
+  # https://github.com/kasketis/netfox (iDevice)
   # https://code.google.com/p/ccl-bplist/
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
   e_header "Installing idb (iOS)"
