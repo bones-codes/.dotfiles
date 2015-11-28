@@ -11,6 +11,7 @@ recipes=(
   "brew-cask"
   coreutils 
   ctags 
+  "curl --with-openssl"
   findutils 
   "gdbm --universal" 
   git 
@@ -23,7 +24,6 @@ recipes=(
   "python --universal" 
   reattach-to-user-namespace
   rename 
-  #"sqlite --universal" 
   ssh-copy-id  
   tmux
   "vim --with-python --with-ruby --with-perl --enable-cscope 
@@ -53,7 +53,6 @@ fi
 if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   recipes+=(
   rbenv
-#  ruby-build
   )
   
 fi

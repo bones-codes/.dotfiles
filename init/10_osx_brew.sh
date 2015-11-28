@@ -31,8 +31,9 @@ if [[ ! $MIN ]]; then
 taps=("homebrew/dupes" "caskroom/cask" "caskroom/versions" "caskroom/fonts")
   if [[ $HACK || $NET ]]; then
     # Needed for Scapy
-    taps=("homebrew/python")
+    taps+=("homebrew/python")
   fi
+
 taps=($(setdiff "${taps[*]}" "$(brew tap)"))
 if (( ${#taps[@]} > 0 )); then
   for a_tap in "${taps[@]}"; do
