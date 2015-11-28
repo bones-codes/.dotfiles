@@ -1,4 +1,3 @@
-# README
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
