@@ -1,3 +1,4 @@
+# README
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
@@ -79,6 +80,7 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
    * brew-cask
    * coreutils 
    * ctags 
+   * curl --with-openssl
    * findutils 
    * gdbm --universal 
    * git 
@@ -91,7 +93,6 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
    * python --universal 
    * reattach-to-user-namespace
    * rename 
-   * sqlite --universal 
    * ssh-copy-id  
    * tmux
    * vim --with-python --with-ruby --with-perl --enable-cscope --enable-pythoninterp --override-system-vi
