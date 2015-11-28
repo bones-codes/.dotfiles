@@ -60,6 +60,13 @@ if [[ $LOCAL ]]; then
   fi
 fi
 
+e_header "Installing Karabiner and Seil sets"
+open -a karabiner
+sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'UPDATE access SET allowed = "1";'
+sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
+sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
+killall karabiner
+
 if [[ "$(type -P pip)" ]]; then
   e_header "Install and/or Upgrade PIP"
   pip -q install --upgrade pip

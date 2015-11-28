@@ -14,12 +14,6 @@ if [[ $MIN ]]; then
   return
 fi
 
-e_header "Installing Karabiner and Seil sets"
-open -a karabiner
-sleep 60
-sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
-sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
-
 ## iTerm
 # If iTerm has never been run this wont exist. 
 # We then run iTerm so we can config it.
@@ -61,6 +55,7 @@ sleep 1
 # Delete the no longer needed file.
 rm $filename
 done
+killall iTerm
 
 if [[ ! $MIN ]]; then 
   mkdir -p $USER_HOME/dev
