@@ -18,7 +18,6 @@ if [[ $HACK || $REV ]]; then
 fi
 
 if [ "$LOCAL" ]; then
-    # TODO automate tunnelblick install
   casks+=(ricochet 1password vagrant mactex vmware-fusion little-snitch)
 fi
 
