@@ -83,8 +83,8 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 ###############################################################################
 # Security                                                                    #
 ###############################################################################
-# https://github.com/drduh/OS-X-Security-and-Privacy-Guide
-# Enable Firewall.
+# TODO https://github.com/drduh/OS-X-Security-and-Privacy-Guide
+# Enable Firewall
 # Replace value with
 # 0 = off
 # 1 = on for specific services
@@ -125,6 +125,8 @@ sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resourc
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
 # Disable Bluetooth Sharing.
 sudo defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+# Disable Captive Portal
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 
 #TODO
 #Need to look at bad services in the future right now disabling some service
