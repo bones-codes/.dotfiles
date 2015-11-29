@@ -363,7 +363,7 @@ if [[ ! -d $DOTFILES_HOME && ! $MIN ]]; then
   new_dotfiles_install=1
   prompt_delay=15
   e_header "Downloading dotfiles"
-  git clone git://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
+  git clone https://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
   cd $DOTFILES_HOME
 elif [[ "$1" != "restart" ]]; then
   # Make sure we have the latest files.
