@@ -78,6 +78,8 @@ function check_cmd_tools() {
     pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
     if [[ $? != 0 ]]; then
       if [[ $LOCAL || $HACK || $IOS ]]; then
+        # Prevent sleep while we install the Xcodes
+        caffeinate -t 144000 &
         e_header "You need to install XCode... cause sometimes the cli tools just aren't enough"
         open https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12#
         while true; do
@@ -293,7 +295,6 @@ function assert() {
 ################################################################################
 ## FUNCTIONS END                                                               #
 ################################################################################
-
 get_os 
 
 # If this file was being sourced, exit now.
@@ -359,6 +360,7 @@ fi
 
 # Initialize unless min install.
 if [[ ! -d $DOTFILES_HOME && ! $MIN ]]; then
+    echo 1
   # $DOTFILES directory doesn't exist? Clone it!
   new_dotfiles_install=1
   prompt_delay=15
@@ -366,6 +368,7 @@ if [[ ! -d $DOTFILES_HOME && ! $MIN ]]; then
   git clone https://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
   cd $DOTFILES_HOME
 elif [[ "$1" != "restart" ]]; then
+    echo 2
   # Make sure we have the latest files.
   e_header "Updating dotfiles"
   cd $DOTFILES_HOME
