@@ -2,20 +2,13 @@
 
 # OSX
 if get_os 'osx'; then
-  echo "1"
-  open -a Safari
-  sleep 1
   #google-chrome
-  echo "2"
   open https://www.google.com/chrome
   #vimium
-  echo "3"
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
-  echo "4"
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
   #wifi-signal
-  echo "5"
   open https://itunes.apple.com/us/app/wifi-signal/id525912054?mt=12
   #Paragon
   #open https://www.paragon-software.com/home/ntfs-mac/
@@ -51,12 +44,6 @@ if get_os 'osx'; then
     # https://fix-macosx.com/ 
     e_header "Disabling 'Spotlight Suggestions' for both Spotlight and Safari"
     python $DOTFILES_HOME/bin/fix-macosx.py
-    #tunnelblick-beta
-    #open https://tunnelblick.net/downloads.html
-    #vmware-fusion
-    #open https://my.vmware.com/web/vmware/login
-    #Little-Snitch
-    #open https://www.obdev.at/products/littlesnitch/download.html
   fi
 
 # Ubuntu.

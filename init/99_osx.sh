@@ -76,7 +76,7 @@ if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
     cp $DOTFILES_HOME/conf/local/licenses/burp.txt $USER_HOME/tools/burp/burp-license.txt
   elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
     cd $USER_HOME/tools/burp/
-    wget https://portswigger.net/DownloadUpdate.ashx?Product=Free -O burp.jar
+    curl -fsSL "https://portswigger.net/DownloadUpdate.ashx?Product=Free" -o burp.jar
   fi
 
   e_header "Installing fuzzdb"
