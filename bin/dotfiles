@@ -84,9 +84,7 @@ function check_cmd_tools() {
         open https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12#
         while true; do
           pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
-          if [[ $? != 0 ]]; then 
-            sleep 120
-          else
+          if [[ $? == 0 ]]; then 
             e_header "Please to accept the Xcode User Agreement --- cause lawyers."
             sudo xcrun cc
             break
