@@ -85,12 +85,10 @@ function check_cmd_tools() {
         while true; do
           pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
           if [[ $? == 0 ]]; then 
+            sudo xcodebuild -license accept
             break
           fi
         done
-        e_header "Please to accept the Xcode User Agreement --- cause lawyers."
-        #sudo xcodebuild -license
-        sudo xcrun cc
       fi
     fi
     e_header "Must reboot --- damn you Apple"
