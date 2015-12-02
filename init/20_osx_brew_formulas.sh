@@ -60,7 +60,6 @@ fi
 
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
-  sslyze
   "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
   )
   

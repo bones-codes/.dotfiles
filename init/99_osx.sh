@@ -56,22 +56,17 @@ sleep 1
 rm $filename
 done
 
+killall iTerm2
+
 if [[ ! $MIN ]]; then 
   mkdir -p $USER_HOME/dev
   mkdir -p $USER_HOME/tools
 fi
 
-if [[ $HACK || $NET ]]; then
-  # http://www.adriangranados.com/apps/airtool
-  e_header "Installing Airtool"
-  wget https://s3.amazonaws.com/airtool/airtool_1.2.1.pkg
-  open airtool_1.2.1.pkg
-fi
-
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
-  if [[ -e "$DOTFILES_HOME" && ! $MIN && ! $LOCAL ]]; then
+  if [[ -e "$DOTFILES_HOME/conf/local/" && ! $MIN && ! $LOCAL ]]; then
     ln -s $DOTFILES/conf/local/tools/burpsuite_pro_v*.jar $USER_HOME/tools/burp/
     cp $DOTFILES_HOME/conf/local/licenses/burp.txt $USER_HOME/tools/burp/burp-license.txt
   elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
@@ -113,3 +108,12 @@ if [[ $HACK || $IOS ]]; then
   rm -rf iReSign/
 fi
 
+if [[ $HACK || $WAPT || $IOS ]]; then
+  if [[ -e "$HOME/.dotfiles/bin/testssl.sh" ]]; then
+    cd "$HOME/.dotfiles/bin/testssl.sh"
+    git pull
+  else
+    cd "$HOME/.dotfiles/bin/"
+    git clone https://github.com/drwetter/testssl.sh.git
+  fi
+fi
