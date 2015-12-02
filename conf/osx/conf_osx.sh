@@ -211,6 +211,8 @@ defaults write NSGlobalDomain NSWindowResizeTime .1
 # Disable press-and-hold for keys in favor of key repeat
 # I hope whoever came up with this stupid fucking idea dies in a tar pit
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Don't take EONS to repeat 
+defaults write NSGlobalDomain InitialKeyRepeat -int 4
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
