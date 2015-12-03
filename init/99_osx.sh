@@ -61,6 +61,10 @@ killall iTerm2
 if [[ ! $MIN ]]; then 
   mkdir -p $USER_HOME/dev
   mkdir -p $USER_HOME/tools
+
+  e_header "Installing PyObjC"
+  # Cause Homebrew's Python is missing the CoreFoundation module
+  pip install -U pyobjc
 fi
 
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
