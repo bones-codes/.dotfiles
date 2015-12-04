@@ -1,3 +1,6 @@
+# TODO
+create 'secure' script for use BEFORE connecting to the internets
+clean up non-local dot installs (sources etc)
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
@@ -24,8 +27,23 @@ Note:
 [bin]: https://github.com/bones-codes/.dotfiles/tree/master/bin
 
 ## Installation
+```sh
+bash -c "$(curl -fsSL http://bit.ly/bones--dots)"
+```
+
+If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
+
+```sh
+bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"
+```
+
+Use the following to install with options.
+```sh
+curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
+```
+
 ### Standalone user support
-On my main machine, and in general, I tend to run as a non-privileged user. As such I make use of targetpw and runaspw see [man sudoers](http://www.sudo.ws/sudoers.man.html). Therefore even if the current account is compromised the attacker still needs to know either the root user or adminsitator user's password to run as a privileged user. Indeed this is a defense-in-depth mechanism only but is highly effective in many situations.  
+On my main machine, and in general, I tend to run as a non-privileged user. As such I make use of targetpw and runaspw see [man sudoers](http://www.sudo.ws/sudoers.man.html). Therefore even if the current account is compromised the attacker still needs to know either the root user or adminsitator user's password to run as a privileged user. This is a defense-in-depth mechanism only but is highly effective in many situations.  
 
 #### Setup
 On OSX:
@@ -49,21 +67,4 @@ Root enabled:
 #### On First Run
   * On OSX you will be prompted if you need to run as a standard user. Saying Yes will cause the script to run the brew install as `sudo` and anything that needs root access as `sudo -u root` but will otherwise default to current user allowing you to customize user current preferences. 
   * On systems where u do know the root password no special steps are needed. The script just runs sudo as always, making use of root's actual password. 
-
-
-### Actual Installation 
-```sh
-bash -c "$(curl -fsSL http://bit.ly/bones--dots)"
-```
-
-If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
-
-```sh
-bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"
-```
-
-Use the following to install with options.
-```sh
-curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
-```
 
