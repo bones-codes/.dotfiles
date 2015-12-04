@@ -17,6 +17,10 @@ if get_os 'osx'; then
   #xPRA
   #open https://www.xpra.org/
 
+  if [[ $HACK || $NET ]]; then
+    open http://www.adriangranados.com/apps/airtool
+  fi
+
   if [[ $LOCAL ]]; then
     #tunnelblick
     open https://tunnelblick.net/downloads.html
@@ -27,8 +31,8 @@ if get_os 'osx'; then
     e_header "Enable tty_tickets for sudo"
     su -m -c "echo 'Defaults tty_tickets' >> /etc/sudoers"
     
-    # https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
     e_header "Setup a firmware password"
+    # https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
     echo "1. Shutdown the Mac.
 2. Start up your Mac again and immediately hold the Command and R keys
    after you hear the startup sound to start from OS X Recovery.
@@ -40,9 +44,8 @@ if get_os 'osx'; then
 7. Select Quit Firmware Utility to close the Firmware Password Utility.
 8. Select the Apple menu and choose Restart or Shutdown."
 
-    # Disable "Spotlight Suggestions" for both Spotlight and Safari
-    # https://fix-macosx.com/ 
     e_header "Disabling 'Spotlight Suggestions' for both Spotlight and Safari"
+    # https://fix-macosx.com/ 
     python $DOTFILES_HOME/bin/fix-macosx.py
   fi
 
