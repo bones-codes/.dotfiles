@@ -65,6 +65,10 @@ if [[ ! $MIN ]]; then
   e_header "Installing PyObjC"
   # Cause Homebrew's Python is missing the CoreFoundation module
   pip install -U pyobjc
+
+  e_header "Installing peewee (for pct-vim)"
+  # https://github.com/d0c-s4vage/pct-vim
+  pip install -U peewee
 fi
 
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
@@ -81,7 +85,6 @@ if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header "Installing fuzzdb"
   cd $USER_HOME/tools/burp
   git clone https://github.com/fuzzdb-project/fuzzdb.git fuzzdb
-  cd
 fi
 
 #if [[ $HACK || $IOS || $REV ]]; then

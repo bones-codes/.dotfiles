@@ -262,6 +262,7 @@ function vim_bundle() {
   https://github.com/nelstrom/vim-markdown-folding.git
   https://github.com/terryma/vim-multiple-cursors.git
   https://github.com/will133/vim-dirdiff.git
+  https://github.com/d0c-s4vage/pct-vim.git
   )
 
   e_header "Installing vim plugins"
