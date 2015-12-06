@@ -22,11 +22,12 @@ recipes=(
   "openssl --universal" 
   p7zip 
   "python --universal" 
+  python3
   reattach-to-user-namespace
   rename 
   ssh-copy-id  
   tmux
-  "vim --with-python --with-ruby --with-perl --enable-cscope 
+  "vim --with-python3 --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
   "wget --with-iri" 
   zsh 

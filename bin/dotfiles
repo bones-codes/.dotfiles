@@ -406,13 +406,12 @@ if [[ ! $MIN ]]; then
   if [[ "$backup" ]]; then
     echo -e "\nBackups were moved to ~/${backup_dir#$HOME/}"
   fi
+fi
 
-  # Lest I forget to do a few additional things...
-  if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
-    e_header "First-Time Reminders"
-    source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
-  fi
-
+# Lest I forget to do a few additional things...
+if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
+  e_header "First-Time Reminders"
+  source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
 fi
 
 remove_profile
