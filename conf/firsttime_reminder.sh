@@ -2,20 +2,15 @@
 
 # OSX
 if get_os 'osx'; then
-  echo 1
   open -a Safari
 
   #google-chrome
-  echo 2
   open https://www.google.com/chrome
   #vimium
-  echo 3
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
-  echo 4
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
   #wifi-signal
-  echo 5
   open "https://itunes.apple.com/us/app/wifi-signal/id525912054?mt=12"
   #Paragon
   #open https://www.paragon-software.com/home/ntfs-mac/
@@ -25,13 +20,11 @@ if get_os 'osx'; then
   #open https://www.xpra.org/
 
   if [[ $HACK || $NET ]]; then
-    echo 6
     open http://www.adriangranados.com/apps/airtool
   fi
 
   if [[ $LOCAL ]]; then
     #tunnelblick
-    echo 7
     open https://tunnelblick.net/downloads.html
 
     e_header "Enable Filevault"

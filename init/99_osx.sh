@@ -68,7 +68,7 @@ if [[ ! $MIN ]]; then
 
   e_header "Installing peewee (for pct-vim)"
   # https://github.com/d0c-s4vage/pct-vim
-  pip install -U peewee
+  pip3 install -U peewee
 fi
 
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
