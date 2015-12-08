@@ -212,7 +212,7 @@ defaults write NSGlobalDomain NSWindowResizeTime .1
 # I hope whoever came up with this stupid fucking idea dies in a tar pit
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 # Don't take EONS to repeat 
-defaults write NSGlobalDomain InitialKeyRepeat -int 4
+defaults write NSGlobalDomain InitialKeyRepeat -int 30
 
 # Automatically quit printer app once the print jobs complete
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
