@@ -1,8 +1,7 @@
 folders:
  - INBOX
-user:   'cmarie'
-domain: 'isecpartners.com'
-server: 'exch.corp.isecpartners.com'
-one_path: '/Volumes/time machine/iSEC.agilekeychain'
-onepass: 'iSEC\ Exchange'
+user:   'cbonar171'
+domain: 'nccgroup.com'
+server: 'imaps.nccgroup.com'
+pass: 'ncc/ncc-exchange'
 max: 10
