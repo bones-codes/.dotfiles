@@ -21,10 +21,19 @@ alias l='ls -apG'
 alias c='clear'
 alias x='exit'
 alias q='exit'
- 
+
+# Show line numbers and search recursively by default 
+alias grep='grep -nr'
+
 # File size
 alias fs="stat -f '%z bytes'"
 alias df="df -h"
+
+# Use stronger encryption with hdiutil
+alias hdc="hdiutil create -size 1g -encryption AES-256 -type SPARSE -fs HFS+" 
+alias hda="hdiutil attach"
+alias hdd="hdiutil detach"
+alias hdr="diskutil rename"
 
 # Aliasing eachdir like this allows you to use aliases/functions as commands.
 alias eachdir=". eachdir"
@@ -34,15 +43,14 @@ function md() {
   mkdir -p "$@" && cd "$@"
 }
 
-alias top=htop
-alias 'tmx=tmux -u attach'
-alias 'grep=grep -nr'
-alias "mutt=imap_notifier; mutt"
-alias "testssl=$HOME/.dotfiles/bin/testssl.sh/testssl.sh"
-
 # IP addresses
 alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias whois="whois -h whois-servers.net"
 
 # View HTTP traffic
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+alias top=htop
+alias tmx='tmux -u attach'
+alias mutt="imap_notifier; mutt"
+alias testssl="$HOME/.dotfiles/bin/testssl.sh/testssl.sh"
