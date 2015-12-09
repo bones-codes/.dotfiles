@@ -1,3 +1,5 @@
+# TODO
+create 'secure' script for use BEFORE connecting to the internets
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
@@ -61,6 +63,7 @@ Root enabled:
      
     %wheel ALL=(ALL) ALL
    ```
+
 #### On First Run
   * On OSX you will be prompted if you need to run as a standard user. Saying Yes will cause the script to run the brew install as `sudo` and anything that needs root access as `sudo -u root` but will otherwise default to current user allowing you to customize user current preferences. 
   * On systems where u do know the root password no special steps are needed. The script just runs sudo as always, making use of root's actual password. 
