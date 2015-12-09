@@ -1,5 +1,3 @@
-# TODO
-create 'secure' script for use BEFORE connecting to the internets
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
@@ -44,7 +42,7 @@ curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
 ### Standalone user support
 On my main machine, and in general, I tend to run as a non-privileged user. As such I make use of targetpw and runaspw see [man sudoers](http://www.sudo.ws/sudoers.man.html). Therefore even if the current account is compromised the attacker still needs to know either the root user or adminsitator user's password to run as a privileged user. This is a defense-in-depth mechanism only but is highly effective in many situations.  
 
-#### Setup
+### Setup
 On OSX:
    We can enable the root user and then follow Root enabled below. I choose to not enable the root user and instead make use of runaspw, in combination with setting the runas_default variable to a user who is an Administrator. This allows me to run sudo commands under the Admin user and also allows my user to run `sudo -u root` for root commands. The latter works because what `sudo -u root` with runaspw set really means is sudo sudo.
    * Create a group, for ex non_admin
@@ -64,7 +62,7 @@ Root enabled:
     %wheel ALL=(ALL) ALL
    ```
 
-#### On First Run
+### On First Run
   * On OSX you will be prompted if you need to run as a standard user. Saying Yes will cause the script to run the brew install as `sudo` and anything that needs root access as `sudo -u root` but will otherwise default to current user allowing you to customize user current preferences. 
   * On systems where u do know the root password no special steps are needed. The script just runs sudo as always, making use of root's actual password. 
 
