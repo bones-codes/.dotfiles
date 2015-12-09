@@ -30,8 +30,8 @@ path=/Users/huesos/.mail
 #
 [user]
 name=cara marie
-primary_email=cara@isecpartners.com
-other_email=cara.marie@me.com;cmarie@isecpartners.com;
+primary_email=cara.marie@nccgroup.com
+other_email=cara.marie@me.com;cara.marie@nccgroup.trust;
 
 # Configuration for "notmuch new"
 #
