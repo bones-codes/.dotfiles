@@ -1,8 +1,8 @@
 [general]
 ui = Basic
-accounts = ncc, isec, Apple
+accounts = ncc, Apple
 maxsyncaccounts = 2
-pythonfile=~/.mutt/local-offlineimap.py
+pythonfile=~/.mutt/local-creds.py
 fsync = false
 socktimeout = 60
 
@@ -19,8 +19,8 @@ remoterepository = nccRemote
 localrepository = nccLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
-quick = 10
-#autorefresh = 5
+quick = 100
+#autorefresh = 0.1
 #holdconnectionopen = yes
 
 [Repository nccRemote]
@@ -30,7 +30,7 @@ ssl = yes
 cert_fingerprint = 30751fbad4622d49032898faf9fff071c443edef
 remoteport = 993
 remoteusereval = "cbonar171"
-remotepasseval = get_pass('NCC Exchange')
+remotepasseval = get_pass('ncc/ncc-exchange')
 realdelete = no
 folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
 maxconnections = 3
@@ -40,39 +40,39 @@ idlefolders = ['INBOX']
 type = Maildir
 localfolders = ~/.mail/ncc/
 
-[Account isec]
-remoterepository = isecRemote
-localrepository = isecLocal
-status_backend = sqlite
-postsynchook = /usr/local/bin/notmuch new
-quick = 10
-#autorefresh = 5
+#[Account isec]
+#remoterepository = isecRemote
+#localrepository = isecLocal
+#status_backend = sqlite
+#postsynchook = /usr/local/bin/notmuch new
+#quick = 100
+#autorefresh = 0.1
 #holdconnectionopen = yes
 
-[Repository isecRemote]
-type = IMAP
-remotehost = exch.corp.isecpartners.com
-ssl = yes
-cert_fingerprint = 959fde9f6cd8c7871c489c159f69b2a5189010a7
-remoteport = 993
-remoteusereval = "cmarie@isecpartners.com"
-remotepasseval = get_pass('iSEC Exchange')
-realdelete = no
-folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
-maxconnections = 3
-idlefolders = ['INBOX']
+#[Repository isecRemote]
+#type = IMAP
+#remotehost = exch.corp.isecpartners.com
+#ssl = yes
+#cert_fingerprint = 959fde9f6cd8c7871c489c159f69b2a5189010a7
+#remoteport = 993
+#remoteusereval = "cmarie@isecpartners.com"
+#remotepasseval = get_pass('ncc/isec-exchange')
+#realdelete = no
+#folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
+#maxconnections = 3
+#idlefolders = ['INBOX']
 
-[Repository isecLocal]
-type = Maildir
-localfolders = ~/.mail/isec/
+#[Repository isecLocal]
+#type = Maildir
+#localfolders = ~/.mail/isec/
 
 [Account Apple]
 remoterepository = AppleRemote
 localrepository = AppleLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
-quick = 10
-#autorefresh = 5
+quick = 100
+#autorefresh = 0.1
 #holdconnectionopen = yes
 
 [Repository AppleRemote]
@@ -80,9 +80,9 @@ type = IMAP
 remotehost = imap.mail.me.com
 remoteport = 993
 ssl = yes
-sslcacertfile = ~/.mutt/certs/apple.pem
+cert_fingerprint = 653087783af6e38b439b275bacba12777bdee9d1
 remoteusereval = "fienyx"
-remotepasseval = get_pass('offlineimap')
+remotepasseval = get_pass('ncc/offlineimap')
 realdelete = no
 folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
 maxconnections = 3
