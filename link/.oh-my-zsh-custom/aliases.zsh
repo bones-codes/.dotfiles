@@ -1,9 +1,3 @@
-#load aliasxs 
-#.local_aliases.zsh -> .dotfiles/link/aliases-local.zsh
-if [[ -e "$HOME/.dotfiles/link/.oh-my-zsh-custom/aliases-local.zsh" ]]; then
-    source "$HOME/.dotfiles/link/.oh-my-zsh-custom/aliases-local.zsh"
-fi
-
 export DOTFILES="$HOME/.dotfiles"
 
 # Run dotfiles script, then source.
@@ -44,6 +38,7 @@ alias top=htop
 alias 'tmx=tmux -u attach'
 alias 'grep=grep -nr'
 alias "mutt=imap_notifier; mutt"
+alias "testssl=$HOME/.dotfiles/bin/testssl.sh/testssl.sh"
 
 # IP addresses
 alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"

@@ -1,5 +1,4 @@
 caches/
-*certs*
 backups/
 link/.gnupg/
 link/.ssh/
