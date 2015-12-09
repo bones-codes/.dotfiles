@@ -1,6 +1,3 @@
-# TODO
-create 'secure' script for use BEFORE connecting to the internets
-clean up non-local dot installs (sources etc)
 # Dotfiles
 
 My OS X / Linux dotfiles --- a shameless rip-off of Raviv Cohen's brilliant dotfiles (https://github.com/ravivcohen/dotfiles) with just a few modifications.
