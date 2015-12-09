@@ -65,4 +65,18 @@ set laststatus=2
 xnoremap p pgvy
 map ** gwap
 map ~~ :w<CR> :!make<CR>
-so ~/.vimrc-local
+map -s :call ToggleSpellCheck()         
+
+" custom functions ---------------------------------
+set spell spelllang=
+function! ToggleSpellCheck()
+    if &spelllang == 'en_us'
+        set spell spelllang=
+        echo "Spell check disabled"
+    else
+        !iconv -f UTF-16 -t ASCII//TRANSLIT ~/.vim/spell/spellcheck-word-list.dic > ~/.vim/spell/spellcheck-word-list.ascii
+        mkspell! ~/.vim/spell/en.utf-8.add
+        set spell spelllang=en_us
+        echo "Spell check enabled"
+    endif
+endfunction
