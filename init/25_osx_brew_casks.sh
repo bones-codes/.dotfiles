@@ -18,7 +18,7 @@ if [[ $HACK || $REV ]]; then
 fi
 
 if [ "$LOCAL" ]; then
-  casks+=(ricochet 1password vagrant mactex vmware-fusion little-snitch knox)
+  casks+=(ricochet 1password vagrant mactex vmware-fusion little-snitch)
 fi
 
 # Install Homebrew casks.
