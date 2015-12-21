@@ -348,7 +348,7 @@ fi
 
 standard_user_env
 remove_profile
-
+env
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
 if [[ ! "$(type -P git)" && $(get_os 'ubuntu') ]]; then
