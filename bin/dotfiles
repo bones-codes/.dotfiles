@@ -328,6 +328,7 @@ export DOTFILES_HOME="$USER_HOME/.dotfiles"
 echo 'export DOTFILES_HOME='"$USER_HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
 
 export is_standard_user=false
+echo 'export is_standard_user=false' | tee -a $HOME/.profile >> $HOME/.bashrc
 
 check_sudo
 
@@ -338,17 +339,19 @@ if get_os 'osx'; then
   check_cmd_tools
   if [[ $(xcode-select -p 2>&1) == "/Applications/Xcode.app/Contents/Developer"  ]]; then
     export xcode_installed=true
+    echo 'export xcode_installed=true' | tee -a $HOME/.profile >> $HOME/.bashrc
   fi
 
   if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
     echo "Script is running as a standard user."
     export is_standard_user=true
+    echo 'export is_standard_user=true' | tee -a $HOME/.profile >> $HOME/.bashrc
   fi    
 fi
 
 standard_user_env
 remove_profile
-env
+
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
 if [[ ! "$(type -P git)" && $(get_os 'ubuntu') ]]; then
