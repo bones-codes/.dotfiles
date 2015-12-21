@@ -37,21 +37,23 @@ function check_sudo() {
 
 # Cause I'm too tired to track down the real issue here 
 function standard_user_env() {
-  echo '''
+  if [[ $is_standard_user ]]; then
+    echo '''
 MIN   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
-        .bash_profile, and .bashrc)
+      .bash_profile, and .bashrc)
 LOCAL : no hacking tools, just the basics + ncc requirements
 HACK  : all pentest tools for a vm or native environment
 NET   : network pentest tools
 IOS   : ios hacking tools environment
 WAPT  : web application hacking tools
-'''
-  read -p "Enter the type(s) of installation: " install
-  for arg in "$install"; do 
-    X=`echo "$arg" | tr [a-z] [A-Z]`
-    export "$X"=True
-    echo 'export '"$X"'=True' | tee -a $HOME/.profile >> $HOME/.bashrc
-  done
+  '''
+    read -p "Enter the type(s) of installation: " install
+    for arg in "$install"; do 
+      X=`echo "$arg" | tr [a-z] [A-Z]`
+      export "$X"=True
+      echo 'export '"$X"'=True' | tee -a $HOME/.profile >> $HOME/.bashrc
+    done
+  fi
 }
 
 function check_cmd_tools() {
@@ -278,7 +280,6 @@ function vim_bundle() {
 
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
-    cat "$USER_HOME/.profile"
     source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
