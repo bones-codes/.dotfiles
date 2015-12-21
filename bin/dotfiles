@@ -114,12 +114,9 @@ function init_do() {
   ##Copied this. Could be done better.
   vers=$(awk -F_ '{print $1}' <<<"$filename")
   # Files greater then equal to 50 do not need sudo
-  echo $2
   if [[ "$is_standard_user" = false || $vers -ge 50 ]]; then
-  echo 2 
     source "$2"
   else
-  echo 3
     sudo -H -E TMPDIR=/tmp bash -m -c "source $USER_HOME/.dotfiles/bin/dotfiles source; source $2"
  fi 
 }
@@ -368,31 +365,24 @@ if [[ ! "$(type -P git)" ]]; then
   exit 1
 fi
 
-# Initialize unless min install.
-if [[ $MIN ]]; then
+# Initialize 
+if [[ ! -d $DOTFILES_HOME ]]; then
+  # $DOTFILES directory doesn't exist? Clone it!
+  new_dotfiles_install=1
+  prompt_delay=15
   e_header "Downloading dotfiles"
-  mkdir -p $USER_HOME/.dotfiles/bin/
-  cd $USER_HOME/.dotfiles/bin/
-  curl -fsSL "https://raw.githubusercontent.com/bones-codes/.dotfiles/master/bin/dotfiles" -o dotfiles
-else
-  if [[ ! -d $DOTFILES_HOME ]]; then
-    # $DOTFILES directory doesn't exist? Clone it!
-    new_dotfiles_install=1
-    prompt_delay=15
-    e_header "Downloading dotfiles"
-    git clone https://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
-    cd $DOTFILES_HOME
-  elif [[ "$1" != "restart" ]]; then
-    # Make sure we have the latest files.
-    e_header "Updating dotfiles"
-    cd $DOTFILES_HOME
-    prev_head="$(git rev-parse HEAD)"
-    git pull
-    git submodule update --init --recursive --quiet
-    if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
-      e_header "Changes detected, restarting script"
-      exec "$0" "restart"
-    fi
+  git clone https://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
+  cd $DOTFILES_HOME
+elif [[ "$1" != "restart" ]]; then
+  # Make sure we have the latest files.
+  e_header "Updating dotfiles"
+  cd $DOTFILES_HOME
+  prev_head="$(git rev-parse HEAD)"
+  git pull
+  git submodule update --init --recursive --quiet
+  if [[ "$(git rev-parse HEAD)" != "$prev_head" ]]; then
+    e_header "Changes detected, restarting script"
+    exec "$0" "restart"
   fi
 fi
 
