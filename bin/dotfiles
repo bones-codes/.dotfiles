@@ -369,7 +369,7 @@ fi
 if [[ $MIN ]]; then
   e_header "Downloading dotfiles"
   mkdir -p $USER_HOME/.dotfiles/bin/
-  cd $USER_HOME/.dotfiles/bin/dotfiles
+  cd $USER_HOME/.dotfiles/bin/
   curl -fsSL "https://raw.githubusercontent.com/bones-codes/.dotfiles/master/bin/dotfiles" -o dotfiles
 else
   if [[ ! -d $DOTFILES_HOME ]]; then
