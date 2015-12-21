@@ -24,12 +24,19 @@ function check_sudo() {
   if [[ $(sudo -u root whoami) != "root" ]]; then
     e_error "Sorry, you need root to run parts of this script exiting."
     # Ask to setup /etc/sudoers
-    read -p '''
+    echo -n '''
     1. Yes, as runaspw
     2. Yes, as targetpw
     3. No
     Do you need to setup /etc/sudoers ?
-    ''' yn
+    '''
+    read yn
+    #read -p '''
+    #1. Yes, as runaspw
+    #2. Yes, as targetpw
+    #3. No
+    #Do you need to setup /etc/sudoers ?
+    #''' yn
     case $yn in
     [1]* ) 
       read -p "Enter the username to use:" username
