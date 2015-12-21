@@ -24,10 +24,10 @@ function check_sudo() {
   if [[ $(sudo -u root whoami) != "root" ]]; then
     e_error "Sorry, you need root to run parts of this script exiting."
     e_header "Setting up /etc/sudoers..."
-    read -p "Enter the username to use: " $0
-    read -p "Enter the group to use: " $1
-    su $0 -m -c "echo 'Defaults:%$1 runas_default=$0, runaspw' | sudo tee -a /etc/sudoers;
-    echo '%$1 ALL=(ALL) ALL' | sudo tee -a /etc/sudoers"
+    read -p "Enter the username to use: " $1
+    read -p "Enter the group to use: " $2
+    su $1 -m -c "echo 'Defaults:%$2 runas_default=$1, runaspw' | sudo tee -a /etc/sudoers;
+    echo '%$2 ALL=(ALL) ALL' | sudo tee -a /etc/sudoers"
     if [[ $(sudo -u root whoami) != "root" ]]; then
       e_error "Sorry, you need root to run parts of this script exiting."
       exit 1
