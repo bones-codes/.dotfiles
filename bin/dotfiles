@@ -37,6 +37,7 @@ function check_sudo() {
 
 function set_profile(){
   $@; echo "$@" | tee -a $HOME/.profile >> $HOME/.bashrc
+  env
 }
 
 # Cause I'm too tired to track down the real issue here 
