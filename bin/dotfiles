@@ -54,8 +54,7 @@ WAPT  : web application hacking tools
     read -p "Enter the type(s) of installation: " install
     for arg in "$install"; do 
       X=`echo "$arg" | tr [a-z] [A-Z]`
-      export "$X"=True
-      echo 'export '"$X"'=True' | tee -a $HOME/.profile >> $HOME/.bashrc
+      set_profile "export $X=True"
     done
   fi
 }
@@ -320,19 +319,15 @@ get_os
 # wapt  : web application hacking tools
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
-  export "$X"=True
-  echo 'export '"$X"'=True' | tee -a $HOME/.profile >> $HOME/.bashrc
+  set_profile "export $X=True"
 done
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
 set_profile "export USER_HOME=$HOME"
-env
-export DOTFILES_HOME="$USER_HOME/.dotfiles"
-echo 'export DOTFILES_HOME='"$USER_HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
+set_profile "export DOTFILES_HOME=$USER_HOME/.dotfiles"
 
-export is_standard_user=false
-echo 'export is_standard_user=false' | tee -a $HOME/.profile >> $HOME/.bashrc
+set_profile "export is_standard_user=false"
 
 check_sudo
 
@@ -342,14 +337,12 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 if get_os 'osx'; then
   check_cmd_tools
   if [[ $(xcode-select -p 2>&1) == "/Applications/Xcode.app/Contents/Developer"  ]]; then
-    export xcode_installed=true
-    echo 'export xcode_installed=true' | tee -a $HOME/.profile >> $HOME/.bashrc
+    set_profile "export xcode_installed=true"
   fi
 
   if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
     echo "Script is running as a standard user."
-    export is_standard_user=true
-    echo 'export is_standard_user=true' | tee -a $HOME/.profile >> $HOME/.bashrc
+    set_profile "export is_standard_user=true"
   fi    
 fi
 
