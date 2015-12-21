@@ -259,6 +259,7 @@ function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
     cat "$USER_HOME/.profile"
     source "$USER_HOME/.profile"
+    source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
@@ -301,7 +302,9 @@ done
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
 export USER_HOME=$HOME
+echo 'export USER_HOME='"$HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
 export DOTFILES_HOME="$USER_HOME/.dotfiles"
+echo 'export DOTFILES_HOME='"$USER_HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
 
 export is_standard_user=false
 
