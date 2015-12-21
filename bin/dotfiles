@@ -37,7 +37,6 @@ function check_sudo() {
 
 function set_profile(){
   $@; echo "$@" | tee -a $HOME/.profile >> $HOME/.bashrc
-  env
 }
 
 # Cause I'm too tired to track down the real issue here 
@@ -118,6 +117,7 @@ function init_do() {
   if [[ "$is_standard_user" = false || $vers -ge 50 ]]; then
     source "$2"
   else
+    source "$2"
     sudo -H -E TMPDIR=/tmp bash -m -c "source $USER_HOME/.dotfiles/bin/dotfiles source; source $2"
  fi 
 }
