@@ -21,7 +21,7 @@ function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 function check_sudo() {
-echo "$@"
+echo $@
   if [[ $(sudo -u root whoami) != "root" ]]; then
     e_error "Sorry, you need root to run parts of this script exiting."
     e_header "Setting up /etc/sudoers..."
