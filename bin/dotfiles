@@ -117,6 +117,8 @@ function init_do() {
   # Files greater then equal to 50 do not need sudo
   if [[ "$is_standard_user" = false || $vers -ge 50 ]]; then
     source "$2"
+  elif [[ "$MIN" ]]; then 
+    sudo -H -E TMPDIR=/tmp bash -m -c "source $USER_HOME/dotfiles source; source $2"
   else
     sudo -H -E TMPDIR=/tmp bash -m -c "source $USER_HOME/.dotfiles/bin/dotfiles source; source $2"
  fi 
@@ -384,6 +386,8 @@ if [[ ! $MIN ]]; then
       exec "$0" "restart"
     fi
   fi
+else
+  curl -fsSL "https://raw.githubusercontent.com/bones-codes/.dotfiles/master/bin/dotfiles" -o dotfiles
 fi
 
 # Add binaries into the path
