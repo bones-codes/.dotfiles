@@ -257,7 +257,8 @@ function vim_bundle() {
 
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
-    source ~/.profile
+    cat "$USER_HOME/.profile"
+    source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
