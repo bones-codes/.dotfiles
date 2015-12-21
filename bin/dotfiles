@@ -35,6 +35,10 @@ function check_sudo() {
   fi
 }
 
+function set_profile(){
+  $@; echo "$@" | tee -a $HOME/.profile >> $HOME/.bashrc
+}
+
 # Cause I'm too tired to track down the real issue here 
 function standard_user_env() {
   if [[ "$is_standard_user" = true ]]; then
@@ -322,8 +326,8 @@ done
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
-export USER_HOME=$HOME
-echo 'export USER_HOME='"$HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
+set_profile "export USER_HOME=$HOME"
+env
 export DOTFILES_HOME="$USER_HOME/.dotfiles"
 echo 'export DOTFILES_HOME='"$USER_HOME" | tee -a $HOME/.profile >> $HOME/.bashrc
 
