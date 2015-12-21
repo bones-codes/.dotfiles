@@ -37,7 +37,6 @@ fi
 if [ "$LOCAL" ]; then
   recipes+=(
   pass
-  onepass
   keybase
   "mutt --with-confirm-attachment-patch --with-debug --with-gpgme 
   --with-ignore-thread-patch --with-pgp-verbose-mime-patch --with-trash-patch"

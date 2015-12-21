@@ -9,6 +9,10 @@ $(get_os 'osx') || return 1
 
 casks=(gpgtools java iterm2-nightly firefox karabiner seil)
 
+if [[ $HAFH ]]; then
+  casks+=(logitech-myharmony)
+fi
+
 if [[ $HACK || $NET ]]; then
   casks+=(transmit vlc razorsql)
 fi
