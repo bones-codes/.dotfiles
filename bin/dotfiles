@@ -37,7 +37,7 @@ function check_sudo() {
 
 # Cause I'm too tired to track down the real issue here 
 function standard_user_env() {
-  if [[ $is_standard_user ]]; then
+  if [[ "$is_standard_user" = true ]]; then
     echo '''
 MIN   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
       .bash_profile, and .bashrc)
@@ -368,7 +368,8 @@ fi
 # Initialize unless min install.
 if [[ $MIN ]]; then
   e_header "Downloading dotfiles"
-  mkdir -p ./.dotfiles/bin/
+  mkdir -p $USER_HOME/.dotfiles/bin/
+  cd $USER_HOME/.dotfiles/bin/dotfiles
   curl -fsSL "https://raw.githubusercontent.com/bones-codes/.dotfiles/master/bin/dotfiles" -o dotfiles
 else
   if [[ ! -d $DOTFILES_HOME ]]; then
