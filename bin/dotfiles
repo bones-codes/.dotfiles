@@ -23,29 +23,12 @@ function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 function check_sudo() {
   if [[ $(sudo -u root whoami) != "root" ]]; then
     e_error "Sorry, you need root to run parts of this script exiting."
-    # Ask to setup /etc/sudoers
-    read -p '''
-1. Yes, as runaspw
-2. Yes, as targetpw
-3. No
-Do you need to setup /etc/sudoers ?
-''' yn
-    case $yn in
-    [1]* ) 
-      read -p "Enter the username to use: " username
-      read -p "Enter the group to use: " groupname
-      su $username -m -c "echo 'Defaults:%$groupname runas_default=$username, runaspw' | sudo tee -a /etc/sudoers;
-      echo '%$groupname ALL=(ALL) ALL' | sudo tee -a /etc/sudoers"
-      ;;
-    [2]* )
-      read -p "Enter the group to use: " groupname
-      su -m -c "echo 'Defaults:%$groupname targetpw' >> /etc/sudoers; 
-      echo '%$groupname ALL=(ALL) ALL' >> /etc/sudoers"
-      ;;
-    * ) e_error "Skipping /etc/sudoers setup"
-        exit 1 
-        ;;
-    esac
+    e_header "Setting up /etc/sudoers..."
+    read -p "Enter the username to use: " username
+    read -p "Enter the group to use: " groupname
+    su $username -m -c "echo 'Defaults:%$groupname runas_default=$username, runaspw' | sudo tee -a /etc/sudoers;
+    echo '%$groupname ALL=(ALL) ALL' | sudo tee -a /etc/sudoers"
+
     if [[ $(sudo -u root whoami) != "root" ]]; then
       e_error "Sorry, you need root to run parts of this script exiting."
       exit 1
@@ -320,9 +303,9 @@ export USER_HOME=$HOME
 export DOTFILES_HOME="$USER_HOME/.dotfiles"
 
 export is_standard_user=false
-env
+
 check_sudo
-env
+
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
