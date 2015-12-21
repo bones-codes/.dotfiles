@@ -25,11 +25,11 @@ function check_sudo() {
     e_error "Sorry, you need root to run parts of this script exiting."
     # Ask to setup /etc/sudoers
     read -p '''
-    1. Yes, as runaspw
-    2. Yes, as targetpw
-    3. No
-    Do you need to setup /etc/sudoers ?
-    ''' yn
+1. Yes, as runaspw
+2. Yes, as targetpw
+3. No
+Do you need to setup /etc/sudoers ?
+''' yn
     case $yn in
     [1]* ) 
       read -p "Enter the username to use: " username
@@ -297,7 +297,7 @@ get_os
 
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
-check_sudo
+
 #------------------------------------------------------------------------------#
 #  FLAGS                                                                       #
 #------------------------------------------------------------------------------#
@@ -320,9 +320,9 @@ export USER_HOME=$HOME
 export DOTFILES_HOME="$USER_HOME/.dotfiles"
 
 export is_standard_user=false
-
-#check_sudo
-
+env
+check_sudo
+env
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
