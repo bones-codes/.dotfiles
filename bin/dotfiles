@@ -114,10 +114,12 @@ function init_do() {
   ##Copied this. Could be done better.
   vers=$(awk -F_ '{print $1}' <<<"$filename")
   # Files greater then equal to 50 do not need sudo
+  echo $2
   if [[ "$is_standard_user" = false || $vers -ge 50 ]]; then
+  echo 2 
     source "$2"
   else
-    source "$2"
+  echo 3
     sudo -H -E TMPDIR=/tmp bash -m -c "source $USER_HOME/.dotfiles/bin/dotfiles source; source $2"
  fi 
 }
