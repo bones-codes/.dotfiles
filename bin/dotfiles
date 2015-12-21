@@ -28,7 +28,6 @@ function check_sudo() {
     read -p "Enter the group to use: " groupname
     su $username -m -c "echo 'Defaults:%$groupname runas_default=$username, runaspw' | sudo tee -a /etc/sudoers;
     echo '%$groupname ALL=(ALL) ALL' | sudo tee -a /etc/sudoers"
-
     if [[ $(sudo -u root whoami) != "root" ]]; then
       e_error "Sorry, you need root to run parts of this script exiting."
       exit 1
@@ -258,6 +257,7 @@ function vim_bundle() {
 
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
+    source ~/.profile
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
