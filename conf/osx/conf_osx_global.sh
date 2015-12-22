@@ -1,13 +1,10 @@
+[[ $LOCAL ]] || return 1
 ###############################################################################
 # UI                                                                          #
 ###############################################################################
-
 # It's my library. Let me see it.
 sudo chflags nohidden ~/Library/
 sudo chflags nohidden /tmp
-
-#Disable Spotlight indexing from indexing /Volumes
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
 #Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
@@ -29,19 +26,17 @@ sudo defaults write -g AppleAquaColorVariant -int 6
 # Link to the airport command
 sudo ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/local/bin/airport
 
-[[ $LOCAL ]] || return 1
 
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
-
 # Enable HiDPI display modes (requires restart)
 sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+
 
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
-
 #Disable Spotlight indexing from indexing /volume
 sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
@@ -76,17 +71,18 @@ sudo mdutil -i on / > /dev/null
 # Rebuild the index from scratch
 sudo mdutil -E / > /dev/null
 
+
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
-
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
+
 
 ###############################################################################
 # Security                                                                    #
 ###############################################################################
-# TODO https://github.com/drduh/OS-X-Security-and-Privacy-Guide
+# https://github.com/drduh/OS-X-Security-and-Privacy-Guide
 # Enable Firewall
 # Replace value with
 # 0 = off

@@ -1,7 +1,6 @@
 ###############################################################################
 # UI                                                                          #
 ###############################################################################
-
 # Expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
 
@@ -34,7 +33,6 @@ defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
-
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
@@ -75,8 +73,13 @@ defaults write com.apple.BezelServices kDim -bool true
 # Turn off keyboard illumination when computer is not used for 5 minutes
 defaults write com.apple.BezelServices kDimTime -int 300
 
+# Disable press-and-hold for keys in favor of key repeat
+# I hope whoever came up with this stupid fucking idea dies in a tar pit
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 # Set a blazingly fast keyboard repeat rate -- still too slow
 defaults write NSGlobalDomain KeyRepeat -int 0
+# Don't take EONS to repeat 
+defaults write NSGlobalDomain InitialKeyRepeat -int 30
 
 # Setting trackpad & mouse speed to a reasonable number
 defaults write -g com.apple.trackpad.scaling 2
@@ -84,6 +87,7 @@ defaults write -g com.apple.mouse.scaling 2.5
  
 # Turn off keyboard illumination when computer is not used for 5 minutes
 defaults write com.apple.BezelServices kDimTime -int 300
+
 
 ###############################################################################
 # Screen                                                                      #
@@ -98,7 +102,7 @@ if [[ ! $MIN ]]; then
   defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"
 
   # Save screenshots here instead of to desktop
-  defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
+#  defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
 fi
 
 # Disable drop shadow on screenshots
@@ -110,10 +114,10 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
 #defaults write com.apple.screencapture type -string "png"
 
+
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
-
 # Finder: show hidden files by default
 defaults write com.apple.finder AppleShowAllFiles -string "YES"
 
@@ -157,10 +161,10 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 # I do not need my documents to be cloud
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
+
 ###############################################################################
 # Safari & WebKit                                                             #
 ###############################################################################
-
 # Privacy: Don’t send search queries to Apple
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
@@ -197,10 +201,10 @@ defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebK
 # Add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
+
 ##############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
-
 # ANIMATE FASTER
 defaults write com.apple.dock expose-animation-duration -float 0.15
 
@@ -213,15 +217,6 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 # Speed up sheets
 # Default is .2
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
-
-# Disable press-and-hold for keys in favor of key repeat
-# I hope whoever came up with this stupid fucking idea dies in a tar pit
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-# Don't take EONS to repeat 
-defaults write NSGlobalDomain InitialKeyRepeat -int 30
-
-# Automatically quit printer app once the print jobs complete
-defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
 # Stop doing the stupid desktop reordering thing
 defaults write com.apple.dock mru-spaces -bool false
@@ -280,9 +275,9 @@ if [[ "$new_dotfiles_install" && "$LOCAL" ]]; then
 fi
 
 
+###############################################################################
 # Mail                                                                        #
 ###############################################################################
-
 # Disable send and reply animations in Mail.app
 defaults write com.apple.mail DisableReplyAnimations -bool true
 defaults write com.apple.mail DisableSendAnimations -bool true
@@ -298,10 +293,10 @@ defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -stri
 # Disable inline attachments (just show the icons)
 defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 
+
 ###############################################################################
 # Messages                                                                    #
 ###############################################################################
- 
 # Disable automatic emoji substitution in Messages.app (i.e. use plain text smileys)
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
  
@@ -311,10 +306,10 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Disable continuous spell check
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
+
 ###############################################################################
 # Terminal                                                                    #
 ###############################################################################
-
 # Enable UTF-8 ONLY 
 defaults write com.apple.terminal StringEncodings -array 4
 
@@ -326,14 +321,13 @@ defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
-
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
 
 ###############################################################################
 # Disk Utility                                                                #
 ###############################################################################
-
 # Enable the debug menu in Disk Utility
 defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
 defaults write com.apple.DiskUtility advanced-image-options -bool true
