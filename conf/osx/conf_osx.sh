@@ -129,6 +129,12 @@ defaults write com.apple.finder ShowPathbar -bool true
 # Finder: allow text selection in Quick Look
 defaults write com.apple.finder QLEnableTextSelection -bool true
 
+# Disable animations when opening a Quick Look window.
+defaults write -g QLPanelAnimationDuration -float 0
+
+# Disable animation when opening the Info window in OS X Finder (cmd⌘ + i).
+defaults write com.apple.finder DisableAllAnimations -bool true
+
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
@@ -206,7 +212,7 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Speed up sheets
 # Default is .2
-defaults write NSGlobalDomain NSWindowResizeTime .1
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
 # Disable press-and-hold for keys in favor of key repeat
 # I hope whoever came up with this stupid fucking idea dies in a tar pit

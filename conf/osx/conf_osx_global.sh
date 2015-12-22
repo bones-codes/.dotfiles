@@ -15,8 +15,11 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 # Disable fast user switching 
 sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
 
-# Disable username list in login
-sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME 0
+# Display login window as: Name and password
+sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
+
+# Don't show any password hints
+sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
 
 # Enable dark menu bar and Dock hot key (^⌥⌘t), and Graphite appearance 
 sudo defaults write /Library/Preferences/.GlobalPreferences.plist _HIEnableThemeSwitchHotKey -bool true
