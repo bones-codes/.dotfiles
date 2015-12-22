@@ -19,6 +19,15 @@ else
   git clone https://github.com/fuzzdb-project/fuzzdb.git
 fi
 
+echo 'Updating knockknock'
+if [[ -e "$HOME/.dotfiles/bin/knockknock" ]]; then
+  cd "$HOME/.dotfiles/bin/knockknock"
+  git pull
+else
+  cd "$HOME/.dotfiles/bin/"
+  git clone https://github.com/synack/knockknock.git
+fi
+
 echo 'Updating testssl'
 if [[ -e "$HOME/.dotfiles/bin/testssl.sh" ]]; then
   cd "$HOME/.dotfiles/bin/testssl.sh"
