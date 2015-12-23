@@ -55,6 +55,20 @@ echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
 
+if [[ -e "$HOME/.config/profanity" ]]; then
+  echo; echo "Backing up Profanity settings"
+  cp -R $HOME/.config/profanity/* $HOME/.dotfiles/conf/local/profanity/ 
+fi
+
+if [[ -e "$HOME/.local/share/profanity" ]]; then
+  cp -R $HOME/.local/share/profanity/* $HOME/.dotfiles/conf/local/profanity/local/
+fi
+
+if [[ $(vagrant -v) ]]; then 
+  echo; echo "Updating Vagrant VMWare plugin"
+  vagrant plugin install vagrant-vmware-fusion
+fi
+
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi
