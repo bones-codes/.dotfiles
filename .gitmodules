@@ -1,0 +1,4 @@
+[submodule "link/.vim/bundle/vim-dirdiff"]
+    path = link/.vim/bundle/vim-dirdiff
+	url = git://github.com/will133/vim-dirdiff
+	ignore = dirty
