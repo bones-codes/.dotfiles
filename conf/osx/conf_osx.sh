@@ -100,9 +100,6 @@ if [[ ! $MIN ]]; then
   # Set Arabesque screen saver
   defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Arabesque"
   defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"
-
-  # Save screenshots here instead of to desktop
-#  defaults write com.apple.screencapture location "$USER_HOME/Screenshots/"
 fi
 
 # Disable drop shadow on screenshots
