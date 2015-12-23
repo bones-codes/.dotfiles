@@ -7,6 +7,7 @@ link/.password-store/
 *.last-run
 *.cache/
 *error*
+*dotsync*
 
 # OS generated files #
 ######################
