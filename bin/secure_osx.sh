@@ -1,7 +1,6 @@
 #!/bin/bash
 # This script should be run prior to connecting to a network.
-# TODO check that this works on el capitan
-# TODO https://github.com/drduh/OS-X-Security-and-Privacy-Guide
+# https://github.com/drduh/OS-X-Security-and-Privacy-Guide
 
 ################################################################################
 ## FUNCTIONS START                                                             #
@@ -29,20 +28,8 @@ e_header "Enable Filevault"
 sudo fdesetup enable
 
 e_header "Enable tty_tickets for sudo"
-su -m -c "echo 'Defaults tty_tickets' >> /etc/sudoers"
-
-e_header "Setup a firmware password"
-# https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
-echo "1. Shutdown the Mac.
-2. Start up your Mac again and immediately hold the Command and R keys
-after you hear the startup sound to start from OS X Recovery.
-3. When the Recovery window appears, choose Firmware Password Utility from
-the Utilities menu.
-4. In the Firmware Utility window that appears, select Turn On Firmware Password.
-5. Enter a new password, then enter the same password in the Verify field.
-6. Select Set Password.
-7. Select Quit Firmware Utility to close the Firmware Password Utility.
-8. Select the Apple menu and choose Restart or Shutdown."
+user="$(whoami)"
+su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
 
 e_header "Enable firewall"
 # Enable Firewall
@@ -273,4 +260,17 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 # Empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
+
+e_header "Setup a firmware password"
+# https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
+echo "1. Shutdown the Mac.
+2. Start up your Mac again and immediately hold the Command and R keys
+   after you hear the startup sound to start from OS X Recovery.
+3. When the Recovery window appears, choose Firmware Password Utility from
+   the Utilities menu.
+4. In the Firmware Utility window that appears, select Turn On Firmware Password.
+5. Enter a new password, then enter the same password in the Verify field.
+6. Select Set Password.
+7. Select Quit Firmware Utility to close the Firmware Password Utility.
+8. Select the Apple menu and choose Restart or Shutdown."
 
