@@ -54,3 +54,6 @@ alias top=htop
 alias tmx='tmux -u attach'
 alias mutt="imap_notifier; mutt"
 alias testssl="$HOME/.dotfiles/bin/testssl.sh/testssl.sh"
+
+# Create OS X install drive
+alias createinstaller="sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/OS\ X\ Installer --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app --nointeraction"
