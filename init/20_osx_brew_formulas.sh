@@ -61,6 +61,7 @@ fi
 if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
   "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
+  testssl
   )
   
 fi
@@ -72,6 +73,7 @@ if [[ $HACK || $NET ]]; then
   netcat
   "--with-python libdnet"
   scapy
+  spoof-mac
   )
   
 fi
