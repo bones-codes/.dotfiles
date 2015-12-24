@@ -16,7 +16,7 @@ if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
   git pull
 else
   cd "$HOME/tools/burp"
-  git clone https://github.com/fuzzdb-project/fuzzdb.git
+  git clone git@github.com:fuzzdb-project/fuzzdb.git
 fi
 
 echo 'Updating knockknock'
@@ -25,7 +25,7 @@ if [[ -e "$HOME/.dotfiles/bin/knockknock" ]]; then
   git pull
 else
   cd "$HOME/.dotfiles/bin/"
-  git clone https://github.com/synack/knockknock.git
+  git clone git@github.com:synack/knockknock.git
 fi
 
 echo 'Updating testssl'
@@ -34,7 +34,7 @@ if [[ -e "$HOME/.dotfiles/bin/testssl.sh" ]]; then
   git pull
 else
   cd "$HOME/.dotfiles/bin/"
-  git clone https://github.com/drwetter/testssl.sh.git
+  git clone git@github.com:drwetter/testssl.sh.git
 fi
 
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
@@ -45,8 +45,6 @@ echo; echo 'Updating pip and pip packages'
 pip install --upgrade pip setuptools
 pip install -U pyobjc
 pip3 install -U peewee
-# This updates the System modules... probably not the best idea
-#pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 
 #echo; echo 'update gems'
 #gem update --system
