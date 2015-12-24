@@ -2,7 +2,3 @@
     path = link/.vim/bundle/vim-dirdiff
 	url = git://github.com/will133/vim-dirdiff
 	ignore = dirty
-[submodule "bin/testssl.sh"]
-    path = bin/testssl.sh
-	url = git@github.com:drwetter/testssl.sh.git
-	ignore = dirty
