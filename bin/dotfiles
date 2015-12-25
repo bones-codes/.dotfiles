@@ -46,10 +46,11 @@ function standard_user_env() {
 MIN   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
       .bash_profile, and .bashrc)
 LOCAL : no hacking tools, just the basics + ncc requirements
-HACK  : all pentest tools for a vm or native environment
+BHACK : all the basics (basics + burp, wireshark, nmap, testssl, dirbuster-ng)
 NET   : network pentest tools
-IOS   : ios hacking tools environment
 WAPT  : web application hacking tools
+IOS   : ios hacking tools environment
+HACK  : all pentest tools for a vm or native environment
   '''
     read -p "Enter the type(s) of installation: " install
     for arg in "$install"; do 
@@ -141,6 +142,22 @@ function link_test() {
   [[ "$1" -ef "$2" ]] && echo "same file"
 }
 function link_do() {
+  # Only linking mutt-related rcs if local install
+  # TODO does this work?
+  if [[ ! $LOCAL ]]; then
+    dots=(
+    .imap_notifier
+    .inputrc
+    .mutt
+    .muttrc
+    .notmuch-config
+    .offlineimaprc
+    .slate
+    .urlview
+    )
+
+    for i in "${dots[@]}"; do [[ "$1" == "$i" ]] && return 0; done
+  fi
   e_success "Linking ~/$1. ${2#$HOME/}"
   ln -sf ${2#$HOME/} ~/
 }
@@ -313,10 +330,11 @@ get_os
 # min   : osx configs, homebrew, tmux and a few rcs (.vimrc, .tmux.conf, .ackrc,
 #         .bash_profile, and .bashrc)
 # local : no hacking tools, just the basics + ncc reqs
-# hack  : all pentest tools for vm or native env
+# bhack : all the basics (basics + burp, wireshark, nmap, testssl, dirbuster-ng)
 # net   : network pentest tools
-# ios   : ios hacking tools env
 # wapt  : web application hacking tools
+# ios   : ios hacking tools env
+# hack  : all pentest tools for vm or native env
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   set_profile "export $X=True"

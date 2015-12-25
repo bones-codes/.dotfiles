@@ -58,7 +58,7 @@ if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
   "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
   testssl
@@ -93,6 +93,14 @@ if [[ $HACK || $BT ]]; then
   libusb 
   pkg-config 
   homebrew/dupes/libpcap
+  )
+  
+fi
+
+if [[ $BHACK ]]; then
+  recipes+=(
+  nmap
+  netcat
   )
   
 fi

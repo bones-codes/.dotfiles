@@ -16,7 +16,7 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
   fi
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $NET || $WAPT || $IOS || $BT || $BHACK]]; then
   # Temp fix for wireshark interfaces
   # -rw-r--r-- 1 root wheel
   if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then

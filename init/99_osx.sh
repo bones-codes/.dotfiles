@@ -71,7 +71,7 @@ if [[ ! $MIN ]]; then
   pip3 install -U peewee
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
   if [[ -e "$DOTFILES_HOME/conf/local/" && ! $MIN && ! $LOCAL ]]; then
@@ -113,14 +113,4 @@ if [[ $HACK || $IOS ]]; then
   git clone https://github.com/maciekish/iReSign.git
   mv iReSign/iReSign.app /Applications/
   rm -rf iReSign/
-fi
-
-if [[ $HACK || $WAPT || $IOS ]]; then
-  if [[ -e "$HOME/.dotfiles/bin/testssl.sh" ]]; then
-    cd "$HOME/.dotfiles/bin/testssl.sh"
-    git pull
-  else
-    cd "$HOME/.dotfiles/bin/"
-    git clone https://github.com/drwetter/testssl.sh.git
-  fi
 fi
