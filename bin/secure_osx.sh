@@ -85,7 +85,7 @@ if [[ $ADMIN ]]; then
   # 0 = off
   # 1 = on for specific services
   # 2 = on for essential services
-  sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
+  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
   # Enable Stealth mode.
   sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
   # Enable Firewall Logging.
