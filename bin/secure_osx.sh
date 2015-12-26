@@ -1,6 +1,14 @@
 #!/bin/bash
 # This script should be run prior to connecting to a network.
 # https://github.com/drduh/OS-X-Security-and-Privacy-Guide
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+Usage: $(basename "$0 <options>")
+
+    -a,--admin       Secure configurations for an Administrator user
+    -s,--standard    Secure configurations for a Standard user (default)
+
+HELP
+exit; fi
 
 ################################################################################
 ## FUNCTIONS START                                                             #
@@ -23,28 +31,150 @@ function setcomp() {
 ## FUNCTIONS END                                                               #
 ################################################################################
 
+[[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
-e_header "Enable Filevault"
-sudo fdesetup enable
+if [[ $ADMIN ]]; then
+  e_header "Enable Filevault"
+  sudo fdesetup enable
+  echo
+  # Destroy Filevault Key when going to standby
+  # mode. By default File vault keys are retained even when system goes
+  # to standby. If the keys are destroyed, user will be prompted to
+  # enter the password while coming out of standby mode.(value: 1 -
+  # Destroy, 0 - Retain)
+  sudo pmset -a destroyfvkeyonstandby 1
 
-e_header "Enable tty_tickets for sudo"
-user="$(whoami)"
-su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
+  # We do not recommend modifying hibernation settings. Any changes you
+  # make are not supported. If you choose to do so anyway, we recommend
+  # using one of these three settings. For your sake and mine, please
+  # don't use anything other 0, 3, or 25.
 
-e_header "Enable firewall"
-# Enable Firewall
-# Replace value with
-# 0 = off
-# 1 = on for specific services
-# 2 = on for essential services
-sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
-# Enable Stealth mode.
-sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-# Enable Firewall Logging.
-sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-# Allow signed APPS
-sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+  # hibernatemode = 0 (binary 0000) by default on supported desktops.
+  # The system will not back memory up to persistent storage. The system
+  # must wake from the contents of memory; the system will lose context
+  # on power loss. This is, historically, plain old sleep.
 
+  # hibernatemode = 3 (binary 0011) by default on supported portables.
+  # The system will store a copy of memory to persistent storage (the
+  # disk), and will power memory during sleep. The system will wake from
+  # memory, unless a power loss forces it to restore from disk image.
+
+  # hibernatemode = 25 (binary 0001 1001) is only settable via pmset.
+  # The system will store a copy of memory to persistent storage (the
+  # disk), and will remove power to memory. The system will restore from
+  # disk image. If you want "hibernation" - slower sleeps, slower wakes,
+  # and better battery life, you should use this setting.
+  sudo pmset -a hibernatemode 25
+  # Enable hard disk sleep.
+  sudo pmset -a disksleep 0
+  # Disable computer sleep.
+  sudo pmset -a sleep 90
+  # Display sleep
+  sudo pmset -a displaysleep 60
+  # Disable Wake for Ethernet network administrator access.
+  sudo pmset -a womp 0
+  # Disable Restart automatically after power failure.
+  sudo pmset -a autorestart 0
+  # specifies the delay, in seconds, before writing the
+  # hibernation image to disk and powering off memory for Standby.
+  sudo pmset -a standbydelay 300
+
+  e_header "Enable firewall"
+  # Enable Firewall
+  # Replace value with
+  # 0 = off
+  # 1 = on for specific services
+  # 2 = on for essential services
+  sudo defaults write /Library/Preferences/com.apple.alf globalstate -bool true
+  # Enable Stealth mode.
+  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+  # Enable Firewall Logging.
+  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+  # Allow signed APPS
+  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+
+  e_header "Enable tty_tickets for sudo"
+  user="$(whoami)"
+  su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
+
+
+  ###############################################################################
+  # User Management                                                             #
+  ###############################################################################
+  # Require password to unlock each System Preference pane.
+  # Edit the /etc/authorization file using a text editor.
+  # Find <key>system.preferences<key>.
+  # Then find <key>shared<key>.
+  # Then replace <true/> with <false/>.
+  security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
+  defaults write /tmp/system.preferences.plist shared -bool false
+  sudo security -q authorizationdb write system.preferences < /tmp/system.preferences.plist
+  sudo rm -rf /tmp/system.preferences.plist
+
+  # Disable fast user switching 
+  sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
+
+  # Display login window as: Name and password
+  sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
+
+  # Don't show any password hints
+  sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
+
+  # Disable Automatic login.
+  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
+  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
+
+  # Disable Guest login.
+  sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
+
+  # The following sets up a standard user to act as the primary user. All sudo
+  # actions are handled via runaspw under the current admin user.
+  e_header "Create non-admin group"
+  read -p "Enter non-admin groupname: " groupname
+  sudo dscl . create /Groups/$groupname
+  # Create the group name key
+  sudo dscl . create /Groups/$groupname RealName $groupname
+  sudo dscl . create /Groups/$groupname passwd “*”
+  sudo dscl . create /Groups/$groupname PrimaryGroupID 701
+
+  e_header "Create user (Standard)"
+  read -p "Enter new username (Standard): " username
+  read -p "Enter user's full name: " fullname
+  read -p "Set the user's password: " password
+  # Create a new entry in the local domain under the category /users.
+  sudo dscl . -create /Users/$username
+  # Create and set the shell property to bash.
+  sudo dscl . -create /Users/$username UserShell /bin/bash
+  # Create and set the user’s full name.
+  sudo dscl . -create /Users/$username RealName $fullname
+  # Create and set the user’s ID.
+  sudo dscl . -create /Users/$username UniqueID 1337
+  # Create and set the user’s group ID property.
+  sudo dscl . -create /Users/$username PrimaryGroupID 20
+  # Create and set the user home directory.
+  sudo mkdir /Users/$username
+  sudo chown $username /Users/$username
+  sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
+  # Set the password.
+  sudo dscl . -passwd /Users/$username $password
+
+  e_header "Adding $username to $groupname"
+  sudo dseditgroup -o edit -a $username -t user $groupname
+
+  e_header "Setting up /etc/sudoers..."
+  adminuser=$(whoami)
+  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
+  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+
+  e_header "Hide current admin user"
+  read -p "Enter admin username: " adminuser
+  sudo dscl . -create /Users/$adminuser IsHidden 1
+fi
+
+
+###############################################################################
+# Screensaver                                                                 #
+###############################################################################
 # Start screen saver -- bottom right corner
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0
@@ -53,124 +183,9 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 defaults write com.apple.dock wvous-bl-corner -int 6
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
-# Destroy Filevault Key when going to standby
-# mode. By default File vault keys are retained even when system goes
-# to standby. If the keys are destroyed, user will be prompted to
-# enter the password while coming out of standby mode.(value: 1 -
-# Destroy, 0 - Retain)
-sudo pmset -a destroyfvkeyonstandby 1
-
-# We do not recommend modifying hibernation settings. Any changes you
-# make are not supported. If you choose to do so anyway, we recommend
-# using one of these three settings. For your sake and mine, please
-# don't use anything other 0, 3, or 25.
-
-# hibernatemode = 0 (binary 0000) by default on supported desktops.
-# The system will not back memory up to persistent storage. The system
-# must wake from the contents of memory; the system will lose context
-# on power loss. This is, historically, plain old sleep.
-
-# hibernatemode = 3 (binary 0011) by default on supported portables.
-# The system will store a copy of memory to persistent storage (the
-# disk), and will power memory during sleep. The system will wake from
-# memory, unless a power loss forces it to restore from disk image.
-
-# hibernatemode = 25 (binary 0001 1001) is only settable via pmset.
-# The system will store a copy of memory to persistent storage (the
-# disk), and will remove power to memory. The system will restore from
-# disk image. If you want "hibernation" - slower sleeps, slower wakes,
-# and better battery life, you should use this setting.
-sudo pmset -a hibernatemode 25
-# Enable hard disk sleep.
-sudo pmset -a disksleep 0
-# Disable computer sleep.
-sudo pmset -a sleep 90
-# Display sleep
-sudo pmset -a displaysleep 60
-# Disable Wake for Ethernet network administrator access.
-sudo pmset -a womp 0
-# Disable Restart automatically after power failure.
-sudo pmset -a autorestart 0
-# specifies the delay, in seconds, before writing the
-# hibernation image to disk and powering off memory for Standby.
-sudo pmset -a standbydelay 300
-
-
-###############################################################################
-# User Management                                                             #
-###############################################################################
-# Require password to unlock each System Preference pane.
-# Edit the /etc/authorization file using a text editor.
-# Find <key>system.preferences<key>.
-# Then find <key>shared<key>.
-# Then replace <true/> with <false/>.
-security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
-defaults write /tmp/system.preferences.plist shared -bool false
-sudo security -q authorizationdb write system.preferences < /tmp/system.preferences.plist
-sudo rm -rf /tmp/system.preferences.plist
-
-# Disable fast user switching 
-sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
-
-# Display login window as: Name and password
-sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
-
-# Don't show any password hints
-sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
-
 # Enable Require password to wake this computer from sleep or screen saver.
 sudo defaults write com.apple.screensaver askForPassword -int 1
 sudo defaults write com.apple.screensaver askForPasswordDelay -int 0
-
-# Disable Automatic login.
-sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
-sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
-
-# Disable Guest login.
-sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
-
-# The following sets up a standard user to act as the primary user. All sudo
-# actions are handled via runaspw under the current admin user.
-e_header "Create non-admin group"
-read -p "Enter non-admin groupname: " groupname
-sudo dscl . create /Groups/$groupname
-# Create the group name key
-sudo dscl . create /Groups/$groupname RealName $groupname
-sudo dscl . create /Groups/$groupname passwd “*”
-sudo dscl . create /Groups/$groupname PrimaryGroupID 701
-
-e_header "Create user (Standard)"
-read -p "Enter new username (Standard): " username
-read -p "Enter user's full name: " fullname
-read -p "Set the user's password: " password
-# Create a new entry in the local domain under the category /users.
-sudo dscl . -create /Users/$username
-# Create and set the shell property to bash.
-sudo dscl . -create /Users/$username UserShell /bin/bash
-# Create and set the user’s full name.
-sudo dscl . -create /Users/$username RealName $fullname
-# Create and set the user’s ID.
-sudo dscl . -create /Users/$username UniqueID 1337
-# Create and set the user’s group ID property.
-sudo dscl . -create /Users/$username PrimaryGroupID 20
-# Create and set the user home directory.
-sudo mkdir /Users/$username
-sudo chown $username /Users/$username
-sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
-# Set the password.
-sudo dscl . -passwd /Users/$username $password
-
-e_header "Adding $username to $groupname"
-sudo dseditgroup -o edit -a $username -t user $groupname
-
-e_header "Hide current admin user"
-read -p "Enter admin username: " adminuser
-sudo dscl . -create /Users/$adminuser IsHidden 1
-
-e_header "Setting up /etc/sudoers..."
-adminuser=$(whoami)
-echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
-echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
 
 
 ###############################################################################
@@ -261,9 +276,10 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 
-e_header "Setup a firmware password"
-# https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
-echo "1. Shutdown the Mac.
+if [[ $ADMIN ]]; then
+  e_header "Setup a firmware password"
+  # https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
+  echo "1. Shutdown the Mac.
 2. Start up your Mac again and immediately hold the Command and R keys
    after you hear the startup sound to start from OS X Recovery.
 3. When the Recovery window appears, choose Firmware Password Utility from
@@ -273,4 +289,4 @@ echo "1. Shutdown the Mac.
 6. Select Set Password.
 7. Select Quit Firmware Utility to close the Firmware Password Utility.
 8. Select the Apple menu and choose Restart or Shutdown."
-
+fi
