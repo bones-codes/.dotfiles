@@ -93,10 +93,6 @@ defaults write com.apple.BezelServices kDimTime -int 300
 # Screen                                                                      #
 ###############################################################################
 if [[ ! $MIN ]]; then
-  # Require password immediately after sleep or screen saver begins
-  defaults write com.apple.screensaver askForPassword -int 1
-  defaults write com.apple.screensaver askForPasswordDelay -int 0
-
   # Set Arabesque screen saver
   defaults -currentHost write com.apple.screensaver moduleDict -dict-add "moduleName" -string "Arabesque"
   defaults -currentHost write com.apple.screensaver moduleDict -dict-add "path" -string "/System/Library/Screen Savers/Arabesque.qtz"

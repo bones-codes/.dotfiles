@@ -97,7 +97,8 @@ sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
 sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
 # Enable Require password to wake this computer from sleep or screen saver.
-sudo defaults -currentHost write com.apple.screensaver askForPassword -int 1
+sudo defaults write com.apple.screensaver askForPassword -int 1
+sudo defaults write com.apple.screensaver askForPasswordDelay -int 0
 # Disable Automatic login.
 sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
 sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
