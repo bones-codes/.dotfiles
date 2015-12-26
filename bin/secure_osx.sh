@@ -119,8 +119,8 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -boo
 sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
 
 # Enable Require password to wake this computer from sleep or screen saver.
-sudo defaults -currentHost write com.apple.screensaver askForPassword -int 1
-sudo defaults -currentHost write com.apple.screensaver askForPasswordDelay -int 0
+sudo defaults write com.apple.screensaver askForPassword -int 1
+sudo defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 # Disable Automatic login.
 sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
@@ -169,7 +169,7 @@ sudo dscl . -create /Users/$adminuser IsHidden 1
 
 e_header "Setting up /etc/sudoers..."
 adminuser=$(whoami)
-echo 'Defaults:%$groupname runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
+echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
 echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
 
 
@@ -185,7 +185,7 @@ sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resourc
 # Disable Internet Sharing.
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
 # Disable Bluetooth Sharing.
-sudo defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
+sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
 # Disable Captive Portal
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 
