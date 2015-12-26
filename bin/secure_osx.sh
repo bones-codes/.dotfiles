@@ -134,8 +134,9 @@ if [[ $ADMIN ]]; then
   sudo dscl . create /Groups/$groupname
   # Create the group name key
   sudo dscl . create /Groups/$groupname RealName $groupname
+  sudo dscl . create /Groups/$groupname RecordName $groupname
   sudo dscl . create /Groups/$groupname passwd “*”
-  sudo dscl . create /Groups/$groupname PrimaryGroupID 701
+  sudo dscl . create /Groups/$groupname PrimaryGroupID 503
 
   e_header "Create user (Standard)"
   read -p "Enter new username (Standard): " username
@@ -147,8 +148,9 @@ if [[ $ADMIN ]]; then
   sudo dscl . -create /Users/$username UserShell /bin/bash
   # Create and set the user’s full name.
   sudo dscl . -create /Users/$username RealName $fullname
+  sudo dscl . -create /Users/$username RecordName $fullname
   # Create and set the user’s ID.
-  sudo dscl . -create /Users/$username UniqueID 1337
+  sudo dscl . -create /Users/$username UniqueID 502
   # Create and set the user’s group ID property.
   sudo dscl . -create /Users/$username PrimaryGroupID 20
   # Create and set the user home directory.
@@ -169,6 +171,7 @@ if [[ $ADMIN ]]; then
   e_header "Hide current admin user"
   read -p "Enter admin username: " adminuser
   sudo dscl . -create /Users/$adminuser IsHidden 1
+  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
 fi
 
 
