@@ -163,14 +163,14 @@ sudo dscl . -passwd /Users/$username $password
 e_header "Adding $username to $groupname"
 sudo dseditgroup -o edit -a $username -t user $groupname
 
-#e_header "Hide current admin user"
-#read -p "Enter admin username: " adminuser
-#sudo dscl . -create /Users/$adminuser IsHidden 1
+e_header "Hide current admin user"
+read -p "Enter admin username: " adminuser
+sudo dscl . -create /Users/$adminuser IsHidden 1
 
 e_header "Setting up /etc/sudoers..."
 adminuser=$(whoami)
-echo 'Defaults:%$groupname runas_default=$adminuser, runaspw' | sudo tee -a /etc/sudoers
-echo '%$groupname ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+echo 'Defaults:%$groupname runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
+echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
 
 
 ###############################################################################
