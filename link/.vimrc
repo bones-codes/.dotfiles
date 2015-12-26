@@ -66,6 +66,7 @@ xnoremap p pgvy
 map ** gwap
 map ~~ :w<CR> :!make<CR>
 map -s :call ToggleSpellCheck()         
+map ww :w !sudo tee %
 
 " custom functions ---------------------------------
 set spell spelllang=
