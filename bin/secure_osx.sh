@@ -168,10 +168,10 @@ if [[ $ADMIN ]]; then
   echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
   echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
 
-  e_header "Hide current admin user"
-  read -p "Enter admin username: " adminuser
-  sudo dscl . -create /Users/$adminuser IsHidden 1
-  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
+#  e_header "Hide current admin user"
+#  read -p "Enter admin username: " adminuser
+#  sudo dscl . -create /Users/$adminuser IsHidden 1
+#  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
 fi
 
 
@@ -187,25 +187,27 @@ defaults write com.apple.dock wvous-bl-corner -int 6
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
 # Enable Require password to wake this computer from sleep or screen saver.
-sudo defaults write com.apple.screensaver askForPassword -int 1
-sudo defaults write com.apple.screensaver askForPasswordDelay -int 0
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 
 ###############################################################################
 # Services                                                                    #
 ###############################################################################
-# Disable IR remote control.
-sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-# Turn Bluetooth off.
-sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-# Disable Remote Management.
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-# Disable Internet Sharing.
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
+if [[ $ADMIN ]]; then
+  # Disable IR remote control.
+  sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
+  # Turn Bluetooth off.
+  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
+  # Disable Remote Management.
+  sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
+  # Disable Internet Sharing.
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
+  # Disable Captive Portal
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+fi
 # Disable Bluetooth Sharing.
 sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
-# Disable Captive Portal
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 
 bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
 loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
