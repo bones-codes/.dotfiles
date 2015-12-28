@@ -362,7 +362,7 @@ if [[ ! -d $DOTFILES_HOME ]]; then
   e_header "Downloading dotfiles"
   git clone https://github.com/bones-codes/.dotfiles.git $DOTFILES_HOME
   cd $DOTFILES_HOME
-elif [[ "$LOCAL" || "$1" != "restart" ]]; then
+elif [[ ! "$LOCAL" && "$1" != "restart" ]]; then
   # Make sure we have the latest files.
   e_header "Updating dotfiles"
   cd $DOTFILES_HOME
