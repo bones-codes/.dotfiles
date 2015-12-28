@@ -2,7 +2,7 @@
 # This script should be run prior to connecting to a network.
 # https://github.com/drduh/OS-X-Security-and-Privacy-Guide
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
-Usage: $(basename "$0 <options>")
+Usage: sudo $(basename "$0 <options>")
 
     -a,--admin       Secure configurations for an Administrator user
     -s,--standard    Secure configurations for a Standard user (default)
@@ -93,9 +93,9 @@ if [[ $ADMIN ]]; then
   # Allow signed APPS
   sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
-  e_header "Enable tty_tickets for sudo"
+  e_header "Enable tty_tickets for sud"
   user="$(whoami)"
-  su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
+  su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/suders"
 
 
   ###############################################################################
@@ -127,7 +127,7 @@ if [[ $ADMIN ]]; then
   # Disable Guest login.
   sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
 
-  # The following sets up a standard user to act as the primary user. All sudo
+  # The following sets up a standard user to act as the primary user. All sud
   # actions are handled via runaspw under the current admin user.
   e_header "Create non-admin group"
   read -p "Enter non-admin groupname: " groupname
@@ -163,15 +163,15 @@ if [[ $ADMIN ]]; then
   e_header "Adding $username to $groupname"
   sudo dseditgroup -o edit -a $username -t user $groupname
 
-  e_header "Setting up /etc/sudoers..."
+  e_header "Setting up /etc/suders..."
   adminuser=$(whoami)
-  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
-  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/suders
+  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/suders
 
-#  e_header "Hide current admin user"
-#  read -p "Enter admin username: " adminuser
-#  sudo dscl . -create /Users/$adminuser IsHidden 1
-#  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
+  #  e_header "Hide current admin user"
+  #  read -p "Enter admin username: " adminuser
+  #  sudo dscl . -create /Users/$adminuser IsHidden 1
+  #  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
 fi
 
 
