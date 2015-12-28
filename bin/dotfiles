@@ -45,6 +45,7 @@ function set_profile(){
 }
 
 # Cause I'm too tired to track down the real issue here 
+# TODO
 function standard_user_env() {
   if [[ "$is_standard_user" = true ]]; then
     echo '''
@@ -302,10 +303,10 @@ function vim_bundle() {
     done
   fi
 }
-
+# TODO
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
-    source "$USER_HOME/.profile"
+  #  source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
@@ -337,10 +338,13 @@ done
 
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
-set_profile "export USER_HOME=$HOME"
-set_profile "export DOTFILES_HOME=$USER_HOME/.dotfiles"
+export USER_HOME=$HOME
+# TODO set_profile "export USER_HOME=$HOME"
+export DOTFILES_HOME=$USER_HOME/.dotfiles
+# TODO set_profile "export DOTFILES_HOME=$USER_HOME/.dotfiles"
 
-set_profile "export is_standard_user=false"
+is_standard_user=false
+# TODO set_profile "export is_standard_user=false"
 
 check_sudo
 
@@ -350,16 +354,19 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 if get_os 'osx'; then
   check_cmd_tools
   if [[ $(xcode-select -p 2>&1) == "/Applications/Xcode.app/Contents/Developer"  ]]; then
-    set_profile "export xcode_installed=true"
+    xcode_installed=true
+    # TODO set_profile "export xcode_installed=true"
   fi
 
   if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
     echo "Script is running as a standard user."
-    set_profile "export is_standard_user=true"
+    is_standard_user=true
+    # TODO set_profile "export is_standard_user=true"
   fi    
 fi
 
-standard_user_env
+#standard_user_env
+env
 remove_profile
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
