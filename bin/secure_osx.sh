@@ -34,8 +34,110 @@ function setcomp() {
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
 if [[ $ADMIN ]]; then
+  e_header "Enable tty_tickets for sud"
+  user="$(whoami)"
+  su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
+
+
+  ###############################################################################
+  # Firewall                                                                    #
+  ###############################################################################
+  e_header "Enable firewall"
+  # Enable Firewall
+  # Replace value with
+  # 0 = off
+  # 1 = on for specific services
+  # 2 = on for essential services
+  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+  # Enable Stealth mode.
+  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+  # Enable Firewall Logging.
+  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+  # Allow signed APPS
+  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+
+
+  ###############################################################################
+  # User Management                                                             #
+  ###############################################################################
+  # Require password to unlock each System Preference pane.
+  # Edit the /etc/authorization file using a text editor.
+  # Find <key>system.preferences<key>.
+  # Then find <key>shared<key>.
+  # Then replace <true/> with <false/>.
+  security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
+  defaults write /tmp/system.preferences.plist shared -bool false
+  sudo security -q authorizationdb write system.preferences < /tmp/system.preferences.plist
+  sudo rm -rf /tmp/system.preferences.plist
+
+  # Disable fast user switching 
+  sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
+
+  # Display login window as: Name and password
+  sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
+
+  # Don't show any password hints
+  sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
+
+  # Disable Automatic login.
+  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
+  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
+
+  # Disable Guest login.
+  sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
+
+  # The following sets up a standard user to act as the primary user. All sudo
+  # actions are handled via runaspw under the current admin user.
+  e_header "Create non-admin group"
+  read -p "Enter non-admin groupname: " groupname
+  sudo dscl . -create /Groups/$groupname
+  # Create the group name key
+  sudo dscl . -create /Groups/$groupname RealName $groupname
+  sudo dscl . -create /Groups/$groupname RecordName $groupname
+  sudo dscl . -create /Groups/$groupname passwd “*”
+  sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
+
+  e_header "Create user (Standard)"
+  read -p "Enter new username (Standard): " username
+  read -p "Enter user's full name: " fullname
+  read -p "Set the user's password: " password
+  # Create a new entry in the local domain under the category /users.
+  sudo dscl . -create /Users/$username
+  # Create and set the shell property to bash.
+  sudo dscl . -create /Users/$username UserShell /bin/bash
+  # Create and set the user’s full name.
+  sudo dscl . -create /Users/$username RealName $fullname
+  sudo dscl . -create /Users/$username RecordName $fullname
+  # Create and set the user’s ID.
+  sudo dscl . -create /Users/$username UniqueID 502
+  # Create and set the user’s group ID property.
+  sudo dscl . -create /Users/$username PrimaryGroupID 20
+  # Create and set the user home directory.
+  sudo mkdir /Users/$username
+  sudo chown $username /Users/$username
+  sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
+  # Set the password.
+  sudo dscl . -passwd /Users/$username $password
+ 
+  e_header "Adding $username to $groupname"
+  sudo dseditgroup -o edit -a $username -t user $groupname
+
+  e_header "Setting up /etc/sudoers..."
+  adminuser=$(whoami)
+  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
+  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+
+  #  e_header "Hide current admin user"
+  #  read -p "Enter admin username: " adminuser
+  #  sudo dscl . -create /Users/$adminuser IsHidden 1
+  #  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
+
+
+  ###############################################################################
+  # Filevault                                                                   #
+  ###############################################################################
   e_header "Enable Filevault"
-  sudo fdesetup enable
+  sudo fdesetup enable -user $adminuser -usertoadd $username
   echo
   # Destroy Filevault Key when going to standby
   # mode. By default File vault keys are retained even when system goes
@@ -78,100 +180,6 @@ if [[ $ADMIN ]]; then
   # specifies the delay, in seconds, before writing the
   # hibernation image to disk and powering off memory for Standby.
   sudo pmset -a standbydelay 300
-
-  e_header "Enable firewall"
-  # Enable Firewall
-  # Replace value with
-  # 0 = off
-  # 1 = on for specific services
-  # 2 = on for essential services
-  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
-  # Enable Stealth mode.
-  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-  # Enable Firewall Logging.
-  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-  # Allow signed APPS
-  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
-
-  e_header "Enable tty_tickets for sud"
-  user="$(whoami)"
-  su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/suders"
-
-
-  ###############################################################################
-  # User Management                                                             #
-  ###############################################################################
-  # Require password to unlock each System Preference pane.
-  # Edit the /etc/authorization file using a text editor.
-  # Find <key>system.preferences<key>.
-  # Then find <key>shared<key>.
-  # Then replace <true/> with <false/>.
-  security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
-  defaults write /tmp/system.preferences.plist shared -bool false
-  sudo security -q authorizationdb write system.preferences < /tmp/system.preferences.plist
-  sudo rm -rf /tmp/system.preferences.plist
-
-  # Disable fast user switching 
-  sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
-
-  # Display login window as: Name and password
-  sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
-
-  # Don't show any password hints
-  sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
-
-  # Disable Automatic login.
-  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
-  sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
-
-  # Disable Guest login.
-  sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
-
-  # The following sets up a standard user to act as the primary user. All sud
-  # actions are handled via runaspw under the current admin user.
-  e_header "Create non-admin group"
-  read -p "Enter non-admin groupname: " groupname
-  sudo dscl . -create /Groups/$groupname
-  # Create the group name key
-  sudo dscl . -create /Groups/$groupname RealName $groupname
-  sudo dscl . -create /Groups/$groupname RecordName $groupname
-  sudo dscl . -create /Groups/$groupname passwd “*”
-  sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
-
-  e_header "Create user (Standard)"
-  read -p "Enter new username (Standard): " username
-  read -p "Enter user's full name: " fullname
-  read -p "Set the user's password: " password
-  # Create a new entry in the local domain under the category /users.
-  sudo dscl . -create /Users/$username
-  # Create and set the shell property to bash.
-  sudo dscl . -create /Users/$username UserShell /bin/bash
-  # Create and set the user’s full name.
-  sudo dscl . -create /Users/$username RealName $fullname
-  sudo dscl . -create /Users/$username RecordName $fullname
-  # Create and set the user’s ID.
-  sudo dscl . -create /Users/$username UniqueID 502
-  # Create and set the user’s group ID property.
-  sudo dscl . -create /Users/$username PrimaryGroupID 20
-  # Create and set the user home directory.
-  sudo mkdir /Users/$username
-  sudo chown $username /Users/$username
-  sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
-  # Set the password.
-  sudo dscl . -passwd /Users/$username $password
- 
-  e_header "Adding $username to $groupname"
-  sudo dseditgroup -o edit -a $username -t user $groupname
-
-  e_header "Setting up /etc/suders..."
-  adminuser=$(whoami)
-  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/suders
-  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/suders
-
-  #  e_header "Hide current admin user"
-  #  read -p "Enter admin username: " adminuser
-  #  sudo dscl . -create /Users/$adminuser IsHidden 1
-  #  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
 fi
 
 
