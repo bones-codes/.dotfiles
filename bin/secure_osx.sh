@@ -131,12 +131,12 @@ if [[ $ADMIN ]]; then
   # actions are handled via runaspw under the current admin user.
   e_header "Create non-admin group"
   read -p "Enter non-admin groupname: " groupname
-  sudo dscl . create /Groups/$groupname
+  sudo dscl . -create /Groups/$groupname
   # Create the group name key
-  sudo dscl . create /Groups/$groupname RealName $groupname
-  sudo dscl . create /Groups/$groupname RecordName $groupname
-  sudo dscl . create /Groups/$groupname passwd “*”
-  sudo dscl . create /Groups/$groupname PrimaryGroupID 503
+  sudo dscl . -create /Groups/$groupname RealName $groupname
+  sudo dscl . -create /Groups/$groupname RecordName $groupname
+  sudo dscl . -create /Groups/$groupname passwd “*”
+  sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
 
   e_header "Create user (Standard)"
   read -p "Enter new username (Standard): " username
@@ -159,7 +159,7 @@ if [[ $ADMIN ]]; then
   sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
   # Set the password.
   sudo dscl . -passwd /Users/$username $password
-
+ 
   e_header "Adding $username to $groupname"
   sudo dseditgroup -o edit -a $username -t user $groupname
 
