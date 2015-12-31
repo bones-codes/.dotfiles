@@ -98,34 +98,39 @@ if [[ $ADMIN ]]; then
   sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
 
   e_header "Create user (Standard)"
-  read -p "Enter new username (Standard): " username
-  read -p "Enter user's full name: " fullname
-  read -p "Set the user's password: " password
-  # Create a new entry in the local domain under the category /users.
-  sudo dscl . -create /Users/$username
-  # Create and set the shell property to bash.
-  sudo dscl . -create /Users/$username UserShell /bin/bash
-  # Create and set the user’s full name.
-  sudo dscl . -create /Users/$username RealName $fullname
-  sudo dscl . -create /Users/$username RecordName $fullname
-  # Create and set the user’s ID.
-  sudo dscl . -create /Users/$username UniqueID 502
-  # Create and set the user’s group ID property.
-  sudo dscl . -create /Users/$username PrimaryGroupID 20
-  # Create and set the user home directory.
-  sudo mkdir /Users/$username
-  sudo chown $username /Users/$username
-  sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
-  # Set the password.
-  sudo dscl . -passwd /Users/$username $password
- 
-  e_header "Adding $username to $groupname"
-  sudo dseditgroup -o edit -a $username -t user $groupname
+  read -p "Enter new username (Standard):" username
+  read -p "Enter user's full name:" fullname
+  read -s "Set the user's password:" password
+  read -s "Confirm user's password:" passcheck
+  if [[ $password == $passcheck ]]; then 
+    # Create a new entry in the local domain under the category /users.
+    sudo dscl . -create /Users/$username
+    # Create and set the shell property to bash.
+    sudo dscl . -create /Users/$username UserShell /bin/bash
+    # Create and set the user’s full name.
+    sudo dscl . -create /Users/$username RealName $fullname
+    sudo dscl . -create /Users/$username RecordName $fullname
+    # Create and set the user’s ID.
+    sudo dscl . -create /Users/$username UniqueID 502
+    # Create and set the user’s group ID property.
+    sudo dscl . -create /Users/$username PrimaryGroupID 20
+    # Create and set the user home directory.
+    sudo mkdir /Users/$username
+    sudo chown $username /Users/$username
+    sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
+    # Set the password.
+    sudo dscl . -passwd /Users/$username $password
+    
+    e_header "Adding $username to $groupname"
+    sudo dseditgroup -o edit -a $username -t user $groupname
 
-  e_header "Setting up /etc/sudoers..."
-  adminuser=$(whoami)
-  echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
-  echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+    e_header "Setting up /etc/sudoers..."
+    adminuser=$(whoami)
+    echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
+    echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+  else
+    e_error "Passwords don't match -- run again"
+  fi
 
   #  e_header "Hide current admin user"
   #  read -p "Enter admin username: " adminuser
