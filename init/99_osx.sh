@@ -72,6 +72,21 @@ if [[ ! $MIN ]]; then
 fi
 
 if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
+  e_header 'Installing dirbuster-ng'
+  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng" ]]; then
+    cd "$HOME/.dotfiles/bin/dirbuster-ng"
+    git pull
+    cd build
+    cmake ..
+    make install
+  else
+    cd "$HOME/.dotfiles/bin"
+    git clone https://github.com/digination/dirbuster-ng.git
+    cd dirbuster-ng; mkdir build; cd build
+    cmake ..
+    make install
+  fi
+
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
   if [[ -e "$DOTFILES_HOME/conf/local/" && ! $MIN && ! $LOCAL ]]; then

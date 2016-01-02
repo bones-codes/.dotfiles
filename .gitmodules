@@ -2,3 +2,7 @@
     path = link/.vim/bundle/vim-dirdiff
 	url = git://github.com/will133/vim-dirdiff
 	ignore = dirty
+[submodule "bin/dirbuster-ng"]
+    path = bin/dirbuster-ng
+	url = git@github.com:rk700/dirbuster-ng.git
+	ignore = dirty

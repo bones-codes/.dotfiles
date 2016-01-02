@@ -19,6 +19,21 @@ else
   git clone git@github.com:fuzzdb-project/fuzzdb.git
 fi
 
+echo 'Updating dirbuster-ng'
+if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng" ]]; then
+  cd "$HOME/.dotfiles/bin/dirbuster-ng"
+  git pull
+  cd build
+  cmake ..
+  make install
+else
+  cd "$HOME/.dotfiles/bin"
+  git clone git@github.com:digination/dirbuster-ng.git
+  cd dirbuster-ng; mkdir build; cd build
+  cmake ..
+  make install
+fi
+
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
 brew update && brew upgrade --all && brew upgrade brew-cask 
 brew cleanup && brew cask cleanup && brew doctor
