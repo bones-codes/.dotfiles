@@ -34,7 +34,7 @@ function setcomp() {
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
 if [[ $ADMIN ]]; then
-  e_header "Enable tty_tickets for sud"
+  e_header "Enable tty_tickets for sudo"
   user="$(whoami)"
   su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
 
@@ -98,10 +98,12 @@ if [[ $ADMIN ]]; then
   sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
 
   e_header "Create user (Standard)"
-  read -p "Enter new username (Standard):" username
-  read -p "Enter user's full name:" fullname
-  read -s "Set the user's password:" password
-  read -s "Confirm user's password:" passcheck
+  read -p "Enter new username (Standard): " username
+  read -p "Enter user's full name: " fullname
+  echo -n "Set the user's password: "
+  read -s password; echo
+  echo -n "Confirm user's password: " 
+  read -s password; echo
   if [[ $password == $passcheck ]]; then 
     # Create a new entry in the local domain under the category /users.
     sudo dscl . -create /Users/$username
