@@ -2,7 +2,7 @@
 # This script should be run prior to connecting to a network.
 # https://github.com/drduh/OS-X-Security-and-Privacy-Guide
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
-Usage: sudo $(basename "$0 <options>")
+Usage: $(basename "$0 <options>")
 
     -a,--admin       Secure configurations for an Administrator user
     -s,--standard    Secure configurations for a Standard user (default)
