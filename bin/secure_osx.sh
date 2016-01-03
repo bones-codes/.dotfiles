@@ -101,9 +101,11 @@ if [[ $ADMIN ]]; then
   read -p "Enter new username (Standard): " username
   read -p "Enter user's full name: " fullname
   echo -n "Set the user's password: "
-  read -s password; echo
+  read -s password
+  echo
   echo -n "Confirm user's password: " 
-  read -s password; echo
+  read -s passcheck
+  echo
   if [[ $password == $passcheck ]]; then 
     # Create a new entry in the local domain under the category /users.
     sudo dscl . -create /Users/$username
@@ -130,21 +132,20 @@ if [[ $ADMIN ]]; then
     adminuser=$(whoami)
     echo 'Defaults:%'$groupname' runas_default='$adminuser', runaspw' | sudo tee -a /etc/sudoers
     echo '%'$groupname' ALL=(ALL) ALL' | sudo tee -a /etc/sudoers
+
   else
     e_error "Passwords don't match -- run again"
   fi
-
-  #  e_header "Hide current admin user"
-  #  read -p "Enter admin username: " adminuser
-  #  sudo dscl . -create /Users/$adminuser IsHidden 1
-  #  sudo dscl . -delete "/SharePoints/"$adminuser"'s Public Folder"
 
 
   ###############################################################################
   # Filevault                                                                   #
   ###############################################################################
+  # Restricting enabled users to Standard cause fucking Filevault doesn't
+  # respect the name/pass setting 
+  # https://discussions.apple.com/thread/3201161?start=15&tstart=0 
   e_header "Enable Filevault"
-  sudo fdesetup enable -user $adminuser -usertoadd $username
+  sudo fdesetup enable -user $username
   echo
   # Destroy Filevault Key when going to standby
   # mode. By default File vault keys are retained even when system goes
