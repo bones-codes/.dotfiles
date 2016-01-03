@@ -135,6 +135,7 @@ if [[ $ADMIN ]]; then
 
   else
     e_error "Passwords don't match -- run again"
+    exit 1
   fi
 
 
