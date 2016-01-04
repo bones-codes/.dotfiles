@@ -16,7 +16,7 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
   fi
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS || $BT || $BHACK]]; then
+if [[ $HACK || $NET || $WAPT || $IOS || $BT || $BHACK ]]; then
   # Temp fix for wireshark interfaces
   # -rw-r--r-- 1 root wheel
   if [[ "$(stat -L -f "%Sp:%Su:%Sg" /Library/LaunchDaemons/org.wireshark.ChmodBPF.plist)" != "-rw-r--r--:root:wheel" ]]; then
@@ -78,6 +78,18 @@ if [[ "$(type -P pip)" ]]; then
   pip -q install --upgrade virtualenv 
   pip -q install --upgrade virtualenvwrapper
 
+  if [[ ! $MIN ]]; then 
+    mkdir -p $USER_HOME/dev
+    mkdir -p $USER_HOME/tools
+
+    e_header "Installing PyObjC"
+    # Cause Homebrew's Python is missing the CoreFoundation module
+    sudo pip install -U pyobjc
+
+    e_header "Installing peewee (for pct-vim)"
+    # https://github.com/d0c-s4vage/pct-vim
+    sudo pip3 install -U peewee
+  fi
 fi
 
 if [[ $LOCAL || $IOS || $RUBY ]]; then 

@@ -18,9 +18,9 @@ fi
 # If iTerm has never been run this wont exist. 
 # We then run iTerm so we can config it.
 if [[ ! -e ~/Library/Preferences/com.googlecode.iterm2.plist ]]; then
-    open -a iTerm
-    sleep 1
-    killall iTerm2
+  open -a iTerm
+  sleep 1
+  killall iTerm2
 fi
 
 # Now for iTerm to load its setting from an external location.
@@ -57,19 +57,6 @@ rm $filename
 done
 
 killall iTerm2
-
-if [[ ! $MIN ]]; then 
-  mkdir -p $USER_HOME/dev
-  mkdir -p $USER_HOME/tools
-
-  e_header "Installing PyObjC"
-  # Cause Homebrew's Python is missing the CoreFoundation module
-  pip install -U pyobjc
-
-  e_header "Installing peewee (for pct-vim)"
-  # https://github.com/d0c-s4vage/pct-vim
-  pip3 install -U peewee
-fi
 
 if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header 'Installing dirbuster-ng'
