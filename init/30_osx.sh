@@ -96,9 +96,7 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  echo '
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"' >> $USER_HOME/.bashrc
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' >> $USER_HOME/.bashrc
   source $USER_HOME/.bashrc
   CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
   rbenv local 2.2.3
