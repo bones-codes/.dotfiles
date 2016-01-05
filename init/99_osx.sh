@@ -108,9 +108,6 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/kasketis/netfox (iDevice)
   # https://code.google.com/p/ccl-bplist/
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
-  e_header "Installing idb (iOS)"
-  gem install idb
-
   e_header "Installing iReSign (iOS)"
   git clone https://github.com/maciekish/iReSign.git
   mv iReSign/iReSign.app /Applications/

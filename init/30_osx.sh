@@ -96,9 +96,23 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' >> $USER_HOME/.bashrc
-  source $USER_HOME/.bashrc
+  #echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' >> $USER_HOME/.bashrc
+  export PATH="$USER_HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+  #source $USER_HOME/.bashrc
   CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  rbenv local 2.2.3
+  rbenv global 2.2.3
   ruby -v
+fi
+
+if [[ $LOCAL ]]; then 
+  e_header "Installing icalendar gem (mutt)"
+  gem install -v 1.5.4 icalendar
+  e_header "Installing imap_notifier gem (mutt)"
+  gem install imap_notifier
+fi
+
+if [[ $HACK || $IOS ]]; then
+  e_header "Installing idb (iOS)"
+  gem install idb
 fi
