@@ -413,18 +413,20 @@ fi
 remove_profile
 
 e_header "All done!"
-if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
-  echo "For all changes to take effect you should relogin."
+if [[ $(get_os 'osx') ]]; then
+  if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
+    echo "For all changes to take effect you should relogin."
 
-  read -p "Do you want to relogin now (y/n) ?: " yn
-  case $yn in
-    [Yy]* ) 
-      sudo pkill loginwindow
-      ;;
+    read -p "Do you want to relogin now (y/n) ?: " yn
+    case $yn in
+      [Yy]* ) 
+        osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'
+        ;;
 
-    [Nn]* ) 
-      sudo -k
-      exit
-      ;;
-  esac
+      [Nn]* ) 
+        sudo -k
+        exit
+        ;;
+    esac
+  fi
 fi
