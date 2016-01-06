@@ -61,9 +61,9 @@ if [[ $LOCAL ]]; then
 fi
 
 e_header "Installing Karabiner and Seil sets"
-sudo -u na open -a karabiner
+sudo -u $STANDARD_USER open -a karabiner
 sleep 10
-sudo -u na pkill Karabiner
+sudo -u $STANDARD_USER pkill Karabiner
 sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'UPDATE access SET allowed = "1";'
 sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
 sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
@@ -79,8 +79,8 @@ if [[ "$(type -P pip)" ]]; then
   pip -q install --upgrade virtualenvwrapper
 
   if [[ ! $MIN ]]; then 
-    sudo -u na mkdir -p $USER_HOME/dev
-    sudo -u na mkdir -p $USER_HOME/tools
+    sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
+    sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
 
     e_header "Installing PyObjC"
     # Cause Homebrew's Python is missing the CoreFoundation module
@@ -100,17 +100,17 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   export PATH="$USER_HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
   #source $USER_HOME/.bashrc
-  sudo -u na CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  sudo -u na rbenv global 2.2.3
+  sudo -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
+  sudo -u $STANDARD_USER rbenv global 2.2.3
   ruby -v
 fi
 
 if [[ $LOCAL ]]; then 
   e_header "Installing icalendar gem (mutt)"
-  sudo -u na gem install -v 1.5.4 icalendar
+  sudo -u $STANDARD_USER gem install -v 1.5.4 icalendar
 fi
 
 if [[ $HACK || $IOS ]]; then
   e_header "Installing idb (iOS)"
-  sudo -u na gem install idb
+  sudo -u $STANDARD_USER gem install idb
 fi
