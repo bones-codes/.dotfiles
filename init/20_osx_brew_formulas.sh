@@ -21,6 +21,7 @@ recipes=(
   "lesspipe --with-syntax-highlighting"
   "openssl --universal" 
   p7zip 
+  pass
   "python --universal" 
   python3
   reattach-to-user-namespace
@@ -36,7 +37,6 @@ fi
 
 if [ "$LOCAL" ]; then
   recipes+=(
-  pass
   keybase
   "mutt --with-confirm-attachment-patch --with-debug --with-gpgme 
   --with-ignore-thread-patch --with-pgp-verbose-mime-patch --with-trash-patch"
@@ -107,9 +107,10 @@ fi
 
 if [[ $MIN ]]; then
   recipes+=(
-  "wget --with-iri" 
+  pass
   tmux
   reattach-to-user-namespace
+  "wget --with-iri" 
   )
 
 fi
