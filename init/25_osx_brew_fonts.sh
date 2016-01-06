@@ -24,5 +24,5 @@ msft_fonts_dir=$osx_conf_dir/msft_fonts/*
 for font in $msft_fonts_dir
 do
 echo "Installing font: $font"
-cp "$font" $USER_HOME/Library/Fonts/
+sudo cp "$font" /Library/Fonts/
 done
