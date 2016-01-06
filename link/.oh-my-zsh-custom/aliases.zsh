@@ -52,7 +52,6 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 
 alias top=htop
 alias tmx='tmux -u attach'
-alias mutt="imap_notifier; mutt"
 alias dirbuster-ng="$HOME/.dotfiles/bin/dirbuster-ng/build/dirbuster-ng"
 
 # Create OS X install drive
