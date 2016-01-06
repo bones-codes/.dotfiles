@@ -100,19 +100,19 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   export PATH="$USER_HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
   #source $USER_HOME/.bashrc
-  CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  rbenv global 2.2.3
+  sudo -u na CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
+  sudo -u na rbenv global 2.2.3
   ruby -v
 fi
 
 if [[ $LOCAL ]]; then 
   e_header "Installing icalendar gem (mutt)"
-  gem install -v 1.5.4 icalendar
+  sudo -u na gem install -v 1.5.4 icalendar
   e_header "Installing imap_notifier gem (mutt)"
-  gem install imap_notifier
+  sudo -u na gem install imap_notifier
 fi
 
 if [[ $HACK || $IOS ]]; then
   e_header "Installing idb (iOS)"
-  gem install idb
+  sudo -u na gem install idb
 fi
