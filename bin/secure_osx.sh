@@ -95,7 +95,7 @@ if [[ $ADMIN ]]; then
   sudo dscl . -create /Groups/$groupname RealName $groupname
   sudo dscl . -create /Groups/$groupname RecordName $groupname
   sudo dscl . -create /Groups/$groupname passwd “*”
-  sudo dscl . -create /Groups/$groupname PrimaryGroupID 503
+  sudo dscl . -create /Groups/$groupname PrimaryGroupID 513
 
   e_header "Create user (Standard)"
   read -p "Enter new username (Standard): " username
@@ -115,7 +115,7 @@ if [[ $ADMIN ]]; then
     sudo dscl . -create /Users/$username RealName $fullname
     sudo dscl . -create /Users/$username RecordName $fullname
     # Create and set the user’s ID.
-    sudo dscl . -create /Users/$username UniqueID 502
+    sudo dscl . -create /Users/$username UniqueID 507
     # Create and set the user’s group ID property.
     sudo dscl . -create /Users/$username PrimaryGroupID 20
     # Create and set the user home directory.
