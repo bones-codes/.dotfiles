@@ -14,7 +14,7 @@ if [[ $HAFH ]]; then
 fi
 
 if [[ $HACK || $NET ]]; then
-  casks+=(transmit vlc razorsql)
+  casks+=(transmit vlc razorsql vmware-fusion)
 fi
 
 if [[ $HACK || $REV ]]; then
