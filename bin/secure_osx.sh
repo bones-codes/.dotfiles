@@ -33,28 +33,28 @@ function setcomp() {
 
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
+
+###############################################################################
+# Firewall                                                                    #
+###############################################################################
+e_header "Enable firewall"
+# Enable Firewall
+# Replace value with
+# 0 = off
+# 1 = on for specific services
+# 2 = on for essential services
+sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+# Enable Stealth mode.
+sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+# Enable Firewall Logging.
+sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+# Allow signed APPS
+sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+
 if [[ $ADMIN ]]; then
   e_header "Enable tty_tickets for sudo"
   user="$(whoami)"
   su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
-
-
-  ###############################################################################
-  # Firewall                                                                    #
-  ###############################################################################
-  e_header "Enable firewall"
-  # Enable Firewall
-  # Replace value with
-  # 0 = off
-  # 1 = on for specific services
-  # 2 = on for essential services
-  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
-  # Enable Stealth mode.
-  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-  # Enable Firewall Logging.
-  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-  # Allow signed APPS
-  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
 
   ###############################################################################
@@ -211,18 +211,16 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 ###############################################################################
 # Services                                                                    #
 ###############################################################################
-if [[ $ADMIN ]]; then
-  # Disable IR remote control.
-  sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-  # Turn Bluetooth off.
-  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-  # Disable Remote Management.
-  sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-  # Disable Internet Sharing.
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
-  # Disable Captive Portal
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
-fi
+# Disable IR remote control.
+sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
+# Turn Bluetooth off.
+sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
+# Disable Remote Management.
+sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
+# Disable Internet Sharing.
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
+# Disable Captive Portal
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 # Disable Bluetooth Sharing.
 sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
 
