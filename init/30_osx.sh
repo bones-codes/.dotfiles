@@ -108,8 +108,6 @@ fi
 if [[ $LOCAL ]]; then 
   e_header "Installing icalendar gem (mutt)"
   sudo -u na gem install -v 1.5.4 icalendar
-  e_header "Installing imap_notifier gem (mutt)"
-  sudo -u na gem install imap_notifier
 fi
 
 if [[ $HACK || $IOS ]]; then

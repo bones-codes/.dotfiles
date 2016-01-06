@@ -1,7 +1,0 @@
-folders:
- - INBOX
-user:   'cbonar171'
-domain: 'nccgroup.com'
-server: 'imaps.nccgroup.com'
-pass: 'ncc/ncc-exchange'
-max: 10
