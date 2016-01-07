@@ -16,7 +16,7 @@ defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 if [[ "$LOCAL" ]]; then
   # Hide desktop icons
-  defaults write com.apple.finder CreateDesktop false
+  defaults write com.apple.finder CreateDesktop -bool false
 fi
 
 #Disable smart quotes and smart dashes
