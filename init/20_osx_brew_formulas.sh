@@ -9,6 +9,7 @@ if [ ! "$MIN" ]; then
 recipes=(
   ack 
   "brew-cask"
+  cmake
   coreutils 
   ctags 
   "curl --with-openssl"

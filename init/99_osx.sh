@@ -60,7 +60,7 @@ killall iTerm2
 
 if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header 'Installing dirbuster-ng'
-  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng" ]]; then
+  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
     cd "$HOME/.dotfiles/bin/dirbuster-ng"
     git pull
     cd build
