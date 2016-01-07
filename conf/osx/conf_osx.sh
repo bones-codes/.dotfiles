@@ -35,14 +35,15 @@ defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 ###############################################################################
 # Trackpad: enable tap to click for this user and for the login screen
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 2
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 2
 
 # Trackpad: map bottom right corner to right-click
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+
+# Trackpad: enable force click
+defaults -currentHost write NSGlobalDomain com.apple.trackpad.forceClick -int 1
 
 # Trackpad: enable draglock
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad DragLock -int 0
@@ -50,13 +51,14 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Dragging -int 
 
 # Trackpad: enable 5, 4, and 3 finger pinch/swipe gestures
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFiveFingerPinchGesture -int 2 
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerPinchGesture -int 2 
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerHorizSwipeGesture -int 2
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerPinchGesture -int 2
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadFourFingerVertSwipeGesture -int 2
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -int 0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 2
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 2
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadTwoFingerDoubleTapGesture -int 1
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadTwoFingerFromRightEdgeSwipeGesture -int 3
 
@@ -69,13 +71,13 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRotate
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadScroll -int 1
 
 # Automatically illuminate built-in MacBook keyboard in low light
-defaults write com.apple.BezelServices kDim -bool true
+defaults write com.apple.BezelServices kDim -int 1
 # Turn off keyboard illumination when computer is not used for 5 minutes
 defaults write com.apple.BezelServices kDimTime -int 300
 
 # Disable press-and-hold for keys in favor of key repeat
 # I hope whoever came up with this stupid fucking idea dies in a tar pit
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -int 0
 # Set a blazingly fast keyboard repeat rate -- still too slow
 defaults write NSGlobalDomain KeyRepeat -int 0
 # Don't take EONS to repeat 
@@ -85,10 +87,6 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 30
 defaults write -g com.apple.trackpad.scaling 2
 defaults write -g com.apple.mouse.scaling 2.5
  
-# Turn off keyboard illumination when computer is not used for 5 minutes
-defaults write com.apple.BezelServices kDimTime -int 300
-
-
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
