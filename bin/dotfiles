@@ -310,7 +310,8 @@ get_os
 # Capture the flag(s)
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
-  set_profile "export $X=True"
+  #set_profile "export $X=True"
+  export $X=True
 done
 
 #Setup the USER_HOME variable to be the current users home.
@@ -338,7 +339,7 @@ if get_os 'osx'; then
   fi    
 fi
 
-remove_profile
+#remove_profile
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
@@ -412,7 +413,7 @@ if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/c
   source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
 fi
 
-remove_profile
+#remove_profile
 
 e_header "All done!"
 if [[ $(get_os 'osx') ]]; then
