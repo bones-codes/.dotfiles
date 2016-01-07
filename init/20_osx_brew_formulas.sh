@@ -61,7 +61,7 @@ fi
 
 if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
-  "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
+  "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   testssl
   )
   
