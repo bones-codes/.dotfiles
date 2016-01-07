@@ -5,7 +5,8 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0 <options>")
 
     -a,--admin       Secure configurations for an Administrator user
-    -s,--standard    Secure configurations for a Standard user (default)
+    -s,--standard    Secure configurations for a Standard user or single user
+                     install (default)
 
 HELP
 exit; fi
