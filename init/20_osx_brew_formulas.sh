@@ -58,7 +58,7 @@ if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   
 fi
 
-if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
   recipes+=(
   "wireshark --with-headers --with-libpcap --with-libsmi --with-lua --with-qt --devel"
   testssl
@@ -97,7 +97,7 @@ if [[ $HACK || $BT ]]; then
   
 fi
 
-if [[ $BHACK ]]; then
+if [[ $MINHACK ]]; then
   recipes+=(
   nmap
   netcat

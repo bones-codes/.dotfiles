@@ -6,7 +6,7 @@ Usage: $(basename "$0 <options>")
     MIN       osx configs, homebrew, tmux and a few rcs 
               (.ackrc, .bash_profile, .bashrc, .tmux.conf, and .vimrc)
     LOCAL     no hacking tools, just the basics + ncc requirements
-    BHACK     all the basics 
+    MINHACK   all the basics 
               (basics + burp, wireshark, nmap, testssl, dirbuster-ng)
     NET       network pentest tools
     WAPT      web application hacking tools

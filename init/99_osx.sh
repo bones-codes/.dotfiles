@@ -58,7 +58,7 @@ done
 
 killall iTerm2
 
-if [[ $HACK || $BHACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
   e_header 'Installing dirbuster-ng'
   if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng" ]]; then
     cd "$HOME/.dotfiles/bin/dirbuster-ng"
