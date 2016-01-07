@@ -41,8 +41,7 @@ function check_sudo() {
 }
 
 function set_profile() {
-  $@
-  echo "$@" | tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
+  $@; echo "$@" | tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
 }
 
 function check_cmd_tools() {
@@ -284,7 +283,6 @@ function vim_bundle() {
 
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
-    source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
@@ -319,15 +317,10 @@ for arg in "$@"; do
   X=`echo "$arg" | tr [a-z] [A-Z]`
   set_profile "export $X=True"
 done
-echo ".profile should have the vars"
-cat .profile
-echo "BEFORE SUDO CHECK"
-env
+
 is_standard_user=false
 
 check_sudo
-echo "AFTER SUDO CHECK"
-env
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
