@@ -40,8 +40,9 @@ function check_sudo() {
   fi
 }
 
-function set_profile(){
-  $@; echo "$@" | tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
+function set_profile() {
+  $@
+  echo "$@" | tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
 }
 
 function check_cmd_tools() {
@@ -307,20 +308,21 @@ get_os
 # If this file was being sourced, exit now.
 [[ "$1" == "source" ]] && return
 
-# Capture the flag(s)
-for arg in "$@"; do 
-  X=`echo "$arg" | tr [a-z] [A-Z]`
-  set_profile "export $X=True"
-  export $X=True
-done
-echo ".profile should have the vars"
-cat .profile
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
 export STANDARD_USER=$USER
 export USER_HOME=$HOME
 export DOTFILES_HOME=$USER_HOME/.dotfiles
+
+# Capture the flag(s)
+for arg in "$@"; do 
+  X=`echo "$arg" | tr [a-z] [A-Z]`
+  set_profile "export $X=True"
+done
+echo ".profile should have the vars"
+cat .profile
 echo "BEFORE SUDO CHECK"
+env
 is_standard_user=false
 
 check_sudo
