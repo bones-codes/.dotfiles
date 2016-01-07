@@ -78,13 +78,15 @@ if [[ "$(type -P pip)" ]]; then
   pip -q install --upgrade virtualenv 
   pip -q install --upgrade virtualenvwrapper
 
-  if [[ ! $MIN ]]; then 
-    sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
-    sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
-
+  if [[ $LOCAL || $HACK || $IOS ]]; then
     e_header "Installing PyObjC"
     # Cause Homebrew's Python is missing the CoreFoundation module
     sudo -H pip install -U pyobjc
+  fi
+
+  if [[ ! $MIN ]]; then 
+    sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
+    sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
 
     e_header "Installing peewee (for pct-vim)"
     # https://github.com/d0c-s4vage/pct-vim
