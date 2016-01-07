@@ -127,10 +127,8 @@ function link_test() {
 }
 function link_do() {
   # Only linking mutt-related rcs if local install
-  # TODO does this work?
   if [[ ! $LOCAL ]]; then
     dots=(
-    .imap_notifier
     .inputrc
     .mutt
     .muttrc
