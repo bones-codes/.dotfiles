@@ -41,8 +41,7 @@ function check_sudo() {
 }
 
 function set_profile(){
-  #$@; echo "$@" | sudo -u $STANDARD_USER tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
-  $@; echo "$@" | sudo -u $STANDARD_USER tee -a $USER_HOME/.profile
+  $@; echo "$@" | tee -a $USER_HOME/.profile >> $USER_HOME/.bashrc
 }
 
 function check_cmd_tools() {
@@ -83,14 +82,14 @@ function check_cmd_tools() {
         done
       fi
     fi
-#    e_header "Must reboot --- damn you Apple"
+    e_header "Must reboot --- damn you Apple"
     # This creates a .profile and will continue the install upon reboot.
     # This works because:
     # a. On a clean install, sudo reboot will cause the terminal to reopen as part of a restore previous state.
     # b. On a clean install .profile does not exist so it easy to manipulate and later delete.
-#    echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
-#    sleep 5
-#    sudo -u root reboot
+    echo 'bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/dotfiles)"' >> .profile
+    sleep 5
+    sudo -u root reboot
   fi
 }
 
@@ -284,6 +283,7 @@ function vim_bundle() {
 
 function remove_profile() {
   if [[ -e "$USER_HOME/.profile" ]]; then
+    source "$USER_HOME/.profile"
     e_header "Removing .profile"
     rm -rf "$USER_HOME/.profile"
   fi
@@ -310,19 +310,22 @@ get_os
 # Capture the flag(s)
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
-  #set_profile "export $X=True"
+  set_profile "export $X=True"
   export $X=True
 done
-
+echo ".profile should have the vars"
+cat .profile
 #Setup the USER_HOME variable to be the current users home.
 #This is needed when running something as STD user.
 export STANDARD_USER=$USER
 export USER_HOME=$HOME
 export DOTFILES_HOME=$USER_HOME/.dotfiles
-
+echo "BEFORE SUDO CHECK"
 is_standard_user=false
 
 check_sudo
+echo "AFTER SUDO CHECK"
+env
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -339,7 +342,7 @@ if get_os 'osx'; then
   fi    
 fi
 
-#remove_profile
+remove_profile
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
@@ -413,7 +416,7 @@ if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/c
   source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
 fi
 
-#remove_profile
+remove_profile
 
 e_header "All done!"
 if [[ $(get_os 'osx') ]]; then
