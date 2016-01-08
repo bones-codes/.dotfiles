@@ -70,6 +70,7 @@ fi
 if [[ $HACK || $NET ]]; then
   recipes+=(
   masscan
+  nikto
   nmap
   netcat
   "--with-python libdnet"
