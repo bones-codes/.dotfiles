@@ -41,10 +41,8 @@ brew cleanup && brew cask cleanup && brew doctor
 echo; echo 'Updating pip and pip packages'
 pip install --upgrade pip setuptools
 pip install -U pyobjc
+pip install -U pycrypto
 pip3 install -U peewee
-
-#echo; echo 'update gems'
-#gem update --system
 
 echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
@@ -59,7 +57,7 @@ if [[ -e "$HOME/.local/share/profanity" ]]; then
   cp -R $HOME/.local/share/profanity/* $HOME/.dotfiles/conf/local/profanity/local/
 fi
 
-if [[ $(vagrant -v) ]]; then 
+if [[ -e /usr/bin/vagrant ]]; then 
   echo; echo "Updating Vagrant VMWare plugin"
   vagrant plugin install vagrant-vmware-fusion
 fi
