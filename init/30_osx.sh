@@ -78,6 +78,12 @@ if [[ "$(type -P pip)" ]]; then
   pip -q install --upgrade virtualenv 
   pip -q install --upgrade virtualenvwrapper
 
+  if [[ $HACK || $NET ]]; then
+    e_header "Installing PyCrypto"
+    # For Scapy
+    sudo -H pip install -U pycrypto
+  fi
+
   if [[ $LOCAL || $HACK || $IOS ]]; then
     e_header "Installing PyObjC"
     # Cause Homebrew's Python is missing the CoreFoundation module
