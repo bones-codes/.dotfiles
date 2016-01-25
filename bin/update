@@ -66,4 +66,5 @@ if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi
 
+echo; echo "Running Apple's Software Update Tool..."
 sudo softwareupdate --install --all
