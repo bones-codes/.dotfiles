@@ -1,5 +1,5 @@
 [submodule "link/.vim/bundle/vim-dirdiff"]
-    path = link/.vim/bundle/vim-dirdiff
+    path = link/.vim/plugged/vim-dirdiff
 	url = git://github.com/will133/vim-dirdiff
 	ignore = dirty
 [submodule "bin/dirbuster-ng"]

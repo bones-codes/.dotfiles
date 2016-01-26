@@ -1,5 +1,15 @@
-call pathogen#infect()
-call pathogen#helptags()
+"call pathogen#infect()
+"call pathogen#helptags()
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/LaTeX-Box-Team/LaTeX-Box.git'
+Plug 'https://github.com/Raimondi/delimitMate.git'
+Plug 'https://github.com/scrooloose/syntastic.git'
+Plug 'https://github.com/nelstrom/vim-markdown-folding.git'
+Plug 'https://github.com/terryma/vim-multiple-cursors.git'
+Plug 'https://github.com/will133/vim-dirdiff.git'
+Plug 'https://github.com/d0c-s4vage/pct-vim.git'
+" Add plugins to &runtimepath
+call plug#end()
 
 filetype plugin indent on	        " filetype detection
 
