@@ -212,16 +212,19 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 ###############################################################################
 # Services                                                                    #
 ###############################################################################
-# Disable IR remote control.
-sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-# Turn Bluetooth off.
-sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-# Disable Remote Management.
-sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-# Disable Internet Sharing.
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
-# Disable Captive Portal
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+if [[ $ADMIN ]]; then
+  # Disable IR remote control.
+  sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
+  # Turn Bluetooth off.
+  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
+  # Disable Remote Management.
+  sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
+  # Disable Internet Sharing.
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
+  # Disable Captive Portal
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+fi
+
 # Disable Bluetooth Sharing.
 sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
 
@@ -239,8 +242,10 @@ fi
 ###############################################################################
 # Spotlight                                                                   #
 ###############################################################################
-#Disable Spotlight indexing from indexing /Volumes
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+if [[ $ADMIN ]]; then
+  #Disable Spotlight indexing from indexing /Volumes
+  sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+fi
 
 #Change indexing order and disable some search results in Spotlight
 sudo defaults write com.apple.spotlight orderedItems -array \
