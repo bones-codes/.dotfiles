@@ -1,14 +1,20 @@
 #!/bin/bash
 
-echo 'Updating vim plugins'
-cd "$HOME/.dotfiles/link/.vim/bundle"
-for i in `ls`; do
-  echo $i
-  cd "$i"
-  git pull
-  cd ..
-  echo
-done
+echo 'Updating vim plug'
+if [[ -e "$HOME/.vim/autoload/plug.vim" ]]; then
+  rm $HOME/.vim/autoload/plug.vim
+fi
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+#echo 'Updating vim plugins'
+#cd "$HOME/.dotfiles/link/.vim/bundle"
+#for i in `ls`; do
+#  echo $i
+#  cd "$i"
+#  git pull
+#  cd ..
+#  echo
+#done
 
 echo 'Updating fuzzdb'
 if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
@@ -64,6 +70,12 @@ fi
 
 if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
+fi
+
+if [[ -e "/Volumes/disk3" ]]; then
+  rsync -ar --executability --delete --stats /Users/huesos/.dotfiles/ /Volumes/disk3/.dotfiles
+  rsync -ar --executability --delete --stats /Users/huesos/research/ /Volumes/disk3/rsrch
+  rsync -ar --executability --delete --stats /Users/huesos/resources/ /Volumes/disk3/pso
 fi
 
 echo; echo "Running Apple's Software Update Tool..."
