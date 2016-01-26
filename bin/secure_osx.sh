@@ -35,24 +35,24 @@ function setcomp() {
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
 
-###############################################################################
-# Firewall                                                                    #
-###############################################################################
-e_header "Enable firewall"
-# Enable Firewall
-# Replace value with
-# 0 = off
-# 1 = on for specific services
-# 2 = on for essential services
-sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
-# Enable Stealth mode.
-sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-# Enable Firewall Logging.
-sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-# Allow signed APPS
-sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
-
 if [[ $ADMIN ]]; then
+  ###############################################################################
+  # Firewall                                                                    #
+  ###############################################################################
+  e_header "Enable firewall"
+  # Enable Firewall
+  # Replace value with
+  # 0 = off
+  # 1 = on for specific services
+  # 2 = on for essential services
+  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+  # Enable Stealth mode.
+  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+  # Enable Firewall Logging.
+  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+  # Allow signed APPS
+  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+
   e_header "Enable tty_tickets for sudo"
   user="$(whoami)"
   su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
