@@ -13,10 +13,10 @@ source $BASH/colors.sh
 parse_git_dirty () {
   my_string=$(git status 2> /dev/null | tail -n1)
   substring="nothing to commit"
-  if [ "${my_string/$substring}" == $my_string ] ; then
-    echo ""
-  else
+  if [[ "${my_string/$substring}" == $my_string ]] ; then
     echo "*"
+  else
+    echo ""
   fi
 }
 
