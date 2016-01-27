@@ -113,19 +113,20 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  sudo -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  sudo -u $STANDARD_USER export PATH="$USER_HOME/.rbenv/bin:$PATH"
-  sudo -u $STANDARD_USER eval "$(rbenv init -)"
-  sudo -u $STANDARD_USER rbenv global 2.2.3
-  sudo -u $STANDARD_USER ruby -v
+  echo $STANDARD_USER
+  CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
+  export PATH="$USER_HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+  rbenv global 2.2.3
+  ruby -v
 fi
 
 if [[ $LOCAL ]]; then 
   e_header "Installing icalendar gem (mutt)"
-  sudo -u $STANDARD_USER gem install -v 1.5.4 icalendar
+  gem install -v 1.5.4 icalendar
 fi
 
 if [[ $HACK || $IOS ]]; then
   e_header "Installing idb (iOS)"
-  sudo -u $STANDARD_USER gem install idb
+  gem install idb
 fi
