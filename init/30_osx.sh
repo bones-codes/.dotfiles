@@ -114,10 +114,10 @@ if [[ $LOCAL || $IOS || $RUBY ]]; then
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
   #echo 'export PATH="$HOME/.rbenv/bin:$PATH"\neval "$(rbenv init -)"' >> $USER_HOME/.bashrc
-  export PATH="$USER_HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
   #source $USER_HOME/.bashrc
   sudo -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
+  export PATH="$USER_HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
   sudo -u $STANDARD_USER rbenv global 2.2.3
   ruby -v
 fi
