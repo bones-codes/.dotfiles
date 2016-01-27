@@ -28,7 +28,7 @@ brew doctor
 
 # Tap needed repo's
 if [[ ! $MIN ]]; then
-taps=("homebrew/dupes" "caskroom/cask" "caskroom/versions" "caskroom/fonts")
+taps=("homebrew/dupes" "caskroom/cask" "caskroom/versions" "caskroom/fonts" "homebrew/completions")
   if [[ $HACK || $NET ]]; then
     # Needed for Scapy
     taps+=("homebrew/python")

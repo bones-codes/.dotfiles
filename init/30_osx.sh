@@ -16,6 +16,15 @@ if [[ "$(type -P $binroot/zsh)" ]]; then
   fi
 fi
 
+# BASH
+if [[ "$(type -P $binroot/bash)" ]]; then
+  if ! grep -q "$binroot/bash" "/etc/shells"; then
+    e_header "Adding $binroot/bash to the list of acceptable shells"
+    echo "$binroot/bash" | sudo tee -a /etc/shells >/dev/null
+    chsh -s $binroot/bash
+  fi
+fi
+
 if [[ $HACK || $NET || $WAPT || $IOS || $BT || $MINHACK ]]; then
   # Temp fix for wireshark interfaces
   # -rw-r--r-- 1 root wheel

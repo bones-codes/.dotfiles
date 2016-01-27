@@ -8,6 +8,8 @@ $(get_os 'osx') || return 1
 if [ ! "$MIN" ]; then
 recipes=(
   ack 
+  bash
+  bash-completion
   "brew-cask"
   cmake
   coreutils 
@@ -19,6 +21,8 @@ recipes=(
   git-extras
   grep 
   htop-osx  
+  homebrew/completions/brew-cask-completion
+  homebrew/completions/pip-completion
   "lesspipe --with-syntax-highlighting"
   "openssl --universal" 
   p7zip 
@@ -47,6 +51,7 @@ if [ "$LOCAL" ]; then
   swig
   notmuch
   "profanity --with-terminal-notifier"
+  homebrew/completions/vagrant-completion
   w3m
   )
 
@@ -55,6 +60,7 @@ fi
 if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   recipes+=(
   rbenv
+  homebrew/completions/gem-completion
   )
   
 fi

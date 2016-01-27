@@ -10,6 +10,10 @@ source $BASH/aliases.sh
 source $BASH/osx.sh
 source $BASH/colors.sh
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
 parse_git_dirty () {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
 }
