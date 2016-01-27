@@ -11,7 +11,7 @@ source $BASH/osx.sh
 source $BASH/colors.sh
 
 parse_git_dirty () {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1) != *"nothing to commit"* ]] && echo "*"
 }
 
 parse_git_branch () {
