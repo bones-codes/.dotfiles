@@ -19,7 +19,7 @@ export DOTFILES="$HOME/.dotfiles"
 
 # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
 # Add binaries into the path
-PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
+PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin:$PATH
 export PATH
 
 #Some Sudo related stuff if your a STD user.

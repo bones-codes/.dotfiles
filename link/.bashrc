@@ -1,10 +1,10 @@
 # Path to bash configuration.
-BASH=$HOME/.bash
-LESSHISTFILE="/dev/null"
-CLICOLOR=1
-GREP_OPTIONS='--color=auto'
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
+export BASH=$HOME/.bash
+export LESSHISTFILE="/dev/null"
+export CLICOLOR=1
+export GREP_OPTIONS='--color=auto'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 source $BASH/aliases.sh
 source $BASH/osx.sh
