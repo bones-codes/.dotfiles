@@ -1,12 +1,12 @@
 [submodule "link/.vim/plugged/vim-dirdiff"]
     path = link/.vim/plugged/vim-dirdiff
 	url = git://github.com/will133/vim-dirdiff
-	ignore = dirty
+	ignore = all
 [submodule "link/.vim/plugged/syntastic"]
     path = link/.vim/plugged/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-	ignore = dirty
+	ignore = all
 [submodule "bin/dirbuster-ng"]
     path = bin/dirbuster-ng
 	url = git@github.com:rk700/dirbuster-ng.git
-	ignore = dirty
+	ignore = all
