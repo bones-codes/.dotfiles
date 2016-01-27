@@ -1,24 +1,24 @@
-export PS1="\h:\W \u\$ "
-export LESSHISTFILE="/dev/null"
-export CLICOLOR=1
-export GREP_OPTIONS='--color=auto'
+# Path to bash configuration.
+BASH=$HOME/.bash
+LESSHISTFILE="/dev/null"
+CLICOLOR=1
+GREP_OPTIONS='--color=auto'
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
 
-# yea, I'm lazy
-alias ls='ls -apG'
-alias grep='grep -nr'
-alias vi='vim'
-alias rm='srm'
+source $BASH/aliases.sh
+source $BASH/osx.sh
+source $BASH/colors.sh
+
+parse_git_dirty () {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+parse_git_branch () {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$RESET$RED$(parse_git_dirty)$GREEN[\1]/"
+}
+
+PS1="\[${BOLD}${CYAN}\]\u\[$BASE0\]@\[$CYAN\]\h\[$RESET\]\[$CYAN\][\w\[$BASE0\]]\$([[ -n \$(git branch 2> /dev/null) ]])\$(parse_git_branch)\[$BASE0\]\[$RESET\]\$ "
 
 # use vim
 set -o vi
-
-# locks down a thumb drive so that Mac OS X will not write any metadata to it.
-macosx_lockdown_drive() {
-	srm -r -s -v .Trashes
-	touch .Trashes
-	srm -r -s -v .fseventsd
-	touch .fseventsd
-	srm -r -s -v .Spotlight-V100
-	touch .Spotlight-V100
-	touch .metadata_never_index
-}
