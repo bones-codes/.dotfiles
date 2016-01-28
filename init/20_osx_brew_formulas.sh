@@ -65,8 +65,9 @@ if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
   
 fi
 
-if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   recipes+=(
+  amazon-ecs-cli
   "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   testssl
   )

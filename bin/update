@@ -44,6 +44,11 @@ echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
 
+if [[ -e "$HOME/.aws" ]]; then
+  echo; echo "Updating AWS configurations"
+  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
+fi
+
 if [[ -e "$HOME/.config/profanity" ]]; then
   echo; echo "Backing up Profanity settings"
   cp -R $HOME/.config/profanity/* $HOME/.dotfiles/conf/local/profanity/ 
