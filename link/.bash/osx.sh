@@ -1,27 +1,6 @@
 # OSX-only stuff. Abort if not OSX.
 [[ "$OSTYPE" =~ ^darwin ]] || return 1
 
-# Utilities, helpers. Moved into here just to make it cleaner
-# From http://stackoverflow.com//370047/#370255
-function path_remove() {
-  IFS=:
-  # convert it to an array
-  t=($PATH)
-  unset IFS
-  # perform any array operations to remove elements from the array
-  t=(${t[@]%%$1})
-  IFS=:
-  # output the new array
-  echo "${t[*]}"
-}
-
-export DOTFILES="$HOME/.dotfiles"
-
-# APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
-# Add binaries into the path
-PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin:$PATH
-export PATH
-
 #Some Sudo related stuff if your a STD user.
 if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
     alias sudo="sudo -H -E TMPDIR=/tmp"

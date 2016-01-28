@@ -3,6 +3,15 @@ export BASH=$HOME/.bash
 export LESSHISTFILE="/dev/null"
 export CLICOLOR=1
 export GREP_OPTIONS='--color=auto'
+export DOTFILES="$HOME/.dotfiles"
+
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
+  # Add binaries into the path
+  export PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
+fi
+
+# To get rbenv running...
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
