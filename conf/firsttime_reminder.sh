@@ -6,6 +6,8 @@ if get_os 'osx'; then
 
   #google-chrome
   open https://www.google.com/chrome
+  # https everywhere
+  open https://www.eff.org/https-everywhere
   #vimium
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
