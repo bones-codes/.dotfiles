@@ -6,7 +6,13 @@
     path = link/.vim/plugged/syntastic
 	url = https://github.com/scrooloose/syntastic.git
 	ignore = all
+[submodule "link/.vim/plugged/vim-multiple-cursors"]
+    path = link/.vim/plugged/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+	ignore = all
 [submodule "bin/dirbuster-ng"]
     path = bin/dirbuster-ng
 	url = git@github.com:rk700/dirbuster-ng.git
-	ignore = all
+    ignore = all
+
+    
