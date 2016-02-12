@@ -61,14 +61,6 @@ if [[ $HACK || $BT ]]; then
 
 fi
 
-# Install Slate
-#if [[ $LOCAL ]]; then
-#  if [[ ! -e "/Applications/Slate.app" ]]; then
-#    e_header "Installing Slate"
-#    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
-#  fi
-#fi
-
 e_header "Installing Karabiner and Seil sets"
 sudo -u $STANDARD_USER open -a karabiner
 sleep 10
