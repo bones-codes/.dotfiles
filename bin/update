@@ -7,28 +7,32 @@ fi
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # To update the plugins just run :PlugUpdate
 
-echo 'Updating fuzzdb'
-if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
-  cd "$HOME/tools/burp/fuzzdb"
-  git pull
-else
-  cd "$HOME/tools/burp"
-  git clone git@github.com:fuzzdb-project/fuzzdb.git
+if [ -z "$1" ]; then
+  echo 'Updating fuzzdb'
+  if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
+    cd "$HOME/tools/burp/fuzzdb"
+    git pull
+  else
+    cd "$HOME/tools/burp"
+    git clone git@github.com:fuzzdb-project/fuzzdb.git
+  fi
 fi
 
-echo 'Updating dirbuster-ng'
-if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
-  cd "$HOME/.dotfiles/bin/dirbuster-ng"
-  git pull
-  cd build
-  cmake ..
-  make install
-else
-  cd "$HOME/.dotfiles/bin"
-  git clone git@github.com:digination/dirbuster-ng.git
-  cd dirbuster-ng; mkdir build; cd build
-  cmake ..
-  make install
+if [ -z "$1" ]; then
+  echo 'Updating dirbuster-ng'
+  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
+    cd "$HOME/.dotfiles/bin/dirbuster-ng"
+    git pull
+    cd build
+    cmake ..
+    make install
+  else
+    cd "$HOME/.dotfiles/bin"
+    git clone git@github.com:digination/dirbuster-ng.git
+    cd dirbuster-ng; mkdir build; cd build
+    cmake ..
+    make install
+  fi
 fi
 
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
@@ -38,17 +42,19 @@ brew cleanup && brew cask cleanup && brew doctor
 echo; echo 'Updating pip and pip packages'
 pip install --upgrade pip setuptools
 pip install -U pyobjc
-pip install -U pycrypto
 pip3 install -U peewee
+if [ -z "$1" ]; then
+  pip install -U pycrypto
+fi
 
 echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
 /Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
 
-if [[ -e "$HOME/.aws" ]]; then
-  echo; echo "Updating AWS configurations"
-  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
-fi
+#if [[ -e "$HOME/.aws" ]]; then
+#  echo; echo "Updating AWS configurations"
+#  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
+#fi
 
 if [[ -e "$HOME/.config/profanity" ]]; then
   echo; echo "Backing up Profanity settings"

@@ -99,17 +99,3 @@ fi
   #ioregistryexplorer
   #open http://www.hackintoshosx.com/files/file/3600-ioregistryexplorer/
 #fi
-
-if [[ $HACK || $IOS ]]; then
-  # Setup tools/env for iOS hacking
-  # https://github.com/NitinJami/keychaineditor.git (iDevice)
-  # https://github.com/nabla-c0d3/ssl-kill-switch2 (iDevice)
-  # https://nabla-c0d3.github.io/blog/2013/08/20/intercepting-the-app-stores-traffic-on-ios/
-  # https://github.com/kasketis/netfox (iDevice)
-  # https://code.google.com/p/ccl-bplist/
-  # http://www.crypticbit.com/zen/products/iphoneanalyzer
-  e_header "Installing iReSign (iOS)"
-  git clone https://github.com/maciekish/iReSign.git
-  mv iReSign/iReSign.app /Applications/
-  rm -rf iReSign/
-fi

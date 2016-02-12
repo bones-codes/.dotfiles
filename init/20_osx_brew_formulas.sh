@@ -36,7 +36,7 @@ recipes=(
   "vim --with-python3 --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
   "wget --with-iri" 
-  zsh 
+  #zsh 
 )
 fi
 
@@ -48,8 +48,9 @@ if [ "$LOCAL" ]; then
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   urlview
   offlineimap
-  swig
+#  swig
   notmuch
+  rbenv
   "profanity --with-terminal-notifier"
   homebrew/completions/vagrant-completion
   w3m
@@ -57,17 +58,11 @@ if [ "$LOCAL" ]; then
 
 fi
 
-if [[ $HACK || $IOS || $RUBY || $LOCAL ]]; then
-  recipes+=(
-  rbenv
-  homebrew/completions/gem-completion
-  )
-  
-fi
-
 if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   recipes+=(
-  amazon-ecs-cli
+#  amazon-ecs-cli
+  rbenv
+  homebrew/completions/gem-completion
   "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   testssl
   )
@@ -108,6 +103,7 @@ fi
 
 if [[ $MINHACK ]]; then
   recipes+=(
+  masscan
   nmap
   netcat
   )

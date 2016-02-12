@@ -9,12 +9,12 @@ if [[ "$(type -P $binroot/htop)" ]] && [[ "$(stat -L -f "%Su:%Sg" "$binroot/htop
 fi
 
 # ZSH
-if [[ "$(type -P $binroot/zsh)" ]]; then
-  if ! grep -q "$binroot/zsh" "/etc/shells"; then
-    e_header "Adding $binroot/zsh to the list of acceptable shells"
-    echo "$binroot/zsh" | sudo tee -a /etc/shells >/dev/null
-  fi
-fi
+#if [[ "$(type -P $binroot/zsh)" ]]; then
+#  if ! grep -q "$binroot/zsh" "/etc/shells"; then
+#    e_header "Adding $binroot/zsh to the list of acceptable shells"
+#    echo "$binroot/zsh" | sudo tee -a /etc/shells >/dev/null
+#  fi
+#fi
 
 # BASH
 if [[ "$(type -P $binroot/bash)" ]]; then
@@ -62,12 +62,12 @@ if [[ $HACK || $BT ]]; then
 fi
 
 # Install Slate
-if [[ $LOCAL ]]; then
-  if [[ ! -e "/Applications/Slate.app" ]]; then
-    e_header "Installing Slate"
-    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
-  fi
-fi
+#if [[ $LOCAL ]]; then
+#  if [[ ! -e "/Applications/Slate.app" ]]; then
+#    e_header "Installing Slate"
+#    cd /Applications && curl https://www.ninjamonkeysoftware.com/slate/versions/slate-latest.tar.gz | tar -xz
+#  fi
+#fi
 
 e_header "Installing Karabiner and Seil sets"
 sudo -u $STANDARD_USER open -a karabiner
@@ -90,13 +90,13 @@ if [[ "$(type -P pip)" ]]; then
   if [[ $HACK || $NET ]]; then
     e_header "Installing PyCrypto"
     # For Scapy
-    sudo -H pip install -U pycrypto
+    pip -q install -U pycrypto
   fi
 
   if [[ $LOCAL || $HACK || $IOS ]]; then
     e_header "Installing PyObjC"
     # Cause Homebrew's Python is missing the CoreFoundation module
-    sudo -H pip install -U pyobjc
+    pip -q install -U pyobjc
   fi
 
   if [[ ! $MIN ]]; then 
@@ -105,15 +105,14 @@ if [[ "$(type -P pip)" ]]; then
 
     e_header "Installing peewee (for pct-vim)"
     # https://github.com/d0c-s4vage/pct-vim
-    sudo -H pip3 install -U peewee
+    pip3 -q install -U peewee
   fi
 fi
 
-if [[ $LOCAL || $IOS || $RUBY ]]; then 
+if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then 
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  echo $STANDARD_USER
   CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
   export PATH="$USER_HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
@@ -127,6 +126,18 @@ if [[ $LOCAL ]]; then
 fi
 
 if [[ $HACK || $IOS ]]; then
+  # Setup tools/env for iOS hacking
+  # https://github.com/NitinJami/keychaineditor.git (iDevice)
+  # https://github.com/kasketis/netfox (iDevice)
+  # https://github.com/nabla-c0d3/ssl-kill-switch2 (iDevice)
+  # https://nabla-c0d3.github.io/blog/2013/08/20/intercepting-the-app-stores-traffic-on-ios/
+  # https://code.google.com/p/ccl-bplist/
+  # http://www.crypticbit.com/zen/products/iphoneanalyzer
+  e_header "Installing iReSign (iOS)"
+  git clone https://github.com/maciekish/iReSign.git
+  mv iReSign/iReSign.app /Applications/
+  rm -rf iReSign/
+
   e_header "Installing idb (iOS)"
   gem install idb
 fi
