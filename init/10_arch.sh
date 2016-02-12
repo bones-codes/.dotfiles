@@ -6,7 +6,6 @@ sudo pacman --noc -Syyu
 
 # Install APT packages.
 packages=(
-  zsh
   htop
   python2
 )
