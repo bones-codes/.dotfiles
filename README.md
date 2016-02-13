@@ -15,9 +15,12 @@ Use the following to install with options. Cannot be used if installing as a Sta
 curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
 ```
 
-TODO
 ----
-windows script --- 
+todo
+----
++ arch
++ ubuntu
++ windows script --- 
     https://chocolatey.org/
     https://steve-jansen.github.io/guides/windows-batch-scripting/part-1-getting-started.html
 
