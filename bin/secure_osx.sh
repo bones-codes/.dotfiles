@@ -1,6 +1,17 @@
 #!/bin/bash
 # This script should be run prior to connecting to a network.
 # https://github.com/drduh/OS-X-Security-and-Privacy-Guide
+# For El Capitan, you'll need to disable SIP for a few settings
+# To disable SIP, do the following: 
+# 1. Startup while pressing Cmd+R to enter Recovery mode
+# 2. Open Utilities->Terminal
+# 3. Run the command "csrutil disable"
+# 4. Reboot, you'll land in the normal OS with SIP disabled
+# 5. Run this script
+# 6. Reboot again, and press Cmd+R to enter Recovery mode
+# 7. Enable SIP with "csrutil enable"
+# 8. Restart
+
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0 <options>")
 
@@ -34,25 +45,27 @@ function setcomp() {
 
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
+###############################################################################
+# Firewall                                                                    #
+###############################################################################
+e_header "Enable firewall"
+# Enable Firewall
+# Replace value with
+# 0 = off
+# 1 = on for specific services
+# 2 = on for essential services
+sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+# Enable Stealth mode
+sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+# Enable Firewall Logging
+sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+# Disallow signed Apps
+sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
 
 if [[ $ADMIN ]]; then
   ###############################################################################
-  # Firewall                                                                    #
+  # Sudo                                                                        #
   ###############################################################################
-  e_header "Enable firewall"
-  # Enable Firewall
-  # Replace value with
-  # 0 = off
-  # 1 = on for specific services
-  # 2 = on for essential services
-  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
-  # Enable Stealth mode.
-  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-  # Enable Firewall Logging.
-  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-  # Allow signed APPS
-  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
-
   e_header "Enable tty_tickets for sudo"
   user="$(whoami)"
   su $user -m -c "echo 'Defaults tty_tickets' | sudo tee -a /etc/sudoers"
@@ -213,70 +226,94 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 # Services                                                                    #
 ###############################################################################
 if [[ $ADMIN ]]; then
-  # Disable IR remote control.
+  # Disable IR remote control
   sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-  # Turn Bluetooth off.
-  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-  # Disable Remote Management.
+  # Disable Remote Management
   sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-  # Disable Internet Sharing.
+  # Disable Internet Sharing
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
   # Disable Captive Portal
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+  # Turn Bluetooth off
+  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
 fi
 
 # Disable Bluetooth Sharing.
 sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
+#launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
 
-bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
-loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
-bad_list=($(setcomp "${bad[*]}" "$loaded"))
-if (( ${#bad_list[@]} > 0 )); then
-  for rmv in "${bad_list[@]}"; do
-    e_header "Unloading: $rmv"
-    launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
-  done
+# Mute microphone
+sudo osascript -e "set Volume 0"
+
+csrutil status | grep 'disabled' &> /dev/null
+if [ $? == 0 ]; then
+  # Disable Location Services
+  sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
+  launchctl unload /System/Library/LaunchDaemons/com.apple.locationd.plist
+  launchctl load /System/Library/LaunchDaemons/com.apple.locationd.plist
+
+  # Disable Bonjour
+  sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
+  sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+  sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+
+  bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
+  loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
+  bad_list=($(setcomp "${bad[*]}" "$loaded"))
+  if (( ${#bad_list[@]} > 0 )); then
+    for rmv in "${bad_list[@]}"; do
+      e_header "Unloading: $rmv"
+      launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
+    done
+  fi
+
+
+  ###############################################################################
+  # Spotlight                                                                   #
+  ###############################################################################
+  # Hide the icon cause we really don't need it
+  sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+  killall SystemUIServer
+
+  #Disable Spotlight 
+  sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+
 fi
 
+#Disable Spotlight indexing from indexing /Volumes
+#sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
 
-###############################################################################
-# Spotlight                                                                   #
-###############################################################################
-if [[ $ADMIN ]]; then
-  #Disable Spotlight indexing from indexing /Volumes
-  sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-fi
+#Change indexing order and disable some search results in Spotlight TODO -- does this work?
+#sudo defaults write com.apple.spotlight orderedItems -array \ 
+#    '{"enabled" = 1;name = "APPLICATIONS";}' \
+#    '{"enabled" = 0;name = "MENU_SPOTLIGHT_SUGGESTIONS";}' \
+#    '{"enabled" = 1;name = "MENU_CONVERSION";}' \
+#    '{"enabled" = 1;name = "MENU_EXPRESSION";}' \
+#    '{"enabled" = 0;name = "MENU_DEFINITION";}' \
+#    '{"enabled" = 1;name = "SYSTEM_PREFS";}' \
+#    '{"enabled" = 0;name = "DOCUMENTS";}' \
+#    '{"enabled" = 0;name = "DIRECTORIES";}' \
+#    '{"enabled" = 0;name = "PRESENTATIONS";}' \
+#    '{"enabled" = 0;name = "SPREADSHEETS";}' \
+#    '{"enabled" = 0;name = "PDF";}' \
+#    '{"enabled" = 0;name = "MESSAGES";}' \
+#    '{"enabled" = 0;name = "CONTACT";}' \
+#    '{"enabled" = 0;name = "EVENT_TODO";}' \
+#    '{"enabled" = 0;name = "IMAGES";}' \
+#    '{"enabled" = 0;name = "BOOKMARKS";}' \
+#    '{"enabled" = 0;name = "MUSIC";}' \
+#    '{"enabled" = 0;name = "MOVIES";}' \
+#    '{"enabled" = 0;name = "FONTS";}' \
+#    '{"enabled" = 0;name = "MENU_OTHER";}' \
+#    '{"enabled" = 0;name = "MENU_WEBSEARCH";}' \
+#    '{"enabled" = 0;name = "SOURCE";}' 
 
-#Change indexing order and disable some search results in Spotlight
-sudo defaults write com.apple.spotlight orderedItems -array \
-    '{"enabled" = 1;"name" = "APPLICATIONS";}' \
-    '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-    '{"enabled" = 1;"name" = "DIRECTORIES";}' \
-    '{"enabled" = 1;"name" = "PDF";}' \
-    '{"enabled" = 0;"name" = "FONTS";}' \
-    '{"enabled" = 1;"name" = "DOCUMENTS";}' \
-    '{"enabled" = 0;"name" = "MESSAGES";}' \
-    '{"enabled" = 0;"name" = "CONTACT";}' \
-    '{"enabled" = 0;"name" = "EVENT_TODO";}' \
-    '{"enabled" = 0;"name" = "IMAGES";}' \
-    '{"enabled" = 0;"name" = "BOOKMARKS";}' \
-    '{"enabled" = 0;"name" = "MUSIC";}' \
-    '{"enabled" = 0;"name" = "MOVIES";}' \
-    '{"enabled" = 1;"name" = "PRESENTATIONS";}' \
-    '{"enabled" = 1;"name" = "SPREADSHEETS";}' \
-    '{"enabled" = 0;"name" = "SOURCE";}' \
-    '{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
-    '{"enabled" = 0;"name" = "MENU_OTHER";}' \
-    '{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
-    '{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
-    '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
-    '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
 # Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
+#killall mds > /dev/null 2>&1
 # Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
+#sudo mdutil -i on / > /dev/null
 # Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
+#sudo mdutil -E / > /dev/null
 
 
 ###############################################################################

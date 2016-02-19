@@ -7,7 +7,7 @@ sudo chflags nohidden ~/Library/
 sudo chflags nohidden /tmp
 
 #Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+#sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
 # Disable fast user switching 
 sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
