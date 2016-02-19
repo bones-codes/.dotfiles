@@ -45,24 +45,24 @@ function setcomp() {
 
 [[ $1 == '-a' || $1 == '--admin' ]] && export ADMIN=True
 
-###############################################################################
-# Firewall                                                                    #
-###############################################################################
-e_header "Enable firewall"
-# Enable Firewall
-# Replace value with
-# 0 = off
-# 1 = on for specific services
-# 2 = on for essential services
-sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
-# Enable Stealth mode
-sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
-# Enable Firewall Logging
-sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
-# Disallow signed Apps
-sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
-
 if [[ $ADMIN ]]; then
+  ###############################################################################
+  # Firewall                                                                    #
+  ###############################################################################
+  e_header "Enable firewall"
+  # Enable Firewall
+  # Replace value with
+  # 0 = off
+  # 1 = on for specific services
+  # 2 = on for essential services
+  sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
+  # Enable Stealth mode
+  sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
+  # Enable Firewall Logging
+  sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
+  # Disallow signed Apps
+  sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
+
   ###############################################################################
   # Sudo                                                                        #
   ###############################################################################
@@ -243,7 +243,7 @@ sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
 #launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
 
 # Mute microphone
-sudo osascript -e "set Volume 0"
+sudo osascript -e 'tell application "System Events" to set volume input volume 0'
 
 csrutil status | grep 'disabled' &> /dev/null
 if [ $? == 0 ]; then
