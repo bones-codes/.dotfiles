@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-path="$1"
-
-for file in $(egrep -H \^Subject:\ EXTERNAL: $path/* 2>/dev/null | cut -d : -f 1,2) ; do
-  perl -pi -e 's/Subject: EXTERNAL: /Subject: /g' $file
-done
