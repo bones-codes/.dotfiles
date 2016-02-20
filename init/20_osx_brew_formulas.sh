@@ -23,7 +23,6 @@ recipes=(
   htop-osx  
   homebrew/completions/brew-cask-completion
   homebrew/completions/pip-completion
-  "lesspipe --with-syntax-highlighting"
   "openssl --universal" 
   p7zip 
   pass
