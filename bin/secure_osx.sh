@@ -245,37 +245,39 @@ sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
 # Mute microphone
 sudo osascript -e 'tell application "System Events" to set volume input volume 0'
 
-csrutil status | grep 'disabled' &> /dev/null
-if [ $? == 0 ]; then
-  # Disable Location Services
-  sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
+if [[ $ADMIN ]]; then
+  csrutil status | grep 'disabled' &> /dev/null
+  if [ $? == 0 ]; then
+    # Disable Location Services
+    sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
 
-  # Disable Bonjour
-  sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
-  sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
-  sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+    # Disable Bonjour
+    sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
+    sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+    sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
 
-  bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
-  loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
-  bad_list=($(setcomp "${bad[*]}" "$loaded"))
-  if (( ${#bad_list[@]} > 0 )); then
-    for rmv in "${bad_list[@]}"; do
-      e_header "Unloading: $rmv"
-      launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
-    done
+    bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
+    loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
+    bad_list=($(setcomp "${bad[*]}" "$loaded"))
+    if (( ${#bad_list[@]} > 0 )); then
+      for rmv in "${bad_list[@]}"; do
+        e_header "Unloading: $rmv"
+        launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
+      done
+    fi
+
+
+    ###############################################################################
+    # Spotlight                                                                   #
+    ###############################################################################
+    # Hide the icon cause we really don't need it
+    sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+    killall SystemUIServer
+
+    #Disable Spotlight indexing
+    sudo mdutil -i off /
+
   fi
-
-
-  ###############################################################################
-  # Spotlight                                                                   #
-  ###############################################################################
-  # Hide the icon cause we really don't need it
-  sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-  killall SystemUIServer
-
-  #Disable Spotlight indexing
-  sudo mdutil -i off /
-
 fi
 
 #Disable Spotlight indexing from indexing /Volumes
