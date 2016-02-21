@@ -249,8 +249,6 @@ csrutil status | grep 'disabled' &> /dev/null
 if [ $? == 0 ]; then
   # Disable Location Services
   sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
-  launchctl unload /System/Library/LaunchDaemons/com.apple.locationd.plist
-  launchctl load /System/Library/LaunchDaemons/com.apple.locationd.plist
 
   # Disable Bonjour
   sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
