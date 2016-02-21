@@ -275,8 +275,8 @@ if [ $? == 0 ]; then
   sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
   killall SystemUIServer
 
-  #Disable Spotlight 
-  sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+  #Disable Spotlight indexing
+  sudo mdutil -i off /
 
 fi
 
