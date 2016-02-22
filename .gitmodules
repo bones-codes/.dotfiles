@@ -10,6 +10,10 @@
     path = link/.vim/plugged/vim-multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
 	ignore = all
+[submodule "link/.vim/plugged/swift.vim"]
+    path = link/.vim/plugged/swift.vim
+	url = https://github.com/keith/swift.vim.git
+	ignore = all
 [submodule "bin/dirbuster-ng"]
     path = bin/dirbuster-ng
 	url = git@github.com:rk700/dirbuster-ng.git
