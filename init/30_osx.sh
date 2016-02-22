@@ -92,8 +92,10 @@ if [[ "$(type -P pip)" ]]; then
   fi
 
   if [[ ! $MIN ]]; then 
-    sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
-    sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
+    if [[ ! $LOCAL ]]; then
+      sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
+      sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
+    fi
 
     e_header "Installing peewee (for pct-vim)"
     # https://github.com/d0c-s4vage/pct-vim

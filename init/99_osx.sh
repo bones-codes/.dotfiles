@@ -76,7 +76,7 @@ if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
 
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
-  if [[ -e "$DOTFILES_HOME/conf/local/" && ! $MIN && ! $LOCAL ]]; then
+  if [[ -e "$DOTFILES_HOME/conf/local/" ]]; then
     ln -s $DOTFILES/conf/local/tools/burpsuite_pro_v*.jar $USER_HOME/tools/burp/
     cp $DOTFILES_HOME/conf/local/licenses/burp.txt $USER_HOME/tools/burp/burp-license.txt
   elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
