@@ -113,6 +113,8 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
 fi
 
 if [[ $LOCAL ]]; then 
+  e_header "Set TeXLive distribution"
+  sudo texdist --current=TeXLive-2015
   e_header "Installing icalendar gem (mutt)"
   gem install -v 1.5.4 icalendar
 fi
