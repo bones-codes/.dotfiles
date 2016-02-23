@@ -7,6 +7,17 @@ fi
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # To update the plugins just run :PlugUpdate
 
+echo 'Updating XVim'
+if [[ -e "$HOME/.dotfiles/bin/xvim" ]]; then
+  cd "$HOME/.dotfiles/bin/xvim"
+  git pull
+  make
+else
+  cd "$HOME/.dotfiles/bin"
+  git clone git@github.com:XVimProject/XVim.git
+  make
+fi
+
 if [ -z "$1" ]; then
   echo 'Updating fuzzdb'
   if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then

@@ -95,7 +95,6 @@ fi
   #  include https://code.google.com/p/iphone-dataprotection/source/browse/usbmuxd-python-client/tcprelay.py?r=1eae3bba5cd2713a372f6eff64e2778ba9d864e4 (move python scripts to gists)
   # script up the debugserver install (including sending to idevice)
   #nsxpc.d ---> gist
-  #install xvim
   #ioregistryexplorer
   #open http://www.hackintoshosx.com/files/file/3600-ioregistryexplorer/
 #fi
