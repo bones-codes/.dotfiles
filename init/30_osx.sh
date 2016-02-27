@@ -99,7 +99,7 @@ if [[ "$(type -P pip)" ]]; then
 
     e_header "Installing peewee (for pct-vim)"
     # https://github.com/d0c-s4vage/pct-vim
-    pip3 -q install -U peewee
+    sudo pip3 -q install -U peewee
   fi
 fi
 
@@ -126,13 +126,9 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/NitinJami/keychaineditor.git (iDevice)
   # https://github.com/kasketis/netfox (iDevice)
   # https://github.com/nabla-c0d3/ssl-kill-switch2 (iDevice)
-  # https://nabla-c0d3.github.io/blog/2013/08/20/intercepting-the-app-stores-traffic-on-ios/
   # https://code.google.com/p/ccl-bplist/
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
-  e_header "Installing iReSign (iOS)"
-  git clone https://github.com/maciekish/iReSign.git
-  mv iReSign/iReSign.app /Applications/
-  rm -rf iReSign/
+  # https://github.com/maciekish/iReSign.git
 
   e_header "Installing idb (iOS)"
   gem install idb

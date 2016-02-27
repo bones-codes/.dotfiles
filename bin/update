@@ -18,7 +18,7 @@ else
   make
 fi
 
-if [ -z "$1" ]; then
+if [[ -e "$HOME/tools" ]]; then
   echo 'Updating fuzzdb'
   if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
     cd "$HOME/tools/burp/fuzzdb"
@@ -44,17 +44,31 @@ if [ -z "$1" ]; then
   fi
 fi
 
+if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+  read -p "Enter the administrator username: " admin
+else
+  admin=$(whoami)
+fi
+
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
-brew update && brew upgrade --all && brew upgrade brew-cask 
-brew cleanup && brew cask cleanup && brew doctor
+sudo -u $admin brew update
+sudo -u $admin brew upgrade --all 
+sudo -u $admin brew upgrade brew-cask 
+sudo -u $admin brew cleanup 
+sudo -u $admin brew cask cleanup
+sudo -u $admin brew doctor
 
 echo; echo 'Updating pip and pip packages'
-pip install --upgrade pip setuptools
-pip install -U pyobjc
-pip3 install -U peewee
-if [ -z "$1" ]; then
-  pip install -U pycrypto
-fi
+  sudo -H -u $admin pip install --upgrade pip setuptools
+  if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) ]]; then
+    sudo -H -u $admin pip install -U pyobjc
+  fi
+  if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) ]]; then
+    sudo -H -u $admin pip3 install -U peewee
+  fi
+  if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) ]]; then
+    sudo -H -u $admin pip install -U pycrypto
+  fi
 
 echo; echo 'Updating karabiner/seil sets'
 /Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
@@ -86,10 +100,10 @@ fi
 if [[ -e "/Volumes/disk3" ]]; then
   echo; echo "Updating dotfiles"
   rsync -ar --executability --delete --stats /Users/huesos/.dotfiles/ /Volumes/disk3/.dotfiles
-#  echo; echo "Updating pso"
-#  rsync -ar --executability --delete --stats /Users/huesos/resources/ /Volumes/disk3/pso
-#  echo; echo "Updating rsrch"
-#  rsync -ar --executability --delete --stats /Users/huesos/research/ /Volumes/disk3/rsrch
+  echo; echo "Updating pso"
+  rsync -ar --executability --delete --stats /Users/huesos/resources/ /Volumes/disk3/pso
+  echo; echo "Updating rsrch"
+  rsync -ar --executability --delete --stats /Users/huesos/research/ /Volumes/disk3/rsrch
 fi
 
 echo; echo "Running Apple's Software Update Tool..."
