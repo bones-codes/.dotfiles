@@ -107,18 +107,18 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  export PATH="$USER_HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-  rbenv global 2.2.3
-  ruby -v
+  sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
+  sudo -H -u $STANDARD_USER export PATH="$USER_HOME/.rbenv/bin:$PATH"
+  sudo -H -u $STANDARD_USER eval "$(rbenv init -)"
+  sudo -H -u $STANDARD_USER rbenv global 2.2.3
+  sudo -H -u $STANDARD_USER ruby -v
 fi
 
 if [[ $LOCAL ]]; then 
   e_header "Set TeXLive distribution"
   sudo texdist --current=TeXLive-2015
   e_header "Installing icalendar gem (mutt)"
-  gem install -v 1.5.4 icalendar
+  sudo -u $STANDARD_USER gem install -v 1.5.4 icalendar
 fi
 
 if [[ $HACK || $IOS ]]; then
@@ -131,5 +131,5 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/maciekish/iReSign.git
 
   e_header "Installing idb (iOS)"
-  gem install idb
+  sudo -u $STANDARD_USER gem install idb
 fi
