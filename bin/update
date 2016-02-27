@@ -60,13 +60,16 @@ sudo -u $admin brew doctor
 
 echo; echo 'Updating pip and pip packages'
   sudo -H -u $admin pip install --upgrade pip setuptools
-  if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) ]]; then
+  if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
+    echo 'pyobjc'
     sudo -H -u $admin pip install -U pyobjc
   fi
-  if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) ]]; then
+  if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
+    echo 'peewee'
     sudo -H -u $admin pip3 install -U peewee
   fi
-  if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) ]]; then
+  if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
+    echo 'pycrypto'
     sudo -H -u $admin pip install -U pycrypto
   fi
 
