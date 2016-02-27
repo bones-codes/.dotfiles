@@ -35,7 +35,6 @@ recipes=(
   "vim --with-python3 --with-python --with-ruby --with-perl --enable-cscope 
   --enable-pythoninterp --override-system-vi"
   "wget --with-iri" 
-  #zsh 
 )
 fi
 
@@ -47,7 +46,6 @@ if [ "$LOCAL" ]; then
   "https://raw.github.com/tgray/homebrew-tgbrew/master/contacts2.rb"
   urlview
   offlineimap
-#  swig
   notmuch
   rbenv
   "profanity --with-terminal-notifier"
@@ -59,11 +57,10 @@ fi
 
 if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   recipes+=(
-#  amazon-ecs-cli
   rbenv
   homebrew/completions/gem-completion
-  "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   testssl
+  "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   )
   
 fi
@@ -87,6 +84,7 @@ if [[ $HACK || $IOS ]]; then
   cmake 
   usbmuxd 
   libimobiledevice
+  sqlitebrowser
   )
   
 fi

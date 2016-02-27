@@ -133,5 +133,5 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/maciekish/iReSign.git
 
   e_header "Installing idb (iOS)"
-  sudo -H -u $STANDARD_USER gem install idb
+  gem install idb
 fi
