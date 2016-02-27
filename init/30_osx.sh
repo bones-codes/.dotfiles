@@ -40,6 +40,7 @@ if [[ $HACK || $BT ]]; then
   # Install Bluetooth baseband library (libbtbb) needs to be built for the
   # Ubertooth tools to decode Bluetooth packets:
   e_header "Bluetooth baseband library (libbtbb)"
+  cd /tmp
   wget https://github.com/greatscottgadgets/libbtbb/archive/2015-10-R1.tar.gz -O libbtbb-2015-10-R1.tar.gz
   tar xf libbtbb-2015-10-R1.tar.gz
   cd libbtbb-2015-10-R1
@@ -50,6 +51,7 @@ if [[ $HACK || $BT ]]; then
   sudo make install
 
   e_header "Installing Ubertooth tools"
+  cd /tmp
   wget https://github.com/greatscottgadgets/ubertooth/releases/download/2015-10-R1/ubertooth-2015-10-R1.tar.xz -O ubertooth-2015-10-R1.tar.xz
   tar xf ubertooth-2015-10-R1.tar.xz
   cd ubertooth-2015-10-R1/host
@@ -118,7 +120,7 @@ if [[ $LOCAL ]]; then
   e_header "Set TeXLive distribution"
   sudo texdist --current=TeXLive-2015
   e_header "Installing icalendar gem (mutt)"
-  sudo -u $STANDARD_USER gem install -v 1.5.4 icalendar
+  sudo -H -u $STANDARD_USER gem install -v 1.5.4 icalendar
 fi
 
 if [[ $HACK || $IOS ]]; then
@@ -131,5 +133,5 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/maciekish/iReSign.git
 
   e_header "Installing idb (iOS)"
-  sudo -u $STANDARD_USER gem install idb
+  sudo -H -u $STANDARD_USER gem install idb
 fi
