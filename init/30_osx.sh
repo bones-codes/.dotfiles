@@ -84,25 +84,19 @@ if [[ "$(type -P pip)" ]]; then
   if [[ $HACK || $NET ]]; then
     e_header "Installing PyCrypto"
     # For Scapy
-    pip -q install -U pycrypto
+    sudo pip -q install --upgrade pycrypto
   fi
 
   if [[ $LOCAL || $HACK || $IOS ]]; then
     e_header "Installing PyObjC"
     # Cause Homebrew's Python is missing the CoreFoundation module
-    pip -q install -U pyobjc
+    sudo pip -q install --upgrade pyobjc
   fi
 
-  if [[ ! $MIN ]]; then 
-    if [[ ! $LOCAL ]]; then
-      sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
-      sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
-    fi
+  e_header "Installing peewee (for pct-vim)"
+  # https://github.com/d0c-s4vage/pct-vim
+  sudo pip3 -q install --upgrade peewee
 
-    e_header "Installing peewee (for pct-vim)"
-    # https://github.com/d0c-s4vage/pct-vim
-    sudo pip3 -q install -U peewee
-  fi
 fi
 
 if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then 
@@ -110,8 +104,8 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
   sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  sudo -H -u $STANDARD_USER export PATH="$USER_HOME/.rbenv/bin:$PATH"
-  sudo -H -u $STANDARD_USER eval "$(rbenv init -)"
+  export PATH="$USER_HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
   sudo -H -u $STANDARD_USER rbenv global 2.2.3
   sudo -H -u $STANDARD_USER ruby -v
 fi
@@ -134,4 +128,9 @@ if [[ $HACK || $IOS ]]; then
 
   e_header "Installing idb (iOS)"
   gem install idb
+fi
+
+if [[ ! $LOCAL ]]; then
+  sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
+  sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
 fi
