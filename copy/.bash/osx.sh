@@ -15,13 +15,6 @@ function path_remove() {
   echo "${t[*]}"
 }
 
-export DOTFILES="$HOME/.dotfiles"
-
-# APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
-# Add binaries into the path
-PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
-export PATH
-
 #Some Sudo related stuff if your a STD user.
 if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
     alias sudo="sudo -H -E TMPDIR=/tmp"
@@ -70,3 +63,5 @@ alias ggl="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user
 alias chrome=ggl
 alias google=ggl
 
+# Create OS X install drive
+alias createinstaller="sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/Install\ OS\ X\ El\ Capitan --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app --nointeraction"
