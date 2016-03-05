@@ -52,3 +52,4 @@ else
   BOLD=""
   RESET="\033[m"
 fi
+

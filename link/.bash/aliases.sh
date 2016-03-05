@@ -57,4 +57,4 @@ alias dirbuster-ng="$HOME/.dotfiles/bin/dirbuster-ng/build/dirbuster-ng"
 alias vi='vim'
 
 # Create OS X install drive
-alias createinstaller="sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/OS\ X\ Installer --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app --nointeraction"
+alias createinstaller="sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/Install\ OS\ X\ El\ Capitan --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app --nointeraction"

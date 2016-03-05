@@ -33,7 +33,11 @@ parse_git_branch () {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/$RESET$RED$(parse_git_dirty)$GREEN[\1]/"
 }
 
-PS1="\u@\h\[$CYAN\][\w]\$([[ -n \$(git branch 2> /dev/null) ]])\$(parse_git_branch)\[$BASE0\]\[$RESET\]\$ "
+last_two_dirs () {
+  pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
+}
+
+PS1="\u@\h\[$CYAN\][\$(last_two_dirs)]\$([[ -n \$(git branch 2> /dev/null) ]])\$(parse_git_branch)\[$BASE0\]\[$RESET\]\$ "
 
 # use vim
 set -o vi
