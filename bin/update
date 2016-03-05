@@ -82,6 +82,11 @@ echo; echo 'Updating karabiner/seil sets'
 #  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
 #fi
 
+if [[ -e "$HOME/.bash" && -e "$HOME/.dotfiles/copy/.bash" ]]; then
+  echo; echo "Backing up various bash scripts"
+  cp -R $HOME/.bash/* $HOME/.dotfiles/copy/.bash/ 
+fi
+
 if [[ -e "$HOME/.config/profanity" ]]; then
   echo; echo "Backing up Profanity settings"
   cp -R $HOME/.config/profanity/* $HOME/.dotfiles/conf/local/profanity/ 
