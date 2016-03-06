@@ -14,8 +14,6 @@ if get_os 'osx'; then
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
-  #wifi-signal
-  open "https://itunes.apple.com/us/app/wifi-signal/id525912054?mt=12"
   #Paragon
   #open https://www.paragon-software.com/home/ntfs-mac/
   #VB box
