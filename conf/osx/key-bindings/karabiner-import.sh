@@ -2,7 +2,7 @@
 
 cli=/Applications/Karabiner.app/Contents/Library/bin/karabiner
 
-$cli set repeat.wait 0
+$cli set repeat.wait 10
 /bin/echo -n .
 $cli set repeat.initial_wait 500
 /bin/echo -n .
