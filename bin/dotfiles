@@ -106,7 +106,7 @@ function init_do() {
  fi 
 }
 
-# Copy files.
+# Copy files and directories.
 function copy_header() { e_header "Copying files into home directory"; }
 function copy_test() {
   if [[ -e "$2" && ! "$(cmp "$1" "$2" 2> /dev/null)" ]]; then
