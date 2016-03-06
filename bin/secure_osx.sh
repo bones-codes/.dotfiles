@@ -222,54 +222,12 @@ defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 
-###############################################################################
-# Services                                                                    #
-###############################################################################
-if [[ $ADMIN ]]; then
-  # Disable IR remote control
-  sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-  # Disable Remote Management
-  sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-  # Disable Internet Sharing
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
-  # Disable Captive Portal
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
-  # Turn Bluetooth off
-  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-fi
-
-# Disable Bluetooth Sharing.
-sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
-#launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
-
-# Mute microphone
-sudo osascript -e 'tell application "System Events" to set volume input volume 0'
-
-if [[ $ADMIN ]]; then
-  csrutil status | grep 'disabled' &> /dev/null
-  if [ $? == 0 ]; then
-    # Disable Location Services
-    sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
-
-    # Disable Bonjour
-    sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
-    sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
-    sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
-
-    bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
-    loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
-    bad_list=($(setcomp "${bad[*]}" "$loaded"))
-    if (( ${#bad_list[@]} > 0 )); then
-      for rmv in "${bad_list[@]}"; do
-        e_header "Unloading: $rmv"
-        launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
-      done
-    fi
-
-
     ###############################################################################
     # Spotlight                                                                   #
     ###############################################################################
+if [[ $ADMIN ]]; then
+  csrutil status | grep 'disabled' &> /dev/null
+  if [ $? == 0 ]; then
     # Hide the icon cause we really don't need it
     sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
     killall SystemUIServer
@@ -337,6 +295,53 @@ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 # Empty Trash securely by default
 defaults write com.apple.finder EmptyTrashSecurely -bool true
+
+
+###############################################################################
+# Services                                                                    #
+###############################################################################
+if [[ $ADMIN ]]; then
+  # Disable IR remote control
+  sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
+  # Disable Remote Management
+  sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
+  # Disable Internet Sharing
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
+  # Disable Captive Portal
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+  # Turn Bluetooth off
+  sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
+fi
+
+# Disable Bluetooth Sharing.
+sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
+#launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+
+if [[ $ADMIN ]]; then
+  csrutil status | grep 'disabled' &> /dev/null
+  if [ $? == 0 ]; then
+    # Disable Location Services
+    sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
+
+    # Disable Bonjour
+    sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
+    sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+    sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+
+    bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
+    loaded="$(launchctl list | awk 'NR>1 && $3 !~ /0x[0-9a-fA-F]+\.(anonymous|mach_init)/ {print $3}')"
+    bad_list=($(setcomp "${bad[*]}" "$loaded"))
+    if (( ${#bad_list[@]} > 0 )); then
+      for rmv in "${bad_list[@]}"; do
+        e_header "Unloading: $rmv"
+        launchctl unload -wF "/System/Library/LaunchAgents/"$rmv".plist"
+      done
+    fi
+  fi
+fi
+
+# Mute microphone
+sudo osascript -e 'tell application "System Events" to set volume input volume 0'
 
 
 if [[ $ADMIN ]]; then
