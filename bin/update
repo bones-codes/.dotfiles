@@ -60,6 +60,7 @@ sudo -u $admin brew doctor
 
 echo; echo 'Updating pip and pip packages'
   sudo -H -u $admin pip install --upgrade pip setuptools
+  sudo -H -u $admin pip3 install --upgrade pip setuptools
   if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating pyobjc'
     sudo -H -u $admin pip install -U pyobjc
