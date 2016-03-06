@@ -8,14 +8,6 @@ if [[ "$(type -P $binroot/htop)" ]] && [[ "$(stat -L -f "%Su:%Sg" "$binroot/htop
   sudo chmod u+s "$binroot/htop"
 fi
 
-# ZSH
-#if [[ "$(type -P $binroot/zsh)" ]]; then
-#  if ! grep -q "$binroot/zsh" "/etc/shells"; then
-#    e_header "Adding $binroot/zsh to the list of acceptable shells"
-#    echo "$binroot/zsh" | sudo tee -a /etc/shells >/dev/null
-#  fi
-#fi
-
 # BASH
 if [[ "$(type -P $binroot/bash)" ]]; then
   if ! grep -q "$binroot/bash" "/etc/shells"; then
@@ -106,18 +98,24 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
   sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.2.3
-  #export PATH="$USER_HOME/.rbenv/bin:$PATH"
-  #eval "$(rbenv init -)"
-  source $DOTFILES_HOME/link/.bashrc
-  sudo -H -u $STANDARD_USER rbenv global 2.2.3
-  sudo -H -u $STANDARD_USER ruby -v
+  sudo su $STANDARD_USER <<'EOF'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv global 2.2.3
+ruby -v
+EOF
 fi
 
 if [[ $LOCAL ]]; then 
-  e_header "Set TeXLive distribution"
-  sudo texdist --current=TeXLive-2015
   e_header "Installing icalendar gem (mutt)"
-  sudo -H -u $STANDARD_USER gem install -v 1.5.4 icalendar
+  sudo su $STANDARD_USER <<'EOF'
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+gem install -v 1.5.4 icalendar
+EOF
+
+  e_header "Set TeXLive distribution"
+  sudo texdist --setcurrent=TeXLive-2015
 fi
 
 if [[ $HACK || $IOS ]]; then
