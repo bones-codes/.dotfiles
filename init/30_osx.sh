@@ -57,12 +57,12 @@ fi
 
 e_header "Installing Karabiner and Seil sets"
 sudo -u $STANDARD_USER open -a karabiner
-sleep 10
-sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'UPDATE access SET allowed = "1";'
-sh $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
-sudo -u $STANDARD_USER pkill Karabiner
 sudo -u $STANDARD_USER open -a Seil
-sh $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
+sleep 20
+sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'UPDATE access SET allowed = "1";'
+sudo -u $STANDARD_USER bash $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
+sudo -u $STANDARD_USER bash $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
+sudo -u $STANDARD_USER pkill Karabiner
 sudo -u $STANDARD_USER pkill Seil
 
 if [[ "$(type -P pip)" ]]; then
