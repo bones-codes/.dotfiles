@@ -8,6 +8,8 @@ if get_os 'osx'; then
   open https://www.google.com/chrome
   # https everywhere
   open https://www.eff.org/https-everywhere
+  # adblock plus
+  open https://adblockplus.org/
   #vimium
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
