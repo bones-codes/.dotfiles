@@ -28,6 +28,7 @@ if get_os 'osx'; then
   if [[ $LOCAL ]]; then
     #tunnelblick
     open https://tunnelblick.net/downloads.html
+    open /opt/homebrew-cask/Caskroom/little-snitch/3.6.3/Little\ Snitch\ Installer.app
   fi
 
 # Ubuntu.
