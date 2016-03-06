@@ -109,6 +109,9 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 ###############################################################################
 # Finder                                                                      #
 ###############################################################################
+# New window shows home directory
+defaults write com.apple.finder NewWindowTarget PfHm
+
 # Finder: show hidden files by default
 defaults write com.apple.finder AppleShowAllFiles -string "YES"
 
