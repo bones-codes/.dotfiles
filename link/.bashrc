@@ -37,7 +37,7 @@ last_two_dirs () {
   pwd |rev| awk -F / '{print $1,$2}' | rev | sed s_\ _/_
 }
 
-PS1="\u@\h\[$CYAN\][\$(last_two_dirs)]\$([[ -n \$(git branch 2> /dev/null) ]])\$(parse_git_branch)\[$BASE0\]\[$RESET\]\$ "
+PS1="\[\u@\h\[$CYAN\][\$(last_two_dirs)]\$([[ -n \$(git branch 2> /dev/null) ]])\[\$(parse_git_branch)\]\[$BASE0\]\[$RESET\]\]\$ "
 
 # use vim
 set -o vi
