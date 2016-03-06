@@ -117,7 +117,7 @@ function copy_test() {
 }
 function copy_do() {
   e_success "Copying ~/$1."
-  cp "$2" ~/
+  cp -R "$2" ~/
 }
 
 # Link files.
