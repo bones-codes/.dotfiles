@@ -51,27 +51,27 @@ else
 fi
 
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
-sudo -u $admin brew update
-sudo -u $admin brew upgrade --all 
-sudo -u $admin brew upgrade brew-cask 
-sudo -u $admin brew cleanup 
-sudo -u $admin brew cask cleanup
-sudo -u $admin brew doctor
+su $admin -c "brew update"
+su $admin -c "brew upgrade --all"
+su $admin -c "brew upgrade brew-cask"
+su $admin -c "brew cleanup" 
+su $admin -c "brew cask cleanup"
+su $admin -c "brew doctor"
 
 echo; echo 'Updating pip and pip packages'
-  sudo -H -u $admin pip install --upgrade pip setuptools
-  sudo -H -u $admin pip3 install --upgrade pip setuptools
+  su $admin -c "pip install --upgrade pip setuptools"
+  su $admin -c "pip3 install --upgrade pip setuptools"
   if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating pyobjc'
-    sudo -H -u $admin pip install -U pyobjc
+    su $admin -c "pip install -U pyobjc"
   fi
   if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating peewee'
-    sudo -H -u $admin pip3 install -U peewee
+    su $admin -c "pip3 install -U peewee"
   fi
   if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating pycrypto'
-    sudo -H -u $admin pip install -U pycrypto
+    su $admin -c "pip install -U pycrypto"
   fi
 
 echo; echo 'Updating karabiner/seil sets'
