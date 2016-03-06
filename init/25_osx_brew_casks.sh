@@ -7,14 +7,14 @@ $(get_os 'osx') || return 1
 # Exit if, for some reason, cask is not installed.
 [[ ! "$(brew ls --versions brew-cask)" ]] && e_error "Brew-cask failed to install." && return 1
 
-casks=(spectacle gpgtools java iterm2-nightly firefox karabiner seil)
+casks=(spectacle gpgtools iterm2-nightly karabiner seil)
 
 if [[ $HAFH ]]; then
   casks+=(logitech-myharmony)
 fi
 
 if [[ $HACK || $NET ]]; then
-  casks+=(transmit vlc razorsql vmware-fusion)
+  casks+=(transmit vlc razorsql vmware-fusion java firefox)
 fi
 
 if [[ $HACK || $REV ]]; then
