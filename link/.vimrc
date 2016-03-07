@@ -1,5 +1,3 @@
-"call pathogen#infect()
-"call pathogen#helptags()
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/LaTeX-Box-Team/LaTeX-Box.git'
 Plug 'https://github.com/Raimondi/delimitMate.git'
@@ -16,7 +14,8 @@ filetype plugin indent on	        " filetype detection
 
 " syntax and custom colorization -------------------
 syntax on
-set background=dark
+"set background=dark
+set background=light
 let g:solarized_termtrans=1
 colorscheme solarized
 set hlsearch		                " highlight all search matches
