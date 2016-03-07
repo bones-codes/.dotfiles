@@ -8,15 +8,15 @@
     <string>homebrew.mxcl.offline-imap</string>
     <key>ProgramArguments</key>
     <array>
-      <string>/usr/local/opt/offline-imap/bin/offlineimap</string>
+      <string>/usr/local/bin/offlineimap</string>
     </array>
     <key>StartInterval</key>
     <integer>1</integer>
     <key>RunAtLoad</key>
     <true />
     <key>StandardErrorPath</key>
-    <string>/dev/null</string>
+    <string>/Users/huesos/.mutt/offlineimap.error</string>
     <key>StandardOutPath</key>
-    <string>/dev/null</string>
+    <string>/Users/huesos/.mutt/offlineimap.log</string>
   </dict>
 </plist>
