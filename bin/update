@@ -59,19 +59,19 @@ sudo -u $admin brew cask cleanup
 sudo -u $admin brew doctor
 
 echo; echo 'Updating pip and pip packages'
-  sudo -u $admin pip install --upgrade pip setuptools
-  sudo -u $admin pip3 install --upgrade pip setuptools
+  sudo -H -u $admin pip install --upgrade pip setuptools
+  sudo -H -u $admin pip3 install --upgrade pip setuptools
   if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating pyobjc'
-    su $admin -c "pip install -U pyobjc"
+    sudo -H -su $admin "pip install -U pyobjc"
   fi
   if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating peewee'
-    sudo -u $admin pip3 install -U peewee
+    sudo -H -su $admin "pip3 install -U peewee"
   fi
   if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
     echo; echo 'Updating pycrypto'
-    sudo -u $admin pip install -U pycrypto
+    sudo -H -su $admin "pip install -U pycrypto"
   fi
 
 echo; echo 'Updating karabiner/seil sets'
@@ -108,11 +108,11 @@ fi
 
 if [[ -e "/Volumes/disk3" ]]; then
   echo; echo "Updating dotfiles"
-  rsync -ar --executability --delete --stats /Users/huesos/.dotfiles/ /Volumes/disk3/.dotfiles
+  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/disk3/.dotfiles
 #  echo; echo "Updating pso"
-#  rsync -ar --executability --delete --stats /Users/huesos/resources/ /Volumes/disk3/pso
+#  rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
 #  echo; echo "Updating rsrch"
-#  rsync -ar --executability --delete --stats /Users/huesos/research/ /Volumes/disk3/rsrch
+#  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
 fi
 
 echo; echo "Running Apple's Software Update Tool..."
