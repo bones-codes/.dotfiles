@@ -46,8 +46,8 @@ localrepository = isecLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
 quick = 100
-#autorefresh = 0.1
-#holdconnectionopen = yes
+autorefresh = 0.1
+holdconnectionopen = yes
 
 [Repository isecRemote]
 type = IMAP
@@ -72,8 +72,8 @@ localrepository = AppleLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
 quick = 100
-autorefresh = 0.1
-holdconnectionopen = yes
+#autorefresh = 0.1
+#holdconnectionopen = yes
 
 [Repository AppleRemote]
 type = IMAP
