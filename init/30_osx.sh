@@ -62,8 +62,6 @@ sleep 20
 sudo sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" 'UPDATE access SET allowed = "1";'
 sudo -u $STANDARD_USER bash $DOTFILES_HOME/conf/osx/key-bindings/karabiner-import.sh
 sudo -u $STANDARD_USER bash $DOTFILES_HOME/conf/osx/key-bindings/seil-import.sh
-sudo -u $STANDARD_USER pkill Karabiner
-sudo -u $STANDARD_USER pkill Seil
 
 if [[ "$(type -P pip)" ]]; then
   e_header "Install and/or Upgrade PIP"

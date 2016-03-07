@@ -338,13 +338,10 @@ if [[ $ADMIN ]]; then
       done
     fi
   fi
-fi
 
-# Mute microphone
-sudo osascript -e 'tell application "System Events" to set volume input volume 0'
+  # Mute microphone
+  sudo osascript -e 'tell application "System Events" to set volume input volume 0'
 
-
-if [[ $ADMIN ]]; then
   e_header "Setup a firmware password"
   # https://github.com/drduh/OS-X-Security-and-Privacy-Guide#firmware-password
   echo "1. Shutdown the Mac.
