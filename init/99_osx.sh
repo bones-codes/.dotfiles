@@ -79,7 +79,7 @@ if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
   if [[ -e "$DOTFILES_HOME/conf/local/" ]]; then
     ln -s $DOTFILES/conf/local/tools/burpsuite_pro_v*.jar $USER_HOME/tools/burp/
     cp $DOTFILES_HOME/conf/local/licenses/burp.txt $USER_HOME/tools/burp/burp-license.txt
-  elif [[ $HACK || $NET || $IOS || $WAPT ]]; then
+  else
     cd $USER_HOME/tools/burp/
     curl -fsSL "https://portswigger.net/DownloadUpdate.ashx?Product=Free" -o burp.jar
   fi

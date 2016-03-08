@@ -13,6 +13,10 @@ if [[ $HAFH ]]; then
   casks+=(logitech-myharmony)
 fi
 
+if [[ $HACK || $NET || $WAPT || $IOS || $MINHACK ]]; then
+  casks+=(java firefox)
+fi
+
 if [[ $HACK || $NET ]]; then
   casks+=(transmit vlc razorsql vmware-fusion java firefox)
 fi
