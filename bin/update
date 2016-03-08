@@ -109,10 +109,10 @@ fi
 if [[ -e "/Volumes/disk3" ]]; then
   echo; echo "Updating dotfiles"
   rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/disk3/.dotfiles
-#  echo; echo "Updating pso"
-#  rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
-#  echo; echo "Updating rsrch"
-#  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
+  echo; echo "Updating pso"
+  rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
+  echo; echo "Updating rsrch"
+  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
 fi
 
 echo; echo "Running Apple's Software Update Tool..."
