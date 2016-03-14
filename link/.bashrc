@@ -8,7 +8,7 @@ export DOTFILES="$HOME/.dotfiles"
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
   # Add binaries into the path
-  export PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin
+  export PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin
 fi
 
 # To get rbenv running...
