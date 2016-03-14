@@ -28,27 +28,33 @@ if [[ -e "$HOME/tools" ]]; then
     git clone git@github.com:fuzzdb-project/fuzzdb.git
   fi
 
-  echo 'Updating dirbuster-ng'
-  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
-    cd "$HOME/.dotfiles/bin/dirbuster-ng"
-    git pull
-    cd build
-    sudo cmake ..
-    sudo make install
-  else
-    cd "$HOME/.dotfiles/bin"
-    git clone git@github.com:digination/dirbuster-ng.git
-    cd dirbuster-ng; mkdir build; cd build
-    sudo cmake ..
-    sudo make install
-  fi
-fi
-
 if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
   read -p "Enter the administrator username: " admin
 else
   admin=$(whoami)
 fi
+
+  echo 'Updating dirbuster-ng'
+  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
+    cd "$HOME/.dotfiles/bin/dirbuster-ng"
+    git pull
+    cd build
+    cmake ..
+    sudo -u $admin sudo make install
+  else
+    cd "$HOME/.dotfiles/bin"
+    git clone git@github.com:digination/dirbuster-ng.git
+    cd dirbuster-ng; mkdir build; cd build
+    cmake ..
+    sudo -u $admin sudo make install
+  fi
+fi
+
+#if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+#  read -p "Enter the administrator username: " admin
+#else
+#  admin=$(whoami)
+#fi
 
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
 sudo -u $admin brew update
