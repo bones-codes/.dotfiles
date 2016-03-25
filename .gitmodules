@@ -14,8 +14,8 @@
     path = link/.vim/plugged/swift.vim
 	url = https://github.com/keith/swift.vim.git
 	ignore = all
-[submodule "bin/xvim"]
-    path = bin/xvim
+[submodule "bin/XVim"]
+    path = bin/XVim
 	url = git@github.com:XVimProject/XVim.git
     ignore = all
 [submodule "bin/dirbuster-ng"]

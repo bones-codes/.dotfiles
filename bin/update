@@ -50,19 +50,13 @@ fi
   fi
 fi
 
-#if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
-#  read -p "Enter the administrator username: " admin
-#else
-#  admin=$(whoami)
-#fi
-
 echo; echo 'Running brew update, upgrade, cleanup and checkup'
-sudo -u $admin brew update
-sudo -u $admin brew upgrade --all
-sudo -u $admin brew upgrade brew-cask
-sudo -u $admin brew cleanup
-sudo -u $admin brew cask cleanup
-sudo -u $admin brew doctor
+sudo -H -u $admin brew update
+sudo -H -u $admin brew upgrade --all
+sudo -H -u $admin brew upgrade brew-cask
+sudo -H -u $admin brew cleanup
+sudo -H -u $admin brew cask cleanup
+sudo -H -u $admin brew doctor
 
 echo; echo 'Updating pip and pip packages'
   sudo -H -u $admin pip install --upgrade pip setuptools
