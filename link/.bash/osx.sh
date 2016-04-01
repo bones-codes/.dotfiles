@@ -63,5 +63,11 @@ alias ggl="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user
 alias chrome=ggl
 alias google=ggl
 
+# iterm2 switch profile
+switch() { 
+    echo -e "\033]50;SetProfile=$1\a" 
+    export ITERM_PROFILE=$1
+}
+
 # Create OS X install drive
 alias createinstaller="sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/Install\ OS\ X\ El\ Capitan --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app --nointeraction"
