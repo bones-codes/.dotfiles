@@ -14,7 +14,7 @@
     path = link/.vim/plugged/swift.vim
 	url = https://github.com/keith/swift.vim.git
 	ignore = all
-[submodule "link/.vim/plugged/vim-colors-solarized"]
+[submodule "link/.vim/plugged/vim-colors-solarized/"]
     path = link/.vim/plugged/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
 	ignore = all
