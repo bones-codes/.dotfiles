@@ -18,9 +18,10 @@ call plug#end()
 
 syntax on
 let g:solarized_termtrans=1
+let g:solarized_menu=0
 colorscheme solarized
 
-set hlsearch		             " highlight all search matches
+set hlsearch		                " highlight all search matches
 highlight LineNr ctermfg=10 ctermbg=NONE
 hi SpellBad ctermfg=015 ctermbg=000
 hi VertSplit ctermbg=0 ctermfg=0
@@ -38,9 +39,9 @@ set clipboard=unnamed
 set hidden		                    " allow invisible buffers
 set ignorecase		                " case-insensitive search
 set smartcase		                " but be smart about it
-set incsearch		            " search incrementally
-"set tags=./tags		         " ctags
-set tags=tags;/		            " ctags
+set incsearch		                " search incrementally
+"set tags=./tags		             " ctags
+set tags=tags;/		                " ctags
 set nocompatible
 set backspace=2
 set history=10000
@@ -76,10 +77,6 @@ map ** gwap
 map ~~ :w<CR> :!make<CR>
 map ww :w !sudo tee %
 map -s :call ToggleSpellCheck()         
-nnoremap <C-s>h <C-w>h
-nnoremap <C-s>j <C-w>j
-nnoremap <C-s>k <C-w>k
-nnoremap <C-s>l <C-w>l
 map ++ :call ToggleSolarLight()         
 map -- :call ToggleSolarDark()         
 

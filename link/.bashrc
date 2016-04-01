@@ -5,6 +5,7 @@ export CLICOLOR=1
 export GREP_OPTIONS='--color=auto'
 export DOTFILES="$HOME/.dotfiles"
 
+
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
   # Add binaries into the path
