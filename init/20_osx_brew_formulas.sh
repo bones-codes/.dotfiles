@@ -7,7 +7,7 @@ $(get_os 'osx') || return 1
 # Install Homebrew recipes.
 if [ ! "$MIN" ]; then
 recipes=(
-  ack 
+  ag
   bash
   bash-completion
   "brew-cask"
