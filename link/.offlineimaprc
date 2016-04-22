@@ -1,6 +1,6 @@
 [general]
 ui = Basic
-accounts = ncc, Apple, isec
+accounts = ncc
 maxsyncaccounts = 2
 pythonfile=~/.mutt/local-creds.py
 fsync = false
