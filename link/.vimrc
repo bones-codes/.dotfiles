@@ -79,6 +79,7 @@ map ww :w !sudo tee %
 map -s :call ToggleSpellCheck()         
 map ++ :call ToggleSolarLight()         
 map -- :call ToggleSolarDark()         
+nnoremap <buffer> gh :call OpenTexFile()<CR>
 
 " custom functions ---------------------------------
 set spell spelllang=
@@ -100,4 +101,13 @@ endfunction
 
 function! ToggleSolarDark()
     hi CursorLine   cterm=NONE ctermbg=0 ctermfg=NONE
+endfunction
+
+function! OpenTexFile()
+    belowright wincmd f
+    wincmd k
+    1wincmd _
+    wincmd j
+    wincmd k
+    wincmd j
 endfunction
