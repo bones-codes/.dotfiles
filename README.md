@@ -1,7 +1,7 @@
 .dotfiles
 ---------
 ```sh
-bash -c "$(curl -fsSL http://bit.ly/bones--dots)"
+bash -c "$(curl -fsSL https://bit.ly/bones--dots)"
 ```
 
 If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
@@ -12,7 +12,7 @@ bash -c "$(curl -fsSL https://raw.github.com/bones-codes/.dotfiles/master/bin/do
 
 Use the following to install with options.
 ```sh
-curl -fsSL http://bit.ly/bones--dots | bash -s [ARG]
+curl -fsSL https://bit.ly/bones--dots | bash -s [ARG]
 ```
 
 ----
