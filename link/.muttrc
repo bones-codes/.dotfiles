@@ -31,6 +31,7 @@ set include=yes                         # quote msg in reply
 set markers=no                          # no + on wrapped lines
 set charset="utf-8"
 set send_charset="utf-8"
+set text_flowed=yes
 
 # View sets
 set sort=reverse-threads

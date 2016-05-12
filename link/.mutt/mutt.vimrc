@@ -23,6 +23,7 @@ set expandtab
 set shiftwidth=4
 set nomodeline
 set tags=tags
+"setlocal fo+=aw
 
 " key mappings -------------------------------------
 xnoremap p pgvy
