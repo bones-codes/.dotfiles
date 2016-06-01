@@ -10,8 +10,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 echo 'Updating XVim'
 if [[ -e "$HOME/.dotfiles/bin/xvim" ]]; then
   cd "$HOME/.dotfiles/bin/xvim"
-  git pull
-  make
+  if [[ $(git pull) != "Already up-to-date." ]]; then
+    make
+  fi
 else
   cd "$HOME/.dotfiles/bin"
   git clone git@github.com:XVimProject/XVim.git
@@ -37,10 +38,11 @@ fi
   echo 'Updating dirbuster-ng'
   if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
     cd "$HOME/.dotfiles/bin/dirbuster-ng"
-    git pull
-    cd build
-    cmake ..
-    sudo -u $admin sudo make install
+    if [[ $(git pull) != "Already up-to-date." ]]; then
+      cd build
+      cmake ..
+      sudo -u $admin sudo make install
+    fi
   else
     cd "$HOME/.dotfiles/bin"
     git clone git@github.com:digination/dirbuster-ng.git
