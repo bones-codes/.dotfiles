@@ -1,1 +1,1 @@
-mailboxes "+ncc/INBOX"
+mailboxes "+ncc/Drafts" "+ncc/INBOX" "+ncc/Sent"
