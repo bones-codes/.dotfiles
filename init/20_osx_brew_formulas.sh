@@ -28,7 +28,6 @@ recipes=(
   pass
   "python --universal" 
   python3
-  reattach-to-user-namespace
   rename 
   ssh-copy-id  
   tmux
