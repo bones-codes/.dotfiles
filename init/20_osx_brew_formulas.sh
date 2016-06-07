@@ -29,6 +29,7 @@ recipes=(
   "python --universal" 
   python3
   rename 
+  reattach-to-user-namespace
   ssh-copy-id  
   tmux
   "vim --with-python3 --with-python --with-ruby --with-perl --enable-cscope 
