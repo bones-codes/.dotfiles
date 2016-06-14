@@ -33,7 +33,7 @@ remoteusereval = "cmarie171"
 remotepasseval = get_pass('ncc/ncc-exchange')
 readonly = True
 realdelete = no
-folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Trash']
+folderfilter = lambda folder: folder in ['INBOX', 'Drafts', 'Sent', 'Archive', 'Deleted Items']
 maxconnections = 3
 idlefolders = ['INBOX']
 

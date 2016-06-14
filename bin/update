@@ -115,8 +115,11 @@ if [[ -e "/Volumes/disk3" ]]; then
   #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
   echo; echo "Updating rsrch"
   rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
-  echo; echo "Updating mail"
-  rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/disk3/.mail
+  echo; read -p "Update mail store? [Y/n] " yn
+  if [[ $yn == [Yy] ]]; then
+    echo; echo "Updating mail"
+    rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/disk3/.mail
+  fi
 fi
 
 echo; echo "Running Apple's Software Update Tool..."
