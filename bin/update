@@ -1,9 +1,6 @@
 #!/bin/bash
 
 echo 'Updating vim plug'
-if [[ -e "$HOME/.vim/autoload/plug.vim" ]]; then
-  rm $HOME/.vim/autoload/plug.vim
-fi
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # To update the plugins just run :PlugUpdate
 
