@@ -33,7 +33,7 @@ recipes=(
   ssh-copy-id  
   tmux
   "vim --with-python3 --with-python --with-ruby --with-perl --enable-cscope 
-  --enable-pythoninterp --override-system-vi"
+  --enable-pythoninterp --with-override-system-vi"
   "wget --with-iri" 
 )
 fi
@@ -61,6 +61,8 @@ if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   homebrew/completions/gem-completion
   testssl
   "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
+  "gdb --with-all-targets --with-python"
+  cgdb
   )
   
 fi
