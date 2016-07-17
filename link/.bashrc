@@ -4,7 +4,7 @@ export LESSHISTFILE="/dev/null"
 export CLICOLOR=1
 export GREP_OPTIONS='--color=auto'
 export DOTFILES="$HOME/.dotfiles"
-
+export GPG_TTY=`tty` 
 
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!

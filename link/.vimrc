@@ -11,6 +11,7 @@ Plug 'https://github.com/d0c-s4vage/pct-vim.git'
 Plug 'https://github.com/keith/swift.vim.git'
 Plug 'https://github.com/guns/xterm-color-table.vim.git'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
+Plug 'https://github.com/jamessan/vim-gnupg.git'
 " Add plugins to &runtimepath
 call plug#end()
 
