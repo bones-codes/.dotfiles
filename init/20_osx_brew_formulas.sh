@@ -10,6 +10,7 @@ recipes=(
   ag
   bash
   bash-completion
+  bfg
   "brew-cask"
   cmake
   coreutils 
@@ -23,6 +24,9 @@ recipes=(
   htop-osx  
   homebrew/completions/brew-cask-completion
   homebrew/completions/pip-completion
+  nmap
+  netcat
+  spoof-mac
   "openssl --universal" 
   p7zip 
   pass
