@@ -18,7 +18,7 @@ if [[ $HACK || $NET || $WAPT || $IOS || $MINHACK ]]; then
 fi
 
 if [[ $HACK || $NET ]]; then
-  casks+=(transmit vlc razorsql vmware-fusion java firefox)
+  casks+=(transmit vlc razorsql vmware-fusion)
 fi
 
 if [[ $HACK || $REV ]]; then
@@ -26,7 +26,7 @@ if [[ $HACK || $REV ]]; then
 fi
 
 if [ "$LOCAL" ]; then
-  casks+=(ricochet 1password vagrant vagrant-manager mactex vmware-fusion little-snitch knockknock)
+  casks+=(ricochet vagrant vagrant-manager mactex vmware-fusion little-snitch knockknock)
 fi
 
 # Install Homebrew casks.
