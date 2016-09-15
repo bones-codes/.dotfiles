@@ -120,8 +120,8 @@ color body          brightcyan      default         "[ ]?[*][^*]*[*][ ]"        
 
 # pgp
 color body          red             default         "(BAD signature)"
-color body          cyan            default         "(Good signature)"
-color body          cyan            default         "^gpg: Good signature .*"
+color body          brightcyan      default         "(Good signature)"
+color body          brightcyan      default         "^gpg: Good signature .*"
 color body          brightyellow    default         "^gpg: "
 color body          brightyellow    red             "^gpg: BAD signature from.*"
 mono  body          bold                            "^gpg: Good signature"
