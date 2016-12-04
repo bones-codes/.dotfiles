@@ -1,10 +1,14 @@
 #!/bin/bash
 
-echo 'Updating vim plug'
+red=`tput setaf 1`
+green=`tput setaf 6`
+reset=`tput sgr0`
+
+echo "${green}Updating vim plug${reset}"
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # To update the plugins just run :PlugUpdate
 
-echo 'Updating XVim'
+echo "${green}Updating XVim${reset}"
 if [[ -e "$HOME/.dotfiles/bin/xvim" ]]; then
   cd "$HOME/.dotfiles/bin/xvim"
   if [[ $(git pull) != "Already up-to-date." ]]; then
@@ -16,8 +20,26 @@ else
   make
 fi
 
+if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+  read -p "Enter the administrator username: " admin
+else
+  admin=$(whoami)
+fi
+
+echo "${green}Updating usbkill${reset}"
+if [[ -e "$HOME/.dotfiles/bin/usbkill" ]]; then
+  cd "$HOME/.dotfiles/bin/usbkill"
+  if [[ $(git pull) != "Already up-to-date." ]]; then
+    sudo -u $admin sudo python setup.py install
+  fi
+else
+  cd "$HOME/.dotfiles/bin"
+  git clone git@github.com:hephaest0s/usbkill.git
+  sudo -u $admin sudo python setup.py install
+fi
+
 if [[ -e "$HOME/tools" ]]; then
-  echo 'Updating fuzzdb'
+  echo "${green}Updating fuzzdb${reset}"
   if [[ -e "$HOME/tools/burp/fuzzdb" ]]; then
     cd "$HOME/tools/burp/fuzzdb"
     git pull
@@ -25,31 +47,9 @@ if [[ -e "$HOME/tools" ]]; then
     cd "$HOME/tools/burp"
     git clone git@github.com:fuzzdb-project/fuzzdb.git
   fi
-
-if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
-  read -p "Enter the administrator username: " admin
-else
-  admin=$(whoami)
 fi
 
-  echo 'Updating dirbuster-ng'
-  if [[ -e "$HOME/.dotfiles/bin/dirbuster-ng/build" ]]; then
-    cd "$HOME/.dotfiles/bin/dirbuster-ng"
-    if [[ $(git pull) != "Already up-to-date." ]]; then
-      cd build
-      cmake ..
-      sudo -u $admin sudo make install
-    fi
-  else
-    cd "$HOME/.dotfiles/bin"
-    git clone git@github.com:digination/dirbuster-ng.git
-    cd dirbuster-ng; mkdir build; cd build
-    cmake ..
-    sudo -u $admin sudo make install
-  fi
-fi
-
-echo; echo 'Running brew update, upgrade, cleanup and checkup'
+echo; echo "${green}Running brew update, upgrade, cleanup and checkup${reset}"
 sudo -H -u $admin brew update
 sudo -H -u $admin brew upgrade --all
 sudo -H -u $admin brew upgrade brew-cask
@@ -57,38 +57,34 @@ sudo -H -u $admin brew cleanup
 sudo -H -u $admin brew cask cleanup
 sudo -H -u $admin brew doctor
 
-echo; echo 'Updating pip and pip packages'
+echo; echo "${green}Updating pip and pip packages${reset}"
   sudo -H -u $admin pip install --upgrade pip setuptools
   sudo -H -u $admin pip3 install --upgrade pip setuptools
   if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo 'Updating pyobjc'
+    echo; echo "${green}Updating pyobjc${reset}"
     sudo -H -su $admin "pip install -U pyobjc"
   fi
   if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo 'Updating peewee'
+    echo; echo "${green}Updating peewee${reset}"
     sudo -H -su $admin "pip3 install -U peewee"
   fi
   if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo 'Updating pycrypto'
+    echo; echo "${green}Updating pycrypto${reset}"
     sudo -H -su $admin "pip install -U pycrypto"
   fi
 
-echo; echo 'Updating karabiner/seil sets'
-/Applications/Karabiner.app/Contents/Library/bin/karabiner export > "$HOME/.dotfiles/conf/osx/key-bindings/karabiner-import.sh"
-/Applications/Seil.app/Contents/Library/bin/seil export > "$HOME/.dotfiles/conf/osx/key-bindings/seil-import.sh"
-
 #if [[ -e "$HOME/.aws" ]]; then
-#  echo; echo "Updating AWS configurations"
+#  echo; echo "${green}Updating AWS configurations${reset}"
 #  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
 #fi
 
 if [[ -e "$HOME/.bash" && -e "$HOME/.dotfiles/copy/.bash" ]]; then
-  echo; echo "Backing up various bash scripts"
+  echo; echo "${green}Backing up various bash scripts${reset}"
   cp -R $HOME/.bash/* $HOME/.dotfiles/copy/.bash/ 
 fi
 
 if [[ -e "$HOME/.config/profanity" ]]; then
-  echo; echo "Backing up Profanity settings"
+  echo; echo "${green}Backing up Profanity settings${reset}"
   cp -R $HOME/.config/profanity/* $HOME/.dotfiles/conf/local/profanity/ 
 fi
 
@@ -97,7 +93,7 @@ if [[ -e "$HOME/.local/share/profanity" ]]; then
 fi
 
 if [[ -e /usr/bin/vagrant ]]; then 
-  echo; echo "Updating Vagrant VMWare plugin"
+  echo; echo "${green}Updating Vagrant VMWare plugin${reset}"
   vagrant plugin install vagrant-vmware-fusion
 fi
 
@@ -106,18 +102,18 @@ if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
 fi
 
 if [[ -e "/Volumes/disk3" ]]; then
-  echo; echo "Updating dotfiles"
+  echo; echo "${green}Updating dotfiles (locally)${reset}"
   rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/disk3/.dotfiles
   #echo; echo "Updating pso"
   #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
-  echo; echo "Updating rsrch"
+  echo; echo "${green}Updating rsrch${reset}"
   rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
   echo; read -p "Update mail store? [Y/n] " yn
   if [[ $yn == [Yy] ]]; then
-    echo; echo "Updating mail"
+    echo; echo "${green}Updating mail${reset}"
     rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/disk3/.mail
   fi
 fi
 
-echo; echo "Running Apple's Software Update Tool..."
-sudo softwareupdate --install --all
+echo; echo "${green}Running Apple's Software Update Tool...${reset}"
+sudo softwareupdate --install --all --verbose

@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# OSX
-if get_os 'osx'; then
+# macOS
+if [[ "$OSTYPE" =~ ^darwin ]]; then
   open -a Safari
 
   #google-chrome
@@ -14,24 +14,18 @@ if get_os 'osx'; then
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
-  #Paragon
-  #open https://www.paragon-software.com/home/ntfs-mac/
-  #VB box
-  #open https://www.virtualbox.org/wiki/Downloads
-  #xPRA
-  #open https://www.xpra.org/
-
-  if [[ $HACK || $NET ]]; then
-    open http://www.adriangranados.com/apps/airtool
-  fi
 
   if [[ $LOCAL ]]; then
-    #tunnelblick
     open https://tunnelblick.net/downloads.html
-    open /opt/homebrew-cask/Caskroom/little-snitch/3.6.3/Little\ Snitch\ Installer.app
+    open /usr/local/Caskroom/little-snitch/3.7/Little\ Snitch\ Installer.app
   fi
 
 # Ubuntu.
-elif get_os 'ubuntu'; then
+elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
 	e_header "TODO!! "
+fi
+
+if [[ -e "$HOME/.profile" ]]; then
+  e_header "Removing .profile"
+  rm -rf "$HOME/.profile"
 fi

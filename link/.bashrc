@@ -10,6 +10,10 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
   # Add binaries into the path
   export PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin
+
+  export HOMEBREW_NO_ANALYTICS=1
+  export HOMEBREW_NO_INSECURE_REDIRECT=1
+  export HOMEBREW_CASK_OPTS=--require-sha
 fi
 
 # To get rbenv running...
@@ -17,7 +21,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 source $BASH/aliases.sh
-source $BASH/osx.sh
+source $BASH/macOS.sh
 source $BASH/colors.sh
 
 parse_git_dirty () {

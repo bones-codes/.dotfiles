@@ -3,7 +3,7 @@
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
 Usage: $(basename "$0 <options>")
 
-    MIN       osx configs, homebrew, tmux and a few rcs 
+    MIN       macOS configs, homebrew, tmux and a few rcs 
               (.ackrc, .bash_profile, .bashrc, .tmux.conf, and .vimrc)
     LOCAL     no hacking tools, just the basics + ncc requirements
     MINHACK   all the basics 
@@ -58,13 +58,13 @@ function check_cmd_tools() {
     # Find the last listed update in the Software Update feed with "Command Line Tools" in the name
     cmd_line_tools=$(softwareupdate -l | awk '/\*\ Command Line Tools/ { $1=$1;print }' | tail -1 | sed 's/^[[ \t]]*//;s/[[ \t]]*$//;s/*//' | cut -c 2-)
     # Install the command line tools
-    softwareupdate -i "$cmd_line_tools" -v
+    softwareupdate -i "$cmd_line_tools" --verbose
     # Remove the temp file
     if [[ -f "/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress" ]]; then
       rm -rf "/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
     fi
     # Install the rest of the updated
-    softwareupdate -iav
+    softwareupdate -ia --verbose
     
     pkgutil --pkg-info=com.apple.pkg.Xcode >/dev/null 2>&1
     if [[ $? != 0 ]]; then
@@ -127,7 +127,7 @@ function link_test() {
 }
 function link_do() {
   # Only linking mutt-related rcs if local install
-  if [[ ! $LOCAL ]]; then
+  if [[ $LOCAL ]]; then
     dots=(
     .inputrc
     .mutt
@@ -240,9 +240,9 @@ function set() {
 # Get the system OS and set the var
 function get_os() {
   if [ -z $1 ]; then
-    # OSX
+    # macOS
     if [[ "$OSTYPE" =~ ^darwin ]]; then
-    export OS="osx" 
+    export OS="macOS" 
     # Ubuntu.
     elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
     export OS="ubuntu"
@@ -298,6 +298,10 @@ export DOTFILES_HOME=$USER_HOME/.dotfiles
 for arg in "$@"; do 
   X=`echo "$arg" | tr [a-z] [A-Z]`
   set_profile "export $X=True"
+  set_profile "export OS=$OS"
+  set_profile "export STANDARD_USER=$USER"
+  set_profile "export USER_HOME=$HOME"
+  set_profile "export DOTFILES_HOME=$USER_HOME/.dotfiles"
 done
 
 is_standard_user=false
@@ -307,7 +311,7 @@ check_sudo
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-if get_os 'osx'; then
+if get_os 'macOS'; then
   check_cmd_tools
   if [[ $(xcode-select -p 2>&1) == "/Applications/Xcode.app/Contents/Developer"  ]]; then
     xcode_installed=true
@@ -318,8 +322,6 @@ if get_os 'osx'; then
     is_standard_user=true
   fi    
 fi
-
-remove_profile
 
 # If Git is not installed, install it (Ubuntu only, since Git comes standard
 # with recent XCode or CLT)
@@ -387,29 +389,28 @@ if [[ ! $MIN ]]; then
   fi
 fi
 
-# Lest I forget to do a few additional things...
-if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
-  e_header "First-Time Reminders"
-  source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
-fi
-
 remove_profile
 
+# Lest I forget to do a few additional things...
+if [[ ( "$new_dotfiles_install" || "$LOCAL" || "$HACK" ) && -e "$DOTFILES_HOME/conf/firsttime_reminder.sh" ]]; then
+  e_header "First-Time Reminders (On Reboot)"
+  set_profile source "$DOTFILES_HOME/conf/firsttime_reminder.sh"
+fi
+
 e_header "All done!"
-if [[ $(get_os 'osx') ]]; then
-  if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
-    echo "For all changes to take effect you should relogin."
+$(get_os 'macOS') || return 1
+if [[ "$new_dotfiles_install" || "$LOCAL" || "$MIN" ]]; then
+  echo "For all changes to take effect you should relogin."
 
-    read -p "Do you want to relogin now (y/n) ?: " yn
-    case $yn in
-      [Yy]* ) 
-        osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'
-        ;;
+  read -p "Do you want to relogin now (y/n) ?: " yn
+  case $yn in
+    [Yy]* ) 
+      osascript -e 'tell application "loginwindow" to  «event aevtrlgo»'
+      ;;
 
-      [Nn]* ) 
-        sudo -k
-        exit
-        ;;
-    esac
-  fi
+    [Nn]* ) 
+      sudo -k
+      exit
+      ;;
+  esac
 fi
