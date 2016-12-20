@@ -65,6 +65,7 @@ if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   "wireshark --with-headers --with-libsmi --with-lua --with-qt5 --with-portaudio"
   "gdb --with-all-targets --with-python"
   cgdb
+  jython
   )
   
 fi
