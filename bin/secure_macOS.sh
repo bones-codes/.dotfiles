@@ -55,18 +55,16 @@ if [[ $ADMIN ]]; then
   # 0 = off
   # 1 = on for specific services
   # 2 = on for essential services
-  #sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 2
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
   # Enable Stealth mode
-  #sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -bool true
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
   # Enable Firewall Logging
-  #sudo defaults write /Library/Preferences/com.apple.alf loggingenabled -bool true
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
   # Disallow signed Apps
-  #sudo defaults write /Library/Preferences/com.apple.alf allowsignedenabled -bool false
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off
+  # Block all incoming connections
+  sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on
 
   ###############################################################################
   # Sudo                                                                        #
