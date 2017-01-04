@@ -27,6 +27,7 @@ recipes=(
   nmap
   netcat
   spoof-mac
+  sqlite
   "openssl --universal" 
   p7zip 
   pass
