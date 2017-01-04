@@ -58,25 +58,20 @@ sudo -H -u $admin brew cask cleanup
 sudo -H -u $admin brew doctor
 
 echo; echo "${green}Updating pip and pip packages${reset}"
-  sudo -H -u $admin pip install --upgrade pip setuptools
-  sudo -H -u $admin pip3 install --upgrade pip setuptools
-  if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo "${green}Updating pyobjc${reset}"
-    sudo -H -su $admin "pip install -U pyobjc"
-  fi
-  if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo "${green}Updating peewee${reset}"
-    sudo -H -su $admin "pip3 install -U peewee"
-  fi
-  if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
-    echo; echo "${green}Updating pycrypto${reset}"
-    sudo -H -su $admin "pip install -U pycrypto"
-  fi
-
-#if [[ -e "$HOME/.aws" ]]; then
-#  echo; echo "${green}Updating AWS configurations${reset}"
-#  cp -R $USER_HOME/.aws $DOTFILES_HOME/conf/local/.aws
-#fi
+sudo -H -u $admin pip install --upgrade pip setuptools
+sudo -H -u $admin pip3 install --upgrade pip setuptools
+if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
+  echo; echo "${green}Updating pyobjc${reset}"
+  sudo -H -su $admin "pip install -U pyobjc"
+fi
+if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
+  echo; echo "${green}Updating peewee${reset}"
+  sudo -H -su $admin "pip3 install -U peewee"
+fi
+if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
+  echo; echo "${green}Updating pycrypto${reset}"
+  sudo -H -su $admin "pip install -U pycrypto"
+fi
 
 if [[ -e "$HOME/.bash" && -e "$HOME/.dotfiles/copy/.bash" ]]; then
   echo; echo "${green}Backing up various bash scripts${reset}"

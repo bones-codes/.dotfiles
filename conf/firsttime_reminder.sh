@@ -14,6 +14,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   open https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb
   #vimperator
   open https://addons.mozilla.org/en-us/firefox/addon/vimfx/ 
+  #autochrome
+  open https://gitlab.na.nccgroup.com/ryan/autochrome
 
   if [[ $LOCAL ]]; then
     open https://tunnelblick.net/downloads.html
