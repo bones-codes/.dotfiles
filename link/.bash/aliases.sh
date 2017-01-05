@@ -21,7 +21,6 @@ alias l='ls -apG'
 alias c='clear'
 alias x='exit'
 alias q='exit'
-alias rm='srm'
 
 # Show line numbers and search recursively by default 
 alias grep='grep -nr'

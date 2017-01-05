@@ -41,11 +41,11 @@ alias dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # Locks down a thumb drive so that Mac OS X will not write any metadata to it.
 macos_lockdown_drive() {
-	srm -r -s -v .Trashes
+	rm -r -s -v .Trashes
 	touch .Trashes
-	srm -r -s -v .fseventsd
+	rm -r -s -v .fseventsd
 	touch .fseventsd
-	srm -r -s -v .Spotlight-V100
+	rm -r -s -v .Spotlight-V100
 	touch .Spotlight-V100
 	touch .metadata_never_index
 }

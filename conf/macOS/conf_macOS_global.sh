@@ -129,6 +129,10 @@ sudo defaults -currentHost write com.apple.bluetooth PrefKeyServicesEnabled 0
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 # Disable Crash Reporter
 sudo defaults write com.apple.CrashReporter DialogType none
+# Disable IPv6
+networksetup -setv6off Wi-Fi
+networksetup -setv6off "Bluetooth PAN"
+networksetup -setv6off "Thunderbolt Bridge"
 
 #TODO
 #Need to look at bad services in the future right now disabling some service

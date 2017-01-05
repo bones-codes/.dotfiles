@@ -96,17 +96,17 @@ if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi
 
-if [[ -e "/Volumes/disk3" ]]; then
+if [[ -e "/Volumes/--" ]]; then
   echo; echo "${green}Updating dotfiles (locally)${reset}"
-  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/disk3/.dotfiles
+  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/--/.dotfiles
   #echo; echo "Updating pso"
-  #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
+  #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/--/pso
   echo; echo "${green}Updating rsrch${reset}"
-  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
+  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/--/rsrch
   echo; read -p "Update mail store? [Y/n] " yn
   if [[ $yn == [Yy] ]]; then
     echo; echo "${green}Updating mail${reset}"
-    rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/disk3/.mail
+    rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/--/.mail
   fi
 fi
 
