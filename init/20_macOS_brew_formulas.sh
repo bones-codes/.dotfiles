@@ -84,6 +84,7 @@ fi
 
 if [[ $HACK || $IOS ]]; then
   recipes+=(
+  qt
   cmake 
   usbmuxd 
   libimobiledevice
