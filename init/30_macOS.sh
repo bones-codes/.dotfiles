@@ -49,11 +49,11 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing rbenv"
-  sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.1
+  sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
   sudo su $STANDARD_USER <<'EOF'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-rbenv global 2.1
+rbenv global 2.1.0
 ruby -v
 EOF
 fi
