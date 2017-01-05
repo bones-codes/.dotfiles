@@ -98,7 +98,7 @@ fi
 
 if [[ -e "/Volumes/--" ]]; then
   echo; echo "${green}Updating dotfiles (locally)${reset}"
-  rsync -ar --executability --delete --stats $HOME/.dotfiles/ :/Volumes/--/.dotfiles
+  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/--/.dotfiles
   #echo; echo "Updating pso"
   #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/--/pso
   if [[ -e "$HOME/research" ]]; then
