@@ -82,6 +82,5 @@ if [[ $HACK || $IOS ]]; then
 fi
 
 if [[ ! $LOCAL ]]; then
-  sudo -u $STANDARD_USER mkdir -p $USER_HOME/dev
   sudo -u $STANDARD_USER mkdir -p $USER_HOME/tools
 fi
