@@ -53,7 +53,7 @@ if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then
   sudo su $STANDARD_USER <<'EOF'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-rbenv global 2.2.3
+rbenv global 2.1
 ruby -v
 EOF
 fi
@@ -77,8 +77,8 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/maciekish/iReSign.git
 
   #TODO --- get working on macOS or just throw onto an ubuntu VM
-  #e_header "Installing idb (iOS)"
-  #gem install idb
+  e_header "Installing idb (iOS)"
+  gem install idb
 fi
 
 if [[ ! $LOCAL ]]; then
