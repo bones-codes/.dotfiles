@@ -20,7 +20,7 @@ else
   make
 fi
 
-if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+if [[ $(groups | grep -q -e '\b(admin)\b')$? -ne 0 ]]; then
   read -p "Enter the administrator username: " admin
 else
   admin=$(whoami)
@@ -98,7 +98,7 @@ fi
 
 if [[ -e "/Volumes/--" ]]; then
   echo; echo "${green}Updating dotfiles (locally)${reset}"
-  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/--/.dotfiles
+  rsync -ar --executability --delete --stats $HOME/.dotfiles/ :/Volumes/--/.dotfiles
   #echo; echo "Updating pso"
   #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/--/pso
   echo; echo "${green}Updating rsrch${reset}"
