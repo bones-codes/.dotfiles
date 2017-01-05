@@ -317,7 +317,7 @@ if get_os 'macOS'; then
     xcode_installed=true
   fi
 
-  if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+  if [[ $(groups | grep -q -e '\b(admin)\b')$? -ne 0 ]]; then
     echo "Script is running as a standard user."
     is_standard_user=true
   fi    
