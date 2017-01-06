@@ -327,7 +327,8 @@ if [[ $ADMIN ]]; then
     sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
 
     # Disable Bonjour
-    sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
+    #sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
+    sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
     sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
     sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
 
@@ -363,8 +364,8 @@ if [[ $ADMIN ]]; then
 fi
 
 # Disabling Apple's calls to home 
-e_header "Disabling Apple home calls"
-if [[ -e "$HOME/.dotfiles/bin/macOS-home-call-drop" ]]; then
-  bash "$HOME/.dotfiles/bin/macOS-home-call-drop/homecall.sh" fixmacos
-fi
+#e_header "Disabling Apple home calls"
+#if [[ -e "$HOME/.dotfiles/bin/macOS-home-call-drop" ]]; then
+#  bash "$HOME/.dotfiles/bin/macOS-home-call-drop/homecall.sh" fixmacos
+#fi
 
