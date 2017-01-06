@@ -78,7 +78,7 @@ if [[ $ADMIN ]]; then
   ###############################################################################
   # User Management                                                             #
   ###############################################################################
-  # Require password to unlock each System Preference pane.
+  e_header "Require password to unlock each System Preference pane"
   # Edit the /etc/authorization file using a text editor.
   # Find <key>system.preferences<key>.
   # Then find <key>shared<key>.
@@ -88,20 +88,20 @@ if [[ $ADMIN ]]; then
   sudo security -q authorizationdb write system.preferences < /tmp/system.preferences.plist
   sudo rm -rf /tmp/system.preferences.plist
 
-  # Disable fast user switching 
+  e_header "Disable fast user switching" 
   sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
 
-  # Display login window as: Name and password
+  e_header "Display login window as: Name and Password"
   sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
 
-  # Don't show any password hints
+  e_header "Don't show any password hints"
   sudo defaults write /Library/Preferences/com.apple.loginwindow RetriesUntilHint -int 0
 
-  # Disable Automatic login.
+  e_header "Disable Automatic login"
   sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.userspref.DisableAutoLogin -bool yes
   sudo defaults write /Library/Preferences/.GlobalPreferences com.apple.autologout.AutoLogOutDelay -int 0
 
-  # Disable Guest login.
+  e_header "Disable Guest login"
   sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -int 0
 
   # The following sets up a standard user to act as the primary user. All sudo
@@ -163,7 +163,7 @@ if [[ $ADMIN ]]; then
   # Restricting enabled users to Standard cause fucking Filevault doesn't
   # respect the name/pass setting 
   # https://discussions.apple.com/thread/3201161?start=15&tstart=0 
-  e_header "Enable Filevault"
+  e_header "Enable Filevault and pmsets"
   sudo fdesetup enable -user $username
   echo
   # Destroy Filevault Key when going to standby
@@ -213,15 +213,15 @@ fi
 ###############################################################################
 # Screensaver                                                                 #
 ###############################################################################
-# Start screen saver -- bottom right corner
+e_header "Start screen saver -- bottom right corner"
 defaults write com.apple.dock wvous-br-corner -int 5
 defaults write com.apple.dock wvous-br-modifier -int 0
 
-# Disable screen saver -- bottom left corner
+e_header "Disable screen saver -- bottom left corner"
 defaults write com.apple.dock wvous-bl-corner -int 6
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
-# Enable Require password to wake this computer from sleep or screen saver.
+e_header "Require password to wake this computer from sleep or screen saver"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
@@ -229,7 +229,7 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 ###############################################################################
 # Siri                                                                        #
 ###############################################################################
-# Disable Siri
+e_header "Disable Siri"
 defaults write com.apple.assistant.support "Assistant Enabled" -int 0
 defaults write com.apple.Siri StatusMenuVisible -int 0
 
@@ -244,7 +244,7 @@ if [[ $ADMIN ]]; then
     sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
     killall SystemUIServer
 
-    #Disable Spotlight indexing
+    e_header "Disable Spotlight indexing"
     sudo mdutil -i off /
 
   fi
@@ -289,13 +289,13 @@ fi
 ###############################################################################
 # Safari/Web                                                                  #
 ###############################################################################
-# Privacy: Don’t send search queries to Apple
+e_header "Privacy: Don’t send search queries to Apple"
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
 
-# Prevent Safari from opening ‘safe’ files automatically after downloading
+e_header "Prevent Safari from opening ‘safe’ files automatically after downloading"
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-# Disable Safari’s thumbnail cache for History and Top Sites
+e_header "Disable Safari’s thumbnail cache for History and Top Sites"
 defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 
 
@@ -303,9 +303,10 @@ defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 # Data Management                                                             #
 ###############################################################################
 # I do not need my documents to be cloud
+e_header "Disable Document Save in iCloud"
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-# Empty Trash securely by default
+e_header "Empty Trash securely by default"
 defaults write com.apple.finder EmptyTrashSecurely -bool true
 
 
@@ -313,35 +314,35 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 # Services                                                                    #
 ###############################################################################
 if [[ $ADMIN ]]; then
-  # Disable IR remote control
+  e_header "Disable IR remote control"
   sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController DeviceEnabled -bool no
-  # Disable Remote Management
+  e_header "Disable Remote Management"
   sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop -quiet
-  # Disable Internet Sharing
+  e_header "Disable Internet Sharing"
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.nat NAT -dict Enabled -int 0
-  # Disable Captive Portal
+  e_header "Disable Captive Portal"
   sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
-  # Turn Bluetooth off
+  e_header "Turn Bluetooth off"
   sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
-fi
 
-# Disable Bluetooth Sharing.
-sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
-#launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+  e_header "Disable Bluetooth Sharing"
+  sudo defaults write com.apple.bluetooth PrefKeyServicesEnabled 0
+  #launchctl unload /System/Library/LaunchDaemons/com.apple.blued.plist
+fi
 
 if [[ $ADMIN ]]; then
   csrutil status | grep 'disabled' &> /dev/null
   if [ $? == 0 ]; then
-    # Disable Location Services
+    e_header "Disable Location Services"
     sudo defaults write /System/Library/LaunchDaemons/com.apple.locationd Disabled -bool true
 
-    # Disable Bonjour
+    e_header "Disable Bonjour"
     #sudo defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
     sudo defaults write /System/Library/LaunchDaemons/com.apple.mDNSResponder ProgramArguments -array-add "-NoMulticastAdvertisements"
     sudo launchctl unload /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
     sudo launchctl load /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
 
-    # Disable Crash Reporter
+    e_header "Disable Crash Reporter"
     defaults write com.apple.CrashReporter DialogType none
 
     bad=("org.apache.httpd" "com.openssh.sshd" "com.apple.VoiceOver" "com.apple.ScreenReaderUIServer" "com.apple.scrod.plist")
@@ -355,7 +356,7 @@ if [[ $ADMIN ]]; then
     fi
   fi
 
-  # Mute microphone
+  e_header "Mute microphone"
   sudo osascript -e 'tell application "System Events" to set volume input volume 0'
 
   e_header "Setup a firmware password"
