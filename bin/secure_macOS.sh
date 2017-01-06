@@ -66,6 +66,7 @@ if [[ $ADMIN ]]; then
   # Block all incoming connections
   sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on
 
+
   ###############################################################################
   # Sudo                                                                        #
   ###############################################################################
@@ -223,6 +224,14 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 # Enable Require password to wake this computer from sleep or screen saver.
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+
+###############################################################################
+# Siri                                                                        #
+###############################################################################
+# Disable Siri
+defaults write com.apple.assistant.support "Assistant Enabled" -int 0
+defaults write com.apple.Siri StatusMenuVisible -int 0
 
 
     ###############################################################################
