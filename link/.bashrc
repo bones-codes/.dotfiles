@@ -14,6 +14,17 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
   export HOMEBREW_NO_ANALYTICS=1
   export HOMEBREW_NO_INSECURE_REDIRECT=1
   export HOMEBREW_CASK_OPTS=--require-sha
+
+   # Locks down a thumb drive so that macOS will not write any metadata to it.
+   macos_lockdown_drive() {
+       rm -r -v .Trashes
+       touch .Trashes
+       rm -r -v .fseventsd
+       touch .fseventsd
+       rm -r -v .Spotlight-V100
+       touch .Spotlight-V100
+       touch .metadata_never_index
+   }
 fi
 
 # To get rbenv running...
