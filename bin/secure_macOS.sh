@@ -225,6 +225,9 @@ e_header "Require password to wake this computer from sleep or screen saver"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
+e_header "Enable screensaver after 2 minutes"
+defaults -currentHost write com.apple.screensaver idleTime 120
+
 
 ###############################################################################
 # Siri                                                                        #
