@@ -77,6 +77,8 @@ if [[ $HACK || $IOS ]]; then
   # https://github.com/maciekish/iReSign.git
 
   #TODO --- get working on macOS or just throw onto an ubuntu VM
+  rbenv global 2.1.0
+  ruby -v
   e_header "Installing idb (iOS)"
   gem install idb
 fi
