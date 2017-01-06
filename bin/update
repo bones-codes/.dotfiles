@@ -52,23 +52,22 @@ fi
 echo; echo "${green}Running brew update, upgrade, cleanup and checkup${reset}"
 sudo -H -u $admin brew update
 sudo -H -u $admin brew upgrade
-sudo -H -u $admin brew upgrade brew-cask
 sudo -H -u $admin brew cleanup
 sudo -H -u $admin brew cask cleanup
 sudo -H -u $admin brew doctor
 
 echo; echo "${green}Updating pip and pip packages${reset}"
-sudo -H -su $admin pip install --upgrade pip setuptools
-sudo -H -su $admin pip3 install --upgrade pip setuptools
-if [[ $(pip list | grep -q pyobjc >/dev/null 2>&1) -eq 0 ]]; then
+sudo -H -su $admin pip install --upgrade pip setuptools 
+sudo -H -su $admin pip3 install --upgrade pip setuptools 
+if [[ $(pip list | grep pyobjc >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating pyobjc${reset}"
   sudo -H -su $admin pip install -U pyobjc
 fi
-if [[ $(pip3 list | grep -q peewee >/dev/null 2>&1) -eq 0 ]]; then
+if [[ $(pip3 list | grep peewee >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating peewee${reset}"
   sudo -H -su $admin pip3 install -U peewee
 fi
-if [[ $(pip list | grep -q pycrypto >/dev/null 2>&1) -eq 0 ]]; then
+if [[ $(pip list | grep pycrypto >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating pycrypto${reset}"
   sudo -H -su $admin pip install -U pycrypto
 fi
