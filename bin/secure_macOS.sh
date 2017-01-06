@@ -248,7 +248,8 @@ if [[ $ADMIN ]]; then
     killall SystemUIServer
 
     e_header "Disable Spotlight indexing"
-    sudo mdutil -i off /
+    sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+    launchctl unload -w /System/Library/LaunchAgents/com.apple.metadata.mdwrite.plist
 
   fi
 fi
