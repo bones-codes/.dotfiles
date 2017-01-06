@@ -9,7 +9,7 @@ export GPG_TTY=`tty`
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   # APPLE, Y U PUT /usr/bin B4 /usr/local/bin?!
   # Add binaries into the path
-  export PATH=$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin
+  export PATH=/Users/huesos/.rbenv/shims:/Users/huesos/.rbenv/bin:$DOTFILES/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Library/TeX/texbin
 
   export HOMEBREW_NO_ANALYTICS=1
   export HOMEBREW_NO_INSECURE_REDIRECT=1

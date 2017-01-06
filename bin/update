@@ -20,7 +20,7 @@ else
   make
 fi
 
-if [[ $(groups | grep -q -e '\badmin\b')$? -ne 0 ]]; then
+if [[ $(groups | grep -q '(admin)')$? -ne 0 ]]; then
   read -p "Enter the administrator username: " admin
 else
   admin=$(whoami)
@@ -51,26 +51,26 @@ fi
 
 echo; echo "${green}Running brew update, upgrade, cleanup and checkup${reset}"
 sudo -H -u $admin brew update
-sudo -H -u $admin brew upgrade --all
+sudo -H -u $admin brew upgrade
 sudo -H -u $admin brew upgrade brew-cask
 sudo -H -u $admin brew cleanup
 sudo -H -u $admin brew cask cleanup
 sudo -H -u $admin brew doctor
 
 echo; echo "${green}Updating pip and pip packages${reset}"
-sudo -H -u $admin pip install --upgrade pip setuptools
-sudo -H -u $admin pip3 install --upgrade pip setuptools
-if [[ $(pip list | grep -F 'pyobjc (' >/dev/null 2>&1) -eq 0 ]]; then
+sudo -H -su $admin pip install --upgrade pip setuptools
+sudo -H -su $admin pip3 install --upgrade pip setuptools
+if [[ $(pip list | grep -q pyobjc >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating pyobjc${reset}"
-  sudo -H -su $admin "pip install -U pyobjc"
+  sudo -H -su $admin pip install -U pyobjc
 fi
-if [[ $(pip3 list | grep -F "peewee (" >/dev/null 2>&1) -eq 0 ]]; then
+if [[ $(pip3 list | grep -q peewee >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating peewee${reset}"
-  sudo -H -su $admin "pip3 install -U peewee"
+  sudo -H -su $admin pip3 install -U peewee
 fi
-if [[ $(pip list | grep -F "pycrypto (" >/dev/null 2>&1) -eq 0 ]]; then
+if [[ $(pip list | grep -q pycrypto >/dev/null 2>&1) -eq 0 ]]; then
   echo; echo "${green}Updating pycrypto${reset}"
-  sudo -H -su $admin "pip install -U pycrypto"
+  sudo -H -su $admin pip install -U pycrypto
 fi
 
 if [[ -e "$HOME/.bash" && -e "$HOME/.dotfiles/copy/.bash" ]]; then
@@ -96,17 +96,19 @@ if [[ -e "$HOME/.dotfiles/bin/update_local" ]]; then
   source "$HOME/.dotfiles/bin/update_local"
 fi
 
-if [[ -e "/Volumes/disk3" ]]; then
+if [[ -e "/Volumes/--" ]]; then
   echo; echo "${green}Updating dotfiles (locally)${reset}"
-  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/disk3/.dotfiles
+  rsync -ar --executability --delete --stats $HOME/.dotfiles/ /Volumes/--/.dotfiles
   #echo; echo "Updating pso"
-  #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/disk3/pso
-  echo; echo "${green}Updating rsrch${reset}"
-  rsync -ar --executability --delete --stats $HOME/research/ /Volumes/disk3/rsrch
+  #rsync -ar --executability --delete --stats $HOME/resources/ /Volumes/--/pso
+  if [[ -e "$HOME/research" ]]; then
+    echo; echo "${green}Updating rsrch${reset}"
+    rsync -ar --executability --delete --stats $HOME/research/ /Volumes/--/rsrch
+  fi
   echo; read -p "Update mail store? [Y/n] " yn
   if [[ $yn == [Yy] ]]; then
     echo; echo "${green}Updating mail${reset}"
-    rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/disk3/.mail
+    rsync -ar --executability --delete --stats $HOME/.mail/ /Volumes/--/.mail
   fi
 fi
 

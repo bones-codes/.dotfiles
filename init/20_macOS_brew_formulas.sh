@@ -35,7 +35,6 @@ recipes=(
   python3
   rename 
   reattach-to-user-namespace
-  ssh-copy-id  
   tmux
   "vim --with-python3 --with-override-system-vi"
   "wget --with-iri" 
@@ -85,6 +84,7 @@ fi
 
 if [[ $HACK || $IOS ]]; then
   recipes+=(
+  qt
   cmake 
   usbmuxd 
   libimobiledevice

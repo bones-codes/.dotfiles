@@ -50,6 +50,8 @@ if (( ${#taps[@]} > 0 )); then
 fi
 fi
 
-e_header "Running macOS Global Config"
-# macOS Config. Can safely be run everytime.
-source $DOTFILES_HOME/conf/macOS/conf_macOS_global.sh
+if [ "$LOCAL" ]; then
+  e_header "Running macOS Global Config"
+  # macOS Config. Can safely be run everytime.
+  source $DOTFILES_HOME/conf/macOS/conf_macOS_global.sh
+fi

@@ -1,8 +1,10 @@
 $(get_os 'macOS') || return 1
 
-e_header "Running macOS Config"
-# macOS Config. Can safely be run everytime.
-source $DOTFILES_HOME/conf/macOS/conf_macOS.sh
+if [ "$LOCAL" ]; then
+  e_header "Running macOS Config"
+  # macOS Config. Can safely be run everytime.
+  source $DOTFILES_HOME/conf/macOS/conf_macOS.sh
+fi
 
 if [[ $MIN ]]; then 
   e_header "Installing dot gists (MIN only)"
