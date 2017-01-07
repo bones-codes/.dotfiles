@@ -127,14 +127,13 @@ function link_test() {
 }
 function link_do() {
   # Only linking mutt-related rcs if local install
-  if [[ $LOCAL ]]; then
+  if [[ ! $LOCAL ]]; then
     dots=(
     .inputrc
     .mutt
     .muttrc
     .notmuch-config
     .offlineimaprc
-    .slate
     .urlview
     )
 

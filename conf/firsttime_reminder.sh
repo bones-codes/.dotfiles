@@ -4,8 +4,6 @@
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   open -a Safari
 
-  #google-chrome
-  open https://www.google.com/chrome
   # https everywhere
   open https://www.eff.org/https-everywhere
   # adblock plus
@@ -19,7 +17,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 
   if [[ $LOCAL ]]; then
     open https://tunnelblick.net/downloads.html
-    open /usr/local/Caskroom/little-snitch/3.7/Little\ Snitch\ Installer.app
+    open -a /usr/local/Caskroom/little-snitch/*/Little Snitch Installer.app
+    open -a Micro\ Snitch.app
   fi
 
 # Ubuntu.

@@ -16,19 +16,6 @@ if [[ $MIN ]]; then
   return
 fi
 
-# usbkill
-e_header 'Installing usbkill'
-if [[ -e "$DOTFILES_HOME/bin/usbkill" ]]; then
-  cd "$DOTFILES_HOME/bin/usbkill"
-  git pull
-  sudo python setup.py install
-else
-  cd "$HOME/.dotfiles/bin"
-  git clone https://github.com/hephaest0s/usbkill.git
-  cd usbkill
-  sudo python setup.py install
-fi
-
 ## iTerm
 # If iTerm has never been run this wont exist. 
 # We then run iTerm so we can config it.

@@ -17,6 +17,19 @@ if [[ "$(type -P $binroot/htop)" ]] && [[ "$(stat -L -f "%Su:%Sg" "$binroot/htop
   sudo chmod u+s "$binroot/htop"
 fi
 
+# usbkill
+e_header 'Installing usbkill'
+if [[ -e "$DOTFILES_HOME/bin/usbkill" ]]; then
+  cd "$DOTFILES_HOME/bin/usbkill"
+  git pull
+  sudo python setup.py install
+else
+  cd "$HOME/.dotfiles/bin"
+  git clone https://github.com/hephaest0s/usbkill.git
+  cd usbkill
+  sudo python setup.py install
+fi
+
 if [[ "$(type -P pip)" ]]; then
   e_header "Install and/or Upgrade PIP"
   pip -q install --upgrade pip

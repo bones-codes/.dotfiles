@@ -4,7 +4,7 @@ $(get_os 'macOS') || return 1
 # Exit if Homebrew is not installed.
 [[ ! "$(type -P brew)" ]] && e_error "Brew recipes need Homebrew to install." && return 1
 
-casks=(gpgtools iterm2)
+casks=(google-chrome gpgtools iterm2)
 
 if [[ $HAFH ]]; then
   casks+=(logitech-myharmony)
