@@ -4,6 +4,10 @@ if [ "$LOCAL" ]; then
   e_header "Running macOS Config"
   # macOS Config. Can safely be run everytime.
   source $DOTFILES_HOME/conf/macOS/conf_macOS.sh
+
+  if [[ -e "/Volumes/--/.mail" ]]; then
+    cp -R /Volumes/--/.mail $HOME
+  fi
 fi
 
 if [[ $MIN ]]; then 
