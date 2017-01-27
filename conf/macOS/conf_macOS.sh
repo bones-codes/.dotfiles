@@ -14,6 +14,12 @@ defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
+# Show Appstore debug menu
+defaults write com.apple.appstore ShowDebugMenu -bool true
+
+# Disable all animations
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
 if [[ "$LOCAL" ]]; then
   # Hide desktop icons
   defaults write com.apple.finder CreateDesktop -bool false
@@ -28,6 +34,9 @@ defaults write com.apple.systemuiserver menuExtras -array "/System/Library/CoreS
 
 # Show remaining battery percentage
 defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
+# Disable Photos from automatically opening whenever an iDevice is plugged in
+defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
 
 ###############################################################################
@@ -79,7 +88,7 @@ defaults write com.apple.BezelServices kDimTime -int 300
 # I hope whoever came up with this stupid fucking idea dies in a tar pit
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -int 0
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 3
+defaults write NSGlobalDomain KeyRepeat -int 2
 # Don't take EONS to repeat 
 defaults write NSGlobalDomain InitialKeyRepeat -int 30
 
@@ -201,6 +210,9 @@ duti -s com.apple.Safari afp
 duti -s com.apple.Safari ftp
 duti -s com.apple.Safari nfs
 duti -s com.apple.Safari smb
+
+# Disable the standard delay in rendering a Web page
+defaults write com.apple.Safari WebKitInitialTimedLayoutDelay 0.25
 
 
 ##############################################################################
