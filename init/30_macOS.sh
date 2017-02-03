@@ -20,10 +20,7 @@ fi
 # usbkill
 e_header 'Installing usbkill'
 if [[ -e "$DOTFILES_HOME/bin/usbkill" ]]; then
-  cd "$DOTFILES_HOME/bin/usbkill"
-  git pull
-  sudo python setup.py install
-else
+  rm -rf "$DOTFILES_HOME/bin/usbkill"
   cd "$HOME/.dotfiles/bin"
   git clone https://github.com/hephaest0s/usbkill.git
   cd usbkill
@@ -61,7 +58,7 @@ fi
 if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then 
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
-  e_header "Installing ruby 2.1.0"
+  e_header "Installing ruby 2.1.10"
   if [[ $STANDARD_USER ]]; then
     sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.1.10
     sudo su $STANDARD_USER <<'EOF'
