@@ -98,6 +98,8 @@ if [[ $HACK || $IOS ]]; then
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
   # https://github.com/maciekish/iReSign.git
 
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
   rbenv global 2.1.10
   ruby -v
   e_header "Installing idb (iOS)"
