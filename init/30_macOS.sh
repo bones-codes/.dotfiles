@@ -104,6 +104,10 @@ if [[ $HACK || $IOS ]]; then
   ruby -v
   e_header "Installing idb (iOS)"
   gem install idb
+
+  # https://www.frida.re/
+  e_header "Installing Frida (iOS)"
+  pip install frida
 fi
 
 if [[ ! $LOCAL ]]; then
