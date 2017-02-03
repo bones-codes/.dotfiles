@@ -61,14 +61,22 @@ fi
 if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then 
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
-  e_header "Installing rbenv"
-  sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.1.0
-  sudo su $STANDARD_USER <<'EOF'
+  e_header "Installing ruby 2.1.0"
+  if [[ $STANDARD_USER ]]; then
+    sudo -H -u $STANDARD_USER CONFIGURE_OPTS=--enable-shared rbenv install 2.1.10
+    sudo su $STANDARD_USER <<'EOF'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-rbenv global 2.1.0
+rbenv global 2.1.10
 ruby -v
 EOF
+  else
+    CONFIGURE_OPTS=--enable-shared rbenv install 2.1.10
+    export PATH="$HOME/.rbenv/bin:$PATH"
+    eval "$(rbenv init -)"
+    rbenv global 2.1.10
+    ruby -v
+  fi
 fi
 
 if [[ $LOCAL ]]; then 
@@ -76,6 +84,7 @@ if [[ $LOCAL ]]; then
   sudo su $STANDARD_USER <<'EOF'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+rbenv global 2.1.10
 gem install -v 1.5.4 icalendar
 EOF
 fi
@@ -89,8 +98,7 @@ if [[ $HACK || $IOS ]]; then
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
   # https://github.com/maciekish/iReSign.git
 
-  #TODO --- get working on macOS or just throw onto an ubuntu VM
-  rbenv global 2.1.0
+  rbenv global 2.1.10
   ruby -v
   e_header "Installing idb (iOS)"
   gem install idb
