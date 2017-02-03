@@ -41,13 +41,23 @@ taps=("homebrew/dupes" "caskroom/cask" "caskroom/versions" "caskroom/fonts" "hom
     taps+=("homebrew/python")
   fi
 
-taps=($(setdiff "${taps[*]}" "$(brew tap)"))
-if (( ${#taps[@]} > 0 )); then
-  for a_tap in "${taps[@]}"; do
-    e_header "Tapping Homebrew: $a_tap"
-    brew tap $a_tap
-  done
-fi
+  if [[ $HACK || $IOS ]]; then
+    # Needed for idb
+    taps+=("cartr/qt4")
+  fi
+
+  taps=($(setdiff "${taps[*]}" "$(brew tap)"))
+  if (( ${#taps[@]} > 0 )); then
+    for a_tap in "${taps[@]}"; do
+      e_header "Tapping Homebrew: $a_tap"
+      brew tap $a_tap
+    done
+  fi
+
+  if [[ $HACK || $IOS ]]; then
+    # Needed for idb
+    brew tap-pin cartr/qt4
+  fi
 fi
 
 if [ "$LOCAL" ]; then
