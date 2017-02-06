@@ -105,6 +105,18 @@ if [[ $HACK || $IOS ]]; then
   # https://www.frida.re/
   e_header "Installing Frida (iOS)"
   pip install frida
+
+  # https://github.com/Nightbringer21/fridump
+  e_header "Installing Fridump (iOS)"
+  if [[ -e "$DOTFILES_HOME/bin/" ]]; then
+    cd "$HOME/.dotfiles/bin"
+    git clone https://github.com/Nightbringer21/fridump.git
+    echo 'alias fridump="python ~/.dotfiles/bin/fridump.py"' >> ~/.bashrc
+  else
+    mkdir .bin && cd .bin/
+    git clone https://github.com/Nightbringer21/fridump.git
+    echo 'alias fridump="python ~/.bin/fridump.py"' >> ~/.bashrc
+  fi 
 fi
 
 if [[ ! $LOCAL ]]; then
