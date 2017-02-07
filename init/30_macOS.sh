@@ -115,7 +115,7 @@ if [[ $HACK || $IOS ]]; then
   else
     mkdir .bin && cd .bin/
     git clone https://github.com/Nightbringer21/fridump.git
-    echo 'alias fridump="python ~/.bin/fridump.py"' >> ~/.bashrc
+    echo 'alias fridump="python ~/.bin/fridump/fridump.py"' >> ~/.bashrc
   fi 
 fi
 
