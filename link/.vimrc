@@ -5,13 +5,14 @@ Plug 'https://github.com/LaTeX-Box-Team/LaTeX-Box.git'
 Plug 'https://github.com/Raimondi/delimitMate.git'
 Plug 'https://github.com/scrooloose/syntastic.git'
 Plug 'https://github.com/nelstrom/vim-markdown-folding.git'
-"Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/will133/vim-dirdiff.git'
 Plug 'https://github.com/d0c-s4vage/pct-vim.git'
 Plug 'https://github.com/keith/swift.vim.git'
 Plug 'https://github.com/guns/xterm-color-table.vim.git'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/jamessan/vim-gnupg.git'
+Plug 'https://github.com/vimwiki/vimwiki.git'
+"Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 " Add plugins to &runtimepath
 call plug#end()
 
