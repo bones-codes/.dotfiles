@@ -59,6 +59,6 @@ PS1="\u@\h\[$CYAN\][\$(last_two_dirs)]\$([[ -n \$(git branch 2> /dev/null) ]])\[
 set -o vi
 shopt -s checkwinsize
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
+  if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+    . /usr/local/share/bash-completion/bash_completion
+  fi
