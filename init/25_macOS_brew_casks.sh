@@ -10,8 +10,8 @@ if [[ $HAFH ]]; then
   casks+=(logitech-myharmony)
 fi
 
-if [[ $HACK || $NET || $WAPT || $IOS || $BT || $MINHACK ]]; then
-  casks+=(wireshark-chmodbpf)
+if [[ $HACK || $BT ]]; then
+  casks+=(libpcap)
 fi
 
 if [[ $HACK || $NET || $WAPT || $IOS || $MINHACK ]]; then

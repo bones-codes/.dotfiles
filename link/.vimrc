@@ -35,6 +35,7 @@ let g:netrw_preview=1               " preview window shown in a vertically split
 let g:netrw_dirhistmax=0            " no .netrwhist
 let g:netrw_dirhist_cnt=0
 
+set foldmethod=syntax
 set number
 set numberwidth=3
 set clipboard=unnamed
@@ -58,6 +59,7 @@ set wildmode=longest,list,full
 set wildmenu
 
 autocmd BufNewFile,BufRead *.md set filetype=markdown
+autocmd BufNewFile,BufRead *.wiki set filetype=vimwiki
 
 " statusline ---------------------------------------
 " format markers:
@@ -159,3 +161,9 @@ if has('viminfo')
         augroup END
     endif
 endif
+
+" vimwiki: run multiple wikis
+let g:vimwiki_list = [
+                        \{'path': '~/engagements/1508_TJX_PCI-US/cara/index.wiki'},
+                        \{'path': '~/engagements/1701_Tanium_Product-Trends/cara/index.wiki'}
+                \]

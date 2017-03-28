@@ -64,7 +64,7 @@ done
 
 killall iTerm2
 
-if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT ]]; then
+if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS ]]; then
   e_header "Installing Burp Suite"
   mkdir -p $USER_HOME/tools/burp/{backup,logs,tmp}
   if [[ -e "$DOTFILES_HOME/conf/local/" ]]; then

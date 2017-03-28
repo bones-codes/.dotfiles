@@ -17,11 +17,11 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 
    # Locks down a thumb drive so that macOS will not write any metadata to it.
    macos_lockdown_drive() {
-       rm -r -v .Trashes
+       rm -r .Trashes
        touch .Trashes
-       rm -r -v .fseventsd
+       rm -r .fseventsd
        touch .fseventsd
-       rm -r -v .Spotlight-V100
+       rm -r .Spotlight-V100
        touch .Spotlight-V100
        touch .metadata_never_index
    }

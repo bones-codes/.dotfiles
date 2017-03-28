@@ -108,15 +108,54 @@ if [[ $HACK || $IOS ]]; then
 
   # https://github.com/Nightbringer21/fridump
   e_header "Installing Fridump (iOS)"
-  if [[ -e "$DOTFILES_HOME/bin/" ]]; then
-    cd "$HOME/.dotfiles/bin"
-    git clone https://github.com/Nightbringer21/fridump.git
-    echo 'alias fridump="python ~/.dotfiles/bin/fridump.py"' >> ~/.bashrc
-  else
-    mkdir .bin && cd .bin/
-    git clone https://github.com/Nightbringer21/fridump.git
-    echo 'alias fridump="python ~/.bin/fridump/fridump.py"' >> ~/.bashrc
-  fi 
+  cd "$HOME/.dotfiles/bin"
+  git clone https://github.com/Nightbringer21/fridump.git
+  echo 'alias fridump="python ~/.dotfiles/bin/fridump/fridump.py"' >> ~/.bashrc
+fi
+
+if [[ $HACK || $BT ]]; then
+  e_header "Installing libbtbb (Ubertooth)"
+  cd "$HOME/.dotfiles/bin"
+  wget https://github.com/greatscottgadgets/libbtbb/archive/2015-10-R1.tar.gz -O libbtbb-2015-10-R1.tar.gz
+  tar xf libbtbb-2015-10-R1.tar.gz
+  cd libbtbb-2015-10-R1
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
+  # cleaning up
+  cd "$HOME/.dotfiles/bin"
+  rm -rf libbtbb-2015-10-R1.tar.gz 
+
+  e_header "Installing various python modules (ubertooth-specan-ui)"
+  pip install pyside numpy
+  export DYLD_LIBRARY_PATH=/usr/local/lib/python2.7/site-packages/PySide
+
+  e_header "Installing Ubertooth tools"
+  cd "$HOME/.dotfiles/bin"
+  wget https://github.com/greatscottgadgets/ubertooth/releases/download/2015-10-R1/ubertooth-2015-10-R1.tar.xz -O ubertooth-2015-10-R1.tar.xz
+  tar xf ubertooth-2015-10-R1.tar.xz
+  cd ubertooth-2015-10-R1/host
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
+
+  cd ../ubertooth-tools/
+  mkdir build
+  cd build
+  cmake ..
+  make
+  sudo make install
+
+  e_header "Installing crackle (Ubertooth)"
+  cd "$HOME/.dotfiles/bin"
+  git clone https://github.com/mikeryan/crackle.git
+  cd crackle/
+  make
+  sudo make install
 fi
 
 if [[ ! $LOCAL ]]; then

@@ -9,7 +9,7 @@ if [ ! "$MIN" ]; then
 recipes=(
   ag
   bash
-  bash-completion
+  bash-completion2
   cmake
   coreutils 
   ctags 
@@ -96,7 +96,8 @@ if [[ $HACK || $BT ]]; then
   recipes+=(
   libusb 
   pkg-config 
-  homebrew/dupes/libpcap
+  cmake
+  wget
   )
   
 fi

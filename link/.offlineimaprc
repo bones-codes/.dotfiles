@@ -4,7 +4,7 @@ accounts = ncc
 maxsyncaccounts = 2
 pythonfile=~/.mutt/local-creds.py
 fsync = false
-socktimeout = 60
+socktimeout = 30
 
 [mbnames]
 enabled = yes
@@ -20,8 +20,8 @@ localrepository = nccLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
 quick = 100
-autorefresh = 0.1
-holdconnectionopen = yes
+#autorefresh = 0.1
+holdconnectionopen = no
 
 [Repository nccRemote]
 type = IMAP
@@ -47,8 +47,8 @@ localrepository = isecLocal
 status_backend = sqlite
 postsynchook = /usr/local/bin/notmuch new
 quick = 100
-autorefresh = 0.1
-holdconnectionopen = yes
+#autorefresh = 0.1
+holdconnectionopen = no
 
 [Repository isecRemote]
 type = IMAP
