@@ -162,8 +162,4 @@ if has('viminfo')
     endif
 endif
 
-" vimwiki: run multiple wikis
-let g:vimwiki_list = [
-                        \{'path': '~/engagements/1508_TJX_PCI-US/cara/index.wiki'},
-                        \{'path': '~/engagements/1701_Tanium_Product-Trends/cara/index.wiki'}
-                \]
+so $HOME/.vim/local-wiki.vim

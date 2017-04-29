@@ -31,7 +31,7 @@ recipes=(
   "openssl --universal" 
   p7zip 
   pass
-  "python --universal" 
+  python 
   python3
   rename 
   reattach-to-user-namespace
@@ -84,10 +84,12 @@ fi
 
 if [[ $HACK || $IOS ]]; then
   recipes+=(
-  qt
-  cmake 
+  #qt
+  #cmake 
+  https://raw.githubusercontent.com/kadwanev/bigboybrew/master/Library/Formula/sshpass.rb
+  libxml2
   usbmuxd 
-  libimobiledevice
+  #libimobiledevice
   )
   
 fi

@@ -55,7 +55,7 @@ if [[ "$(type -P pip)" ]]; then
 
 fi
 
-if [[ $LOCAL || $HACK|| $IOS || $RUBY  ]]; then 
+if [[ $LOCAL || $HACK|| $IOS || $RUBY ]]; then 
   # Install Ruby -- using rbenv to manage Ruby versions
   # https://gorails.com/setup/osx/10.11-el-capitan
   e_header "Installing ruby 2.1.10"
@@ -95,12 +95,24 @@ if [[ $HACK || $IOS ]]; then
   # http://www.crypticbit.com/zen/products/iphoneanalyzer
   # https://github.com/maciekish/iReSign.git
 
-  #export PATH="$HOME/.rbenv/bin:$PATH"
-  #eval "$(rbenv init -)"
-  #rbenv global 2.1.10
-  #ruby -v
-  #e_header "Installing idb (iOS)"
-  #gem install idb
+  # For needle.py
+  # https://github.com/mwrlabs/needle
+  e_header "Installing needle (iOS)"
+  cd "$HOME/.dotfiles/bin"
+  git clone https://github.com/mwrlabs/needle.git
+  echo "alias needle='python ~/.dotfiles/bin/needle/needle/needle.py'" >> ~/.bashrc
+
+  e_header "Installing needle dependencies (iOS)"
+  pip install readline
+  pip install paramiko
+  pip install sshtunnel
+  pip install biplist
+
+  # mitmproxy
+  wget https://github.com/mitmproxy/mitmproxy/releases/download/v0.17.1/mitmproxy-0.17.1-osx.tar.gz
+  tar -xvzf mitmproxy-0.17.1-osx.tar.gz
+  sudo cp mitmproxy-0.17.1-osx/mitm* /usr/local/bin/
+  rm mitmproxy-0.17.1-osx.tar.gz
 
   # https://www.frida.re/
   e_header "Installing Frida (iOS)"
