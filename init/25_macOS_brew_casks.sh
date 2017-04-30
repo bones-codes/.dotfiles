@@ -27,7 +27,7 @@ if [[ $HACK || $REV ]]; then
 fi
 
 if [ "$LOCAL" ]; then
-  casks+=(ricochet vagrant vagrant-manager mactex vmware-fusion little-snitch micro-snitch knockknock)
+  casks+=(homebrew-fonts ricochet vagrant vagrant-manager mactex vmware-fusion little-snitch micro-snitch knockknock)
 fi
 
 # Install Homebrew casks.

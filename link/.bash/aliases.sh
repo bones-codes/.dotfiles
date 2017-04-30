@@ -52,5 +52,6 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 
 alias top=htop
 alias tmx='tmux -u attach'
-alias dirbuster-ng="$HOME/.dotfiles/bin/dirbuster-ng/build/dirbuster-ng"
 alias vi='vim'
+alias fridump="python $HOME/.dotfiles/bin/fridump/fridump.py"
+alias needle="python $HOME/.dotfiles/bin/needle/needle/needle.py"

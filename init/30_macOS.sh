@@ -100,7 +100,6 @@ if [[ $HACK || $IOS ]]; then
   e_header "Installing needle (iOS)"
   cd "$HOME/.dotfiles/bin"
   git clone https://github.com/mwrlabs/needle.git
-  echo "alias needle='python ~/.dotfiles/bin/needle/needle/needle.py'" >> ~/.bashrc
 
   e_header "Installing needle dependencies (iOS)"
   pip install readline
@@ -122,7 +121,6 @@ if [[ $HACK || $IOS ]]; then
   e_header "Installing Fridump (iOS)"
   cd "$HOME/.dotfiles/bin"
   git clone https://github.com/Nightbringer21/fridump.git
-  echo 'alias fridump="python ~/.dotfiles/bin/fridump/fridump.py"' >> ~/.bashrc
 fi
 
 if [[ $HACK || $BT ]]; then

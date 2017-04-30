@@ -62,7 +62,7 @@ if [[ $HACK || $MINHACK || $NET || $WAPT || $IOS || $BT || $RESEARCH ]]; then
   rbenv
   homebrew/completions/gem-completion
   testssl
-  "wireshark --with-headers --with-libsmi --with-lua --with-qt5 --with-portaudio"
+  "wireshark --with-headers --with-libsmi --with-lua --with-qt --with-portaudio"
   "gdb --with-all-targets --with-python"
   cgdb
   jython
