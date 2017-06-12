@@ -55,4 +55,3 @@ alias tmx='tmux -u attach'
 alias vi='vim'
 alias fridump="python $HOME/.dotfiles/bin/fridump/fridump.py"
 alias needle="python $HOME/.dotfiles/bin/needle/needle/needle.py"
-alias ys="ssh-add -e /usr/local/lib/libykcs11.dylib; ssh-add -s /usr/local/lib/libykcs11.dylib"
